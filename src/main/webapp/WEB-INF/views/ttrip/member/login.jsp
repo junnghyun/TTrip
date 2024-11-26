@@ -10,7 +10,7 @@
   <title> Responsive Login and Signup Form </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ttrip/member/style.css">
 
 
 
@@ -115,7 +115,7 @@
 </section>
 
 <!-- JavaScript -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/script.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/ttrip/member/script.js"></script>
 
 </body>
 
