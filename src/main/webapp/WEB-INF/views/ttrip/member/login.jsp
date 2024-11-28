@@ -51,16 +51,16 @@
     <div class="line"></div>
 
     <div class="media-options">
-      <a href="#" class="field facebook">
-        <i class='bx bxl-facebook facebook-icon'></i>
-        <span>Login with Facebook</span>
+      <a href="#" class="field kakao">
+        <img src="${pageContext.request.contextPath}/ttrip/member/images/kakao_logo.png" alt="Kakao" class="kakao-img">
+        <span>Login with Kakao</span>
       </a>
     </div>
 
     <div class="media-options">
-      <a href="#" class="field google">
-        <img src="images/google.png" alt="" class="google-img">
-        <span>Login with Google</span>
+      <a href="#" class="field naver">
+        <img src="${pageContext.request.contextPath}/ttrip/member/images/naver_logo.png" alt="Naver" class="naver-img">
+        <span>Login with Naver</span>
       </a>
     </div>
 
@@ -98,16 +98,16 @@
     <div class="line"></div>
 
     <div class="media-options">
-      <a href="#" class="field facebook">
-        <i class='bx bxl-facebook facebook-icon'></i>
-        <span>Login with Facebook</span>
+      <a href="#" class="field kakao">
+        <img src="${pageContext.request.contextPath}/ttrip/member/images/kakao_logo.png" alt="Kakao" class="kakao-img">
+        <span>Signup with Kakao</span>
       </a>
     </div>
 
     <div class="media-options">
-      <a href="#" class="field google">
-        <img src="images/google.png" alt="Google" class="google-img">
-        <span>Login with Google</span>
+      <a href="#" class="field naver">
+        <img src="${pageContext.request.contextPath}/ttrip/member/images/naver_logo.png" alt="Naver" class="naver-img">
+        <span>Signup with Naver</span>
       </a>
     </div>
 
