@@ -10,7 +10,7 @@
   <title> Responsive Login and Signup Form </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ttrip/member/login.css">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ttrip/member/login/login.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/common/footer/assets/css/footer.css">
 
 
@@ -115,7 +115,7 @@
 </section>
 <jsp:include page="../common/footer.jsp"/>
 <!-- JavaScript -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/ttrip/member/login.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/ttrip/member/login/login.js"></script>
 
 </body>
 
