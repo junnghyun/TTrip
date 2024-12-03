@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Place and Accommodation Selector</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/ttrip/travel/css/travel-plan2.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/ttrip/travel/css/travel-plan3.css">
   <!-- 카카오 지도 API 스크립트 추가 -->
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f4b38fb42b57cde2b0919f29b1e7215"></script>
@@ -13,9 +12,10 @@
 <body>
   <!-- 사이드바 영역 -->
   <div class="sidebar">
+  	<h2 id="travel-name">인천</h2>
     <div id="selection-summary">
       <h3>선택한 기간</h3>
-      <p id="selected-range"></p> <!-- 선택한 기간 표시 -->
+      <p id="selected-range"></p>
     </div>
 
     <div class="tab-menu">
@@ -54,7 +54,6 @@
         <input type="text" placeholder="숙소를 검색하세요">
         <ul class="accommodation-list">
           <li>
-            <img src="hotel1.jpg" alt="숙소 이미지">
             <div>
               <h3>네스트 호텔</h3>
               <p>인천 영종도 | 바다 전망</p>
@@ -62,7 +61,6 @@
             <button onclick="addAccommodationToDayPrompt('네스트 호텔', 'hotel1.jpg')">+</button>
           </li>
           <li>
-            <img src="hotel2.jpg" alt="숙소 이미지">
             <div>
               <h3>파라다이스시티</h3>
               <p>럭셔리 호텔 | 엔터테인먼트</p>
@@ -75,14 +73,17 @@
 
     <button id="finalize-button">최종 선택 완료</button>
   </div>
+  <div class="main-content">
   <!-- 오른쪽 일정 리스트 -->
   <div class="day-plan-sidebar">
     <!-- 일차별 계획이 동적으로 생성됨 -->
   </div>
+  <div class="resize-handle"></div>
+  </div>
 
   <!-- 메인 콘텐츠 영역 -->
   <div id="map" style="width: 70%; height: 100vh; float: right;"></div>
-
+  
   <script src="${pageContext.request.contextPath}/ttrip/travel/js/travel-plan3.js"></script>
   <script>
     // 카카오 지도 API 초기화

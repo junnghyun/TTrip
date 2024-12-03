@@ -21,7 +21,7 @@ if (selectedDates) {
     dayPlanDiv.id = `day${dayCounter}`;
     
     dayPlanDiv.innerHTML = `
-      <h2>${dayCounter}일차</h2>
+      <span id="daycont"><h2>${dayCounter}일차</h2></span>
       <ul class="place-list"></ul>
       <ul class="accommodation-list" style="display: none;"></ul> <!-- 숙소 리스트는 처음엔 숨김 -->
     `;
@@ -143,7 +143,6 @@ function addAccommodationToDay(day, accommodationName, imageUrl) {
 
     const li = document.createElement("li");
     li.innerHTML = `
-        <img src="${imageUrl}" alt="숙소 이미지">
         <div>
             <h3>${accommodationName}</h3>
             <p>숙소 예약</p>
@@ -173,30 +172,58 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 
-    // 장소 탭이 활성화되면 장소 리스트만 보이게 하고 숙소 리스트는 숨김
+    // 탭에 따라 리스트 표시
     if (tabName === 'location') {
         showPlaces();
-    } else {
+    } else if (tabName === 'accommodation') {
         showAccommodations();
     }
 }
 
 function showPlaces() {
     var days = document.getElementsByClassName('day-plan');
-    for (var i = 0; i < days.length; i++) {
-        var placeList = days[i].getElementsByClassName('place-list')[0];
-        var accommodationList = days[i].getElementsByClassName('accommodation-list')[0];
-        placeList.style.display = 'block';        // 장소 리스트 표시
-        accommodationList.style.display = 'none'; // 숙소 리스트 숨김
+    var totalDays = days.length;
+
+    // 모든 일차에서 장소 리스트는 보이고, 숙소 리스트는 숨기도록 설정
+    for (var i = 0; i < totalDays; i++) {
+        var dayPlan = days[i];
+        var placeList = dayPlan.getElementsByClassName('place-list')[0];
+        var accommodationList = dayPlan.getElementsByClassName('accommodation-list')[0];
+        var dayHeader = dayPlan.querySelector('h2');  // 일차 제목
+
+        placeList.style.display = 'block';  // 장소 리스트 보이기
+        accommodationList.style.display = 'none';  // 숙소 리스트 숨기기
+        dayHeader.style.display = 'block';  // 일차 제목 보이기
     }
+
+    // 마지막 일차는 보이도록 설정
+    var lastDay = days[totalDays - 1];
+    lastDay.style.display = 'block';  // 마지막 일차 div는 보이게
 }
 
 function showAccommodations() {
     var days = document.getElementsByClassName('day-plan');
-    for (var i = 0; i < days.length; i++) {
-        var placeList = days[i].getElementsByClassName('place-list')[0];
-        var accommodationList = days[i].getElementsByClassName('accommodation-list')[0];
-        placeList.style.display = 'none';        // 장소 리스트 숨김
-        accommodationList.style.display = 'block'; // 숙소 리스트 표시
+    var totalDays = days.length;
+
+    // 마지막 일차를 제외한 모든 일차에서 장소와 숙소 리스트를 표시
+    for (var i = 0; i < totalDays - 1; i++) {
+        var dayPlan = days[i];
+        var placeList = dayPlan.getElementsByClassName('place-list')[0];
+        var accommodationList = dayPlan.getElementsByClassName('accommodation-list')[0];
+        var dayHeader = dayPlan.querySelector('h2');  // 일차 제목
+
+        placeList.style.display = 'block';  // 장소 리스트 표시
+        accommodationList.style.display = 'block';  // 숙소 리스트 표시
+        dayHeader.style.display = 'block';  // 일차 제목 표시
     }
+
+    // 마지막 일차는 숙소 리스트를 숨기고, 해당 일차 div를 숨김
+    var lastDay = days[totalDays - 1];
+    var lastDayAccommodationList = lastDay.getElementsByClassName('accommodation-list')[0];
+    var lastDayHeader = lastDay.querySelector('h2');  // 일차 제목
+
+    // 마지막 일차의 숙소 리스트를 숨김
+    lastDayAccommodationList.style.display = 'none';
+    // 마지막 일차의 전체 div를 숨김
+    lastDay.style.display = 'none';
 }
