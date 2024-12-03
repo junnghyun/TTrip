@@ -17,4 +17,17 @@ public class TravelController {
 		
 		return "ttrip/travel/travel-plan3";
 	}
+	
+	@RequestMapping("/tc")
+	public String tc() {
+		
+		return "ttrip/travel/travel_course_result";
+	}
+	
+	@RequestMapping("/tm")
+	public String tm() {
+		
+		return "ttrip/travel/travel_main";
+	}
+	
 }
