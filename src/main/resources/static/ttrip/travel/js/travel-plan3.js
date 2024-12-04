@@ -212,7 +212,7 @@ function showAccommodations() {
         var accommodationList = dayPlan.getElementsByClassName('accommodation-list')[0];
         var dayHeader = dayPlan.querySelector('h2');  // 일차 제목
 
-        placeList.style.display = 'block';  // 장소 리스트 표시
+        placeList.style.display = 'none';  // 장소 리스트 표시
         accommodationList.style.display = 'block';  // 숙소 리스트 표시
         dayHeader.style.display = 'block';  // 일차 제목 표시
     }
