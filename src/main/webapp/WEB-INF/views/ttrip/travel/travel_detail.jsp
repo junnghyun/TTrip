@@ -266,8 +266,8 @@ $(function() {
 
 </head>
 <body>
+<%@include file ="../common/header.jsp" %>
 <div id="wrap">
-
 <div class="top">
 <h2>가족끼리 대부도 나들이</h2>
 <span>경기도 안산시</span>
@@ -369,5 +369,6 @@ function addMarker(lat, lng) {
 </div>
 
 </div>
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

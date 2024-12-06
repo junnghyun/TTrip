@@ -4,95 +4,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>여행코스 메인 페이지</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <style type="text/css">
-        /* 기존 CSS 유지 */
-        .title {
-            margin-top: 50px;
-            font-weight: bold;
-            font-size: 40px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
+<meta charset="UTF-8">
+<title>여행코스 메인 페이지</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<style type="text/css">
+.title {
+    margin-top: 50px;
+    font-weight: bold;
+    font-size: 40px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
 
-        .cont {
-            border: 3px black solid;
-            width: 800px;
-            text-align: center;
-            margin: 50px auto;
-        }
+.cont {
+    border: 3px black solid;
+    width: 800px;
+    text-align: center;
+    margin: 50px auto;
+}
 
-        .top {
-            text-align: center;
-            padding: 30px;
-        }
+.top {
+    text-align: center;
+    padding: 30px;
+}
 
-        ul {
-            padding: 29px 0 0;
-        }
+ul {
+    padding: 29px 0 0;
+}
 
-        li {
-            list-style-type: none;
-        }
+li {
+    list-style-type: none;
+}
 
-        input[type="button"] {
-            height: 105px;
-            width: 110px;
-            border-radius: 50%;
-            margin: 15px 5px;
-            font-size: 20px;
-            font-weight: bold;
-            background-color: #F5F6F7;
-            border-style: none;
-        }
+input[type="button"] {
+    height: 105px;
+    width: 110px;
+    border-radius: 50%;
+    margin: 15px 5px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #F5F6F7;
+    border-style: none;
+}
 
-        input[type="button"]:hover {
-            background-color: #C0C0C0; /* 호버 효과 */
-        }
+input[type="button"]:hover {
+    background-color: #C0C0C0; /* 호버 효과 */
+}
 
-        #btn18 {
-            background-color: #202020;
-            color: #fff;
-            border-radius: 0%;
-            height: 50px;
-        }
-    </style>
-    <script type="text/javascript">
-        $(function () {
-            // 선택된 여행지 저장
-            let selectedRegion = "";
+#btn18 {
+    background-color: #202020;
+    color: #fff;
+    border-radius: 0%;
+    height: 50px;
+}
+#backBtn {
+    background-color: #202020;
+    color: #fff;
+    border-radius: 0%;
+    height: 50px;
+}
+</style>
+<script type="text/javascript">
+    $(function () {
+        // 선택된 여행지 저장
+        let selectedRegion = "";
 
-            $("input[type='button']").not("#btn18").click(function () {
-                // 모든 버튼 초기화
-                $("input[type='button']").not("#btn18").css("background-color", "#F5F6F7").css("color", "#000");
-                // 선택된 버튼 스타일 변경
-                $(this).css("background-color", "#333333").css("color", "#fff");
-                // 선택된 값 저장
-                selectedRegion = $(this).val();
-            });
-
-            $("#btn18").click(function () {
-                if (selectedRegion === "") {
-                    alert("여행지를 선택해 주세요.");
-                } else {
-                    // 폼에 값 설정 후 전송
-                    $("#regionForm input[name='region']").val(selectedRegion);
-                    $("#regionForm").submit();
-                }
-            });
+        $("input[type='button']").not("#btn18").click(function () {
+            // 모든 버튼 초기화
+            $("input[type='button']").not("#btn18").css("background-color", "#F5F6F7").css("color", "#000");
+            // 선택된 버튼 스타일 변경
+            $(this).css("background-color", "#333333").css("color", "#fff");
+            // 선택된 값 저장
+            selectedRegion = $(this).val();
         });
-    </script>
+
+        $("#btn18").click(function () {
+            if (selectedRegion === "") {
+                alert("여행지를 선택해 주세요.");
+            } else {
+                // 폼에 값 설정 후 전송
+                $("#regionForm input[name='region']").val(selectedRegion);
+                $("#regionForm").submit();
+            }
+        });
+    });
+</script>
 </head>
 <body>
 <div id="wrap">
-
     <h1 class="title">기존에 경험하지 못한<br>새로운 여행 플래너</h1>
 
     <div class="cont">
@@ -130,6 +134,7 @@
                     <input type="button" id="btn17" name="btn17" value="제주"/>
                 </li>
             </ul>
+            <input type="button" id="backBtn" name="backBtn" value="뒤로"/>
             <input type="button" id="btn18" name="btn18" value="다음"/>
         </div>
     </div>
