@@ -176,6 +176,26 @@
         }
 
     </style>
+<script type="text/javascript">
+    $(function() {
+    $(".backBtn").click(function() {
+        if (confirm("작성한 내용은 저장되지 않습니다. 뒤로 가시겠습니까?")) { // 확인 팝업
+            window.history.back(); // 올바른 뒤로 가기 메서드 호출
+        } else {
+            alert("취소");
+        }
+    });
+    
+    $(".confirmBtn").click(function() {
+        if (confirm("코스를 게시하시겠습니까?")) { // 확인 팝업
+            alert("게시 완료되었습니다.");
+        } else {
+            alert("취소");
+        }
+    });
+});
+</script>
+    
 </head>
 <body>
 <div id="wrap">
@@ -312,9 +332,9 @@
     <h3 class="detailTitle" style="font-weight: bold; padding-top: 20px;">상세 내용</h3>
     <input type="text" placeholder="코스에 대한 상세 내용을 입력해주세요." style="width: 1700px; height: 150px"><br>
     <span class="btnBox">
-    	<input type="button" value="뒤로"
+    	<input type="button" value="뒤로" class="backBtn"
                style="background-color: #ff0000; color: #fff; border-radius: 7px; width: 90px; height: 40px;">
-    	<input type="button" value="저장하기"
+    	<input type="button" value="저장하기" class="confirmBtn"
                style="background-color: #333; color: #fff; border-radius: 7px; width: 90px; height: 40px;">
 	</span>
 </div>
