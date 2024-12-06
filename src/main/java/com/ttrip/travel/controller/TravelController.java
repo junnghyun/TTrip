@@ -29,5 +29,11 @@ public class TravelController {
 
         return "ttrip/travel/travel_main";
     }
+    
+    @RequestMapping("/td")
+    public String td() {
+    	
+    	return "ttrip/travel/travel_detail";
+    }
 
 }
