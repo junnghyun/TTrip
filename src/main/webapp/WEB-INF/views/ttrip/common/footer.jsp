@@ -4,7 +4,7 @@
     <footer id="footer">
         <div class="inner">
             <section>
-                <h2>Follow</h2>
+                <h2 class="footer-h2">Follow</h2>
                 <ul class="icons">
                     <li><a href="https://www.inflearn.com/" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a>
                     </li>
