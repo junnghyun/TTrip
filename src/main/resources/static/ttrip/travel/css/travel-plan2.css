@@ -1,0 +1,81 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.date-picker-container {
+    margin-bottom: 20px;
+}
+
+.date-picker-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.date-input {
+    width: 40%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.time-selection {
+    margin-top: 20px;
+}
+
+.time-block {
+    background-color: #f3f4f6;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.time-block span {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.time-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#trip_text {
+    width: 200px;
+}
+
+#complete-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+  

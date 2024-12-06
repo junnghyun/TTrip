@@ -16,5 +16,5 @@ public class TTripApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(TTripApplication.class);
     }
-}
 
+}
