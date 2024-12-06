@@ -1,3 +1,4 @@
+/* 기본 스타일 */
 * {
     margin: 0;
     padding: 0;
@@ -5,89 +6,124 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #e7f1f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #567FF2; /* 푸른색 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff; /* 흰색 텍스트 */
 }
 
+/* 폼 컨테이너 스타일 */
 .form-container {
-    width: 500px;
-    margin: 100px auto;
-    padding: 20px;
-    border-radius: 15px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 550px; /* 넓은 화면에서 더 큰 폼 */
 }
 
 .signup-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+    border-collapse: separate;
+    border-spacing: 0 20px; /* 필드 간격을 조금 더 넓힘 */
 }
 
-.signup-table th, .signup-table td {
-    padding: 15px;
-    border: 1px solid #999;
-    font-size: 16px;
-}
-
+/* 테이블 헤더 스타일 */
 .signup-table th {
-    width: 120px;
-    background-color: #f0f0f0;
-    text-align: left;
+    font-weight: 600;
+    color: #333; /* 푸른색 텍스트 */
+    font-size: 16px;
+    padding-right: 20px;
 }
 
+/* 테이블 셀 스타일 */
 .signup-table td {
-    text-align: left;
+    color: #6c6c6c; /* 연한 회색 */
 }
 
-input[type="text"], input[type="email"], input[type="date"] {
-    width: calc(100% - 20px);
-    padding: 5px;
+.signup-table input[type="text"], 
+.signup-table input[type="email"], 
+.signup-table input[type="date"], 
+.signup-table input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background-color: #fafafa; /* 연한 회색 배경 */
+    transition: all 0.3s ease;
 }
 
-.check-btn {
-    padding: 5px 10px;
-    margin-left: 10px;
-    background-color: #ccc;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.signup-table input[type="text"]:focus, 
+.signup-table input[type="email"]:focus, 
+.signup-table input[type="date"]:focus, 
+.signup-table input[type="password"]:focus {
+    border-color: #567FF2; /* 푸른색 테두리 */
+    outline: none;
+    box-shadow: 0 0 5px rgba(86, 127, 242, 0.3);
 }
 
-.check-btn:hover {
-    background-color: #aaa;
-}
-
-label {
-    margin-right: 15px;
-}
-
-.submit-btn {
-    display: block;
-    width: 100px;
-    margin: 0 auto;
-    padding: 10px 0;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.submit-btn:hover {
-    background-color: #555;
+.signup-table input[type="radio"] {
+    margin-right: 10px;
 }
 
 .nickname-container {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 }
 
-.nickname-container input {
+.nickname-container input[type="text"] {
+    width: calc(100% - 120px);
+}
+
+.check-btn {
+    background-color: #567FF2; /* 푸른색 버튼 */
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.check-btn:hover {
+    background-color: #4a6fd1; /* 버튼 호버 시 어두운 푸른색 */
+}
+
+/* 제출 버튼 스타일 */
+.submit-btn {
     width: 100%;
-    margin-right: 10px;
+    background-color: #567FF2; /* 푸른색 */
+    color: #fff;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #4a6fd1; /* 버튼 호버 시 어두운 푸른색 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .signup-table th, .signup-table td {
+        font-size: 14px;
+    }
+
+    input[type="text"], input[type="email"], input[type="date"], .check-btn, .submit-btn {
+        font-size: 14px;
+    }
 }
