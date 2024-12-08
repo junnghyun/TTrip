@@ -21,34 +21,34 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
-
-                        .anyRequest().authenticated()
-                );
+//    @Autowired
+//    private JwtAuthenticationFilter jwtAuthenticationFilter;
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+//
+//                        .anyRequest().authenticated()
+//                );
 //                .oauth2Login(oauth2 -> oauth2
 //                        .loginPage("/loginForm") // 프론트엔드 로그인 페이지로 설정 예정
 //                ).sessionManagement(
 //                        session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 //                );
 
-        return http.build();
-    }
+//        return http.build();
+//    }
 }
