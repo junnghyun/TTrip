@@ -16,7 +16,11 @@
     <!-- 카카오 지도 API 스크립트 추가 -->
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f4b38fb42b57cde2b0919f29b1e7215"></script>
+            
     <style type="text/css">
+
+	@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
         body {
             margin: 0;
             padding: 0;
@@ -33,17 +37,36 @@
             width: 50%; /* 기본 폭 */
             overflow: auto;
             resize: horizontal; /* 사용자가 크기를 조정할 수 있도록 설정 */
-            border-right: 2px solid #000; /* 구분선 추가 */
-            /* cursor: "e-resize"; */
+            border-right: 2px solid #567FF2; /* 구분선 추가 */
+            min-width: 500px; /* 최소 너비 설정 */
+            max-width: 1330px;
         }
 
         .right {
             flex: 1; /* 남은 공간을 차지하도록 설정 */
             background-color: #d0d0d0;
             overflow: auto;
-            border-left: 2px solid #000; /* 구분선 추가 */
+            border-left: 2px solid #567FF2; /* 구분선 추가 */
         }
-
+        .resizer {
+			background-color: #cbd5e0;
+			cursor: ew-resize;
+			height: 100%;
+			width: 2px;
+		}
+		
+		.leftTitle{
+			margin-top: 20px;
+			margin-left: 15px;
+		}
+		
+		.journyTitle{
+			font-size: 30px;
+			font-weight: bold;
+			color: #567FF2;
+			font-family: "Jua", sans-serif;
+		}
+		
         .detail {
             padding: 10px;
             background-color: #fff;
@@ -51,7 +74,8 @@
         }
 
         .btnBox {
-            margin-left: 1480px;
+            margin-left: 1500px;
+            margin-top: 20px;
         }
 
         .trip-plan {
@@ -69,8 +93,8 @@
             flex-direction: column; /* 각 일정은 세로로 정렬 */
             gap: 20px; /* 일정 간 간격 */
             padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
+            background-color: #BACCFA;
+            border: 3px solid #567FF2;
             border-radius: 10px;
             min-width: 300px; /* 각 일차의 최소 너비 */
         }
@@ -83,8 +107,9 @@
 
         .day-header h3 {
             margin: 0; /* 여백 제거 */
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 23px;
+            color: #567FF2;
+            font-family: jua;
         }
 
         .day-header .date {
@@ -108,6 +133,7 @@
             border-radius: 5px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: jua;
         }
 
         /* 동그라미 번호 스타일 추가 */
@@ -160,24 +186,23 @@
             border-radius: 10px;
         }
 
-
-        .day span {
-            font-size: 20px;
-            font-weight: bold;
-        }
+		.date{
+			font-family: jua;
+			color: #567FF2;
+		}
 
         input {
             font-size: 15px;
-            border: 0;
+            border: 3px solid #567FF2;
             border-radius: 15px;
             outline: none;
             padding-left: 10px;
-            background-color: rgb(233, 233, 233);
+            background-color: #BACCFA;
         }
 
-    </style>
+</style>
 <script type="text/javascript">
-    $(function() {
+$(function() {
     $(".backBtn").click(function() {
         if (confirm("작성한 내용은 저장되지 않습니다. 뒤로 가시겠습니까?")) { // 확인 팝업
             window.history.back(); // 올바른 뒤로 가기 메서드 호출
@@ -193,7 +218,10 @@
             alert("취소");
         }
     });
+    
 });
+    
+    
 </script>
     
 </head>
@@ -201,8 +229,10 @@
 <div id="wrap">
 
     <div class="left">
-        <span style="font-size: 30px; mar"><strong>인천</strong></span>
-        <span>2024.12.04 ~ 2024.12.07</span>
+    	<div class="leftTitle">
+        <span class="journyTitle">인천</span>
+        <span style="color: #567FF2; font-family: jua">2024.12.04 ~ 2024.12.07</span>
+        </div>
         <div class="trip-plan">
 
             <!-- Day 1 -->
@@ -300,8 +330,10 @@
         </div>
     </div>
 
+	<div class="resizer" id="dragMe"></div>
+
     <div class="right">
-        <div id="map" style="width: 100%; height: 75vh; float: right;"></div>
+        <div id="map" style="width: 100%; height: 77vh; float: right;"></div>
 
         <script src="${pageContext.request.contextPath}/ttrip/travel/js/travel-plan3.js"></script>
         <script>
@@ -329,15 +361,36 @@
 </div>
 
 <div class="detail">
-    <h3 class="detailTitle" style="font-weight: bold; padding-top: 20px;">상세 내용</h3>
+    <h3 class="detailTitle" style="padding-top: 20px; font-family: jua; color: #567FF2">상세 내용</h3>
     <input type="text" placeholder="코스에 대한 상세 내용을 입력해주세요." style="width: 1700px; height: 150px"><br>
-    <span class="btnBox">
+    <div class="btnBox">
     	<input type="button" value="뒤로" class="backBtn"
-               style="background-color: #ff0000; color: #fff; border-radius: 7px; width: 90px; height: 40px;">
+               style="background-color: #ff0000; color: #fff; border-radius: 7px; width: 90px; height: 40px; border: none;">
     	<input type="button" value="저장하기" class="confirmBtn"
-               style="background-color: #333; color: #fff; border-radius: 7px; width: 90px; height: 40px;">
-	</span>
+               style="background-color: #333; color: #fff; border-radius: 7px; width: 90px; height: 40px; border: none;">
+	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
 
 </body>
 </html>
