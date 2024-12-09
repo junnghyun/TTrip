@@ -85,7 +85,7 @@ hr {
 }
 
 .dayBtn{
-	border: 5px solid #76D9E1;
+	border: 5px solid #567FF2;
 	border-radius: 10px;
 	background-color: #fff;
 	width: 250px;
@@ -93,6 +93,14 @@ hr {
 	margin-top: 50px;
 	font-size: 22px;
 	font-weight: bold;
+}
+
+/* 선택된 이미지 스타일 */
+.dayBtn.selected {
+    filter: brightness(80%); /* 이미지 밝기 조절 */
+    transform: scale(1); /* 약간 확대 효과 */
+    border: 5px solid #567FF2;
+    
 }
 
 .dayBtnBox{
@@ -105,7 +113,7 @@ hr {
     height: 150px;
     cursor: pointer; /* 클릭 가능한 커서 */
     transition: all 0.3s ease; /* 애니메이션 효과 */
-    border: 3px solid #76D9E1;
+    border: 3px solid #567FF2;
     border-radius: 10px;
 }
 
@@ -113,7 +121,7 @@ hr {
 .dayImg.selected {
     filter: brightness(40%); /* 이미지 밝기 조절 */
     transform: scale(1.1); /* 약간 확대 효과 */
-    border: 3px solid #76D9E1;
+    border: 3px solid #567FF2;
     
 }
 
@@ -132,7 +140,8 @@ hr {
 	height: 800px;
 	text-align: center;
 	padding: 50px;
-	border: 5px solid #76D9E1;
+	border: 5px solid #567FF2;
+	border-radius: 10px;
 }
 
 .detailImg{
@@ -143,24 +152,27 @@ hr {
 
 .replyBox{
 	width: 1300px;
-	height: 350px;
+	height: 150px;
 	background-color: #F3F2F2;
 	margin: 10px auto;
 	text-align: center;
-	padding: 70px;
+	padding: 20px;
+	margin-bottom: 100px;
 }
 
 .inputReply{
 	width: 1150px;
-	height: 150px;
+	height: 60px;
+	font-size: 15px;
 }
 
 .replyBtn{
 	background-color: #13294B;
 	color: #fff;
 	border-radius: 5px;
-	width: 90px;
-	height: 70px;
+	width: 60px;
+	height: 30px;
+	font-size: 15px;
 }
 
 .reply{
@@ -184,6 +196,18 @@ hr {
 .replyGoodBtn{
 	background: url('/ttrip/travel/images/reply_good_btn.png') no-repeat;
 	width: 30px;
+    position: relative;
+    top: 10px;
+}
+
+.userImg{
+	width: 50px;
+    height: 50px;
+	border-radius: 50%;
+}
+
+.userId{
+	margin-left: 60px;
 }
 
 </style>
@@ -257,6 +281,15 @@ $(function() {
     $(".dayImg").click(function() {
         // 모든 이미지를 초기화
         $(".dayImg").removeClass("selected");
+
+        // 현재 클릭된 이미지에 'selected' 클래스 추가
+        $(this).addClass("selected");
+    });
+    
+    // dayBtn 클릭 이벤트
+    $(".dayBtn").click(function() {
+        // 모든 이미지를 초기화
+        $(".dayBtn").removeClass("selected");
 
         // 현재 클릭된 이미지에 'selected' 클래스 추가
         $(this).addClass("selected");
@@ -344,14 +377,14 @@ function addMarker(lat, lng) {
 
 <div class="replyBox">
 <input type="text" placeholder="소중한 댓글을 남겨주세요" class="inputReply"><br>
-<input type="button" value="등록" class="replyBtn" style="margin-left: 1050px; margin-top: 20px;">
+<input type="button" value="등록" class="replyBtn" style="margin-left: 1100px; margin-top: 20px;">
 </div>
 
 <div class="reply">
 
 <img alt="회원" src="/ttrip/travel/images/user.jpg" class="userImg">
 <span>대부도 서울서 가까워서 가족끼리 바람쐬러 가기 좋아요.</span><br>
-<span>바*렛 | 2024.12.2</span>
+<span class="userId">바*렛 | 2024.12.2</span>
 <input type="button" class="replyReportBtn">
 <input type="button" class="replyGoodBtn">
 
@@ -361,7 +394,7 @@ function addMarker(lat, lng) {
 
 <img alt="회원" src="/ttrip/travel/images/user.jpg" class="userImg">
 <span>대부도에 복합문화시설은 가족들이랑 같이 방문하기 좋더라구요. 아이들 체험 기회도 많고 미술관도 즐거워하네요.</span><br>
-<span>에* | 2024.11.30</span>
+<span class="userId">에* | 2024.11.30</span>
 <input type="button" class="replyReportBtn">
 <input type="button" class="replyGoodBtn">
 
