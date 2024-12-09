@@ -14,20 +14,20 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-@Table(name = "user")
+@Table(name = "member")
 public class User {
 
     @Id
-    @Column(name = "user_id", length = 30, nullable = false)
-    private String userId; // 닉네임
+    @Column(name = "nick", length = 30, nullable = false)
+    private String nick; // 닉네임
 
     @Column(name = "name", length = 30)
     private String name;
 
-    @Column(name = "pass", length = 60) // 암호화된 비밀번호를 저장하기 위해 길이를 60으로 설정
+    @Column(name = "pass", length = 30) // 암호화된 비밀번호를 저장하기 위해 길이를 30으로 설정
     private String password;
 
-    @Column(name = "birth", length = 8)
+    @Column(name = "birth", length = 10)
     private String birth;
 
     @Column(name = "phone", length = 11)
@@ -42,13 +42,13 @@ public class User {
     @Column(name = "join_date")
     private LocalDate joinDate;
 
-    @Column(name = "withdrawn_flag", length = 1)
-    private String withdrawnFlag;
+    @Column(name = "account_flag", length = 1)
+    private String accountFlag;
 
-    @Column(name = "o_auth_provider", length = 20)
+    @Column(name = "oauth_provider", length = 20)
     private String oauthProvider;
 
-    @Column(name = "o_auth_user_id", length = 225)
+    @Column(name = "oauth_user_id", length = 225)
     private String oauthUserId;
 
 }
