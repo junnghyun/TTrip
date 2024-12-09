@@ -24,7 +24,7 @@ body {
 /* 사이드바 디자인 */
 .sidebar {
     width: 200px; /* 사이드바 너비 유지 */
-    background-color: #4e73df;
+    background-color: #567FF2;
     padding: 20px; /* 사이드바 패딩 줄임 */
     color: white;
     box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);

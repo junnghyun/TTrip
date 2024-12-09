@@ -5,19 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 정보 페이지</title>
-    <link rel="stylesheet" href="edit_member.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/ttrip/member/edit_member/edit_member.css">
+    <link href="${pageContext.request.contextPath}/ttrip/mypage/css/mypage.css" rel="stylesheet">
+    
+    <!-- <style type="text/css">
+    .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .side-menu {
+            background: #567FF2;
+            border-radius: 12px;
+            padding: 20px 0;
+        }
+        
+    </style> -->
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <div class="logo">로고</div>
-            <ul class="menu">
-                <li>여행 코스</li>
-                <li>내가 쓴 글</li>
-                <li>댓글 단 글</li>
-                <li>추천한 글</li>
-                <li>신고한 글</li>
-            </ul>
+            <nav class="side-menu">
+	            <a href="mypage_course" class="menu-item" style="width: 180px">여행 코스</a>
+	            <a href="mypage_myboard" class="menu-item" style="width: 180px">내가 쓴 글</a>
+	            <a href="mypage_comment" class="menu-item" style="width: 180px">댓글 단 글</a>
+	            <a href="mypage_recommend" class="menu-item" style="width: 180px">추천한 글</a>
+	            <a href="mypage_report" class="menu-item" style="width: 180px">신고한 글</a>
+	        </nav>
         </div>
 
         <div class="main-content">
@@ -82,7 +102,7 @@
                 </table>
 
                 <div class="button-container">
-                    <button type="button" class="cancel-btn" onclick="cancelChanges()">취소하기</button>
+                    <button type="button" class="cancel-btn" onclick="javascript:history.back()">취소하기</button>
                     <button type="submit" class="submit-btn">변경하기</button>
                 </div>
             </form>
