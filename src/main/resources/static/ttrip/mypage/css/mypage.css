@@ -1,0 +1,397 @@
+@charset "UTF-8";
+/* mypage.css */
+
+/* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+}
+
+/* 컨테이너 */
+.mypage-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    display: flex;
+    gap: 30px;
+    padding: 0 20px;
+    height: 700px;
+}
+
+/* 사이드 메뉴 */
+.side-menu {
+    width: 250px;
+    background: #567FF2;
+    border-radius: 12px;
+    padding: 20px 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 컨텐츠 영역 */
+.content-area {
+    flex: 1;
+}
+
+/* 프로필 섹션 */
+.profile-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #E0E0E0;
+    margin-right: 20px;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.edit-button {
+    background-color: #567FF2;
+    color: white;
+}
+
+.delete-button {
+    background-color: #FF4081;
+    color: white;
+}
+
+/* 컨텐츠 섹션 */
+.content-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    height: 500px;
+    overflow-y: auto;
+}
+
+/* 스크롤바 스타일 */
+.content-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-section::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.content-section::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.content-section::-webkit-scrollbar-thumb:hover {
+    background: #bbb;
+}
+
+/* 컨텐츠 리스트 */
+.content-list {
+    list-style: none;
+}
+
+.content-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #EEEEEE;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.content-item:last-child {
+    border-bottom: none;
+}
+
+/* 카테고리 배지 */
+.category-badge {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 60px;
+    text-align: center;
+}
+
+.category-free { background-color: #E3F2FD; color: #1976D2; }
+.category-question { background-color: #E8F5E9; color: #388E3C; }
+.category-recommend { background-color: #FFF3E0; color: #F57C00; }
+.category-course { background-color: #F3E5F5; color: #7B1FA2; }
+
+/* 컨텐츠 정보 */
+.content-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-wrapper {
+    flex: 1;
+}
+
+.content-title {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+}
+.course-card .course-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    text-decoration: none;
+    display: block;
+}
+
+.course-card .course-title:hover {
+    color: #2D63E2;
+}
+
+.content-date {
+    color: #888;
+    font-size: 14px;
+    min-width: 85px;
+    text-align: right;
+}
+
+/* 댓글 스타일 */
+.comment-text {
+    color: #666;
+    font-size: 14px;
+    margin-left: 20px;
+    position: relative;
+}
+
+.comment-text::before {
+    content: "L";
+    position: absolute;
+    left: -20px;
+    color: #999;
+}
+
+/* 링크 호버 효과 */
+.post-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-right: 20px;
+}
+
+.post-link:hover .content-title {
+    color: #2D63E2;
+}
+
+.post-link:hover .comment-text {
+    color: #333;
+}
+
+/* 신고 상태 배지 */
+.report-status {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+    background-color: #E0E0E0;
+    color: #333;
+    margin-left: auto;
+    border: 1px solid #ccc;
+}
+
+.status-completed {
+    background-color: #FFFFFF;
+    color: #333;
+    border: 1px solid #00897B;
+}
+
+.status-processing {
+    background-color: #FFFFFF;
+    color: #333;
+    border: 1px solid #1976D2;
+}
+
+/* 코스 그리드 레이아웃 */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 10px;
+}
+
+/* 코스 카드 */
+.course-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+.course-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.course-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #4169E1;
+    color: white;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.course-info {
+    padding: 12px;
+}
+
+.course-location {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.course-date {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+/* 통계 아이템 */
+.course-stats {
+    display: flex;
+    gap: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.material-icons.stat-icon {
+    color: #FF4081;
+    font-size: 18px;
+}
+
+.material-icons.stat-icon.comment {
+    color: #666;
+}
+
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 5px;
+}
+
+.page-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.page-item:hover {
+    background-color: #f5f5f5;
+    color: #567FF2;
+}
+
+.page-item.active {
+    background-color: #567FF2;
+    color: white;
+}
+
+.page-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-arrow:hover {
+    color: #567FF2;
+}
