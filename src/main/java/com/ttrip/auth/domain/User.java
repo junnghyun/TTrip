@@ -51,4 +51,6 @@ public class User {
     @Column(name = "oauth_user_id", length = 225)
     private String oauthUserId;
 
+
+    private String role;
 }

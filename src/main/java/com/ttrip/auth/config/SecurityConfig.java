@@ -27,9 +27,9 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable())
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/ttrip/**").permitAll()
+                        .requestMatchers("/login", "/", "/ttrip/**", "/join/**","/auth/**").permitAll()
                         .requestMatchers("/WEB-INF/**").permitAll()
-                        .requestMatchers("/common/**", "/ttrip/**", "/admin/**").permitAll()
+                        .requestMatchers("/common/**").permitAll()
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
