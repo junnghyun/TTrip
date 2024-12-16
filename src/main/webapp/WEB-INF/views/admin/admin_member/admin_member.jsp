@@ -5,9 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 회원관리</title>
-<link rel="stylesheet" type="text/css" href="css/admin_member.css?after">
-<link rel="stylesheet" type="text/css" href="../common/css/admin.css">
-<script src="js/admin_member.js" defer></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_member/css/admin_member.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/common/css/admin.css">
+<script src="${pageContext.request.contextPath}/admin/admin_memberjs/admin_member.js" defer></script>
   <script>
   
   		//편집 화면 버튼
@@ -21,16 +21,6 @@
 <div class="common_admin">
 <h1>회원관리</h1>
 
-<%--
-    MemberDAO memberDAO = new MemberDAO();
-    int currentPage = (request.getParameter("page") != null) ? Integer.parseInt(request.getParameter("page")) : 1;
-    String searchTerm = request.getParameter("search") != null ? request.getParameter("search") : "";
-    int membersPerPage = 20;
-    
-    List<Member> members = memberDAO.getMembers(currentPage, membersPerPage, searchTerm);
-    int totalMembers = memberDAO.getTotalMembersCount(searchTerm);
-    int totalPages = (int) Math.ceil((double) totalMembers / membersPerPage);
---%>
 
 <div class="member-summary">
 
@@ -98,6 +88,6 @@
 <div id="MemberModal" style="display: none;">
     <jsp:include page="member_modal.jsp" />
 </div>
-<script src="../common/js/admin.js"></script>
+<script src="${pageContext.request.contextPath}/admin/common/js/admin.js"></script>
 </body>
 </html>

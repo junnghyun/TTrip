@@ -1,42 +1,9 @@
-<%@page import="kr.co.triptrip.user.store.StoreVO"%>
-<%@page import="kr.co.triptrip.user.store.StoreDAO"%>
 <%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-    // 폼이 POST로 제출된 경우
-    if ("POST".equalsIgnoreCase(request.getMethod())) {
-        StoreVO sVO = new StoreVO();
-        sVO.setStore_name(new String(request.getParameter("store_name").getBytes("ISO-8859-1"), "UTF-8"));
-        sVO.setStore_phone(request.getParameter("store_contact"));
 
-        // 주소와 상세주소를 결합하여 저장
-        String address = new String(request.getParameter("address").getBytes("ISO-8859-1"), "UTF-8");
-		String addressDetail = new String(request.getParameter("address_detail").getBytes("ISO-8859-1"), "UTF-8");
-        String fullAddress = address + " " + addressDetail; // 예: 주소 상세주소
-        sVO.setStore_address(fullAddress.trim()); // trim()으로 공백 제거
-
-        String status = request.getParameter("store_status");
-        sVO.setStore_status(status != null && !status.isEmpty() ? status.charAt(0) : ' ');
-
-        sVO.setLat(Double.parseDouble(request.getParameter("latitude")));
-        sVO.setLng(Double.parseDouble(request.getParameter("longitude")));
-
-        StoreDAO sDAO = StoreDAO.getInstance();
-        
-        try {
-            sDAO.insertStore(sVO);
-            // 성공적인 업데이트 후 리다이렉트
-            out.print("<script>window.location.href='admin_lodging.jsp';</script>");
-            return;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.getWriter().write("error"); // 클라이언트에게 오류 메시지 전송
-        }
-    }
-%>
 <div id="storeAddModal" style="display: none;">
     <div class="modal-overlay">
         <div class="modal-content shadow-xl">
