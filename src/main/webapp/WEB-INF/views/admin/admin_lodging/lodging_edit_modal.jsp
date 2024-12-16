@@ -1,76 +1,7 @@
 <%@page import="java.sql.SQLException"%>
-<%@page import="kr.co.triptrip.user.store.StoreVO"%>
-<%@page import="kr.co.triptrip.user.store.StoreDAO"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="sVO" class="kr.co.triptrip.user.store.StoreVO" scope="page"/>
-<jsp:setProperty property="*" name="sVO"/>
-<%
-request.setCharacterEncoding("UTF-8");
-response.setCharacterEncoding("UTF-8");
 
-int store_id = 0;
-String storeId = request.getParameter("store_id");
-
-// store_id를 정수형으로 변환
-try {
-    store_id = Integer.parseInt(storeId);
-} catch (NumberFormatException nfe) {
-    response.sendRedirect("admin_lodging.jsp");
-    return;
-}
-
-// StoreDAO 및 StoreVO 인스턴스 생성
-StoreDAO sDAO = StoreDAO.getInstance();
-
-try {
-    sVO = sDAO.selectDetailStore(store_id);
-    pageContext.setAttribute("sVO", sVO);
-} catch (SQLException se) {
-    se.printStackTrace();
-    response.sendRedirect("admin_lodging.jsp");
-    return;
-}
-
-
-
-double latitude = sVO.getLat(); // StoreVO에서 위도 가져오기
-double longitude = sVO.getLng(); // StoreVO에서 경도 가져오기
-
-// 매장 수정 폼 HTML 생성
-if ("POST".equalsIgnoreCase(request.getMethod())) {
-    // StoreVO 객체 생성 및 데이터 설정
-    sVO = new StoreVO();
-    sVO.setStore_id(Integer.parseInt(request.getParameter("store_id")));
-    sVO.setStore_name(new String(request.getParameter("store_name").getBytes("ISO-8859-1"), "UTF-8"));
-    sVO.setStore_phone(request.getParameter("store_contact"));
-    
-    String address = new String(request.getParameter("address").getBytes("ISO-8859-1"), "UTF-8");
-	String addressDetail = new String(request.getParameter("address_detail").getBytes("ISO-8859-1"), "UTF-8");
-    String fullAddress = address + " " + addressDetail; // 예: 주소 상세주소
-    sVO.setStore_address(fullAddress.trim()); // trim()으로 공백 제거
-    
-    String status = request.getParameter("store_status");
-    sVO.setStore_status(status != null && !status.isEmpty() ? status.charAt(0) : ' ');
-    
-    String latitudeStr = request.getParameter("latitude");
-    String longitudeStr = request.getParameter("longitude");
-    sVO.setLat(Double.parseDouble(latitudeStr));
-    sVO.setLng(Double.parseDouble(longitudeStr));
-
-    // StoreDAO 인스턴스 생성 및 업데이트 수행
-    sDAO = StoreDAO.getInstance();
-    try {
-        sDAO.updateStore(sVO);
-        // 성공적인 업데이트 후 리다이렉트
-        response.sendRedirect("admin_lodging.jsp");
-        return;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        response.getWriter().write("error"); // 클라이언트에게 오류 메시지 전송
-    }
-}
-%>
 
 <!-- 매장 정보 수정 모달 -->
 <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

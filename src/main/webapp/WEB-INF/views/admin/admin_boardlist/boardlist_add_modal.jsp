@@ -1,11 +1,5 @@
-<%@page import="kr.co.triptrip.admin.prd.AdminPrdVO"%>
-<%@page import="kr.co.triptrip.admin.prd.AdminPrdDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-%>
-
-
 <div class="modal-overlay">
     <div class="modal-content shadow-xl">
         <div class="bg-green-600 text-white px-6 py-4 flex justify-between items-center">

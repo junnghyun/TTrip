@@ -5,14 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <title>관리자 대시보드</title>
-    <link rel="stylesheet" type="text/css" href="../common/css/admin.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin_dashboard.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/common/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_dashboard/css/admin_dashboard.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="${pageContext.request.contextPath}/js/admin_dashboard.js" defer></script>
+    <script src="${pageContext.request.contextPath}admin/admin_dashboard/js/admin_dashboard.js" defer></script>
 </head>
 <body>
-   
+   <jsp:include page="../common/admin.jsp" />
     <div class="common_admin">
         <h1>대시보드</h1>
         <div class="dashboard-grid">
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <script src="../common/js/admin.js"></script>
+    <script src="${pageContext.request.contextPath}/admin/common/js/admin.js"></script>
     
 </body>
 </html>

@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../common/session_chk.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>숙소 데이터 가져오기</title>
-<link rel="stylesheet" type="text/css" href="css/admin_lodging_crawler.css?after">
-<script src="js/admin_lodging_crawler.js" defer></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_lodging/css/admin_lodging_crawler.css">
+<script src="${pageContext.request.contextPath}/admin/admin_lodging/js/admin_lodging_crawler.js" defer></script>
 </head>
 <body>
     <div class="container">
