@@ -1,0 +1,696 @@
+@charset "utf-8";
+.mo{display:none;}
+#contents{width:100%;padding:0 0 100px;overflow: hidden;min-width: 1200px;}
+body{overflow: inherit;}
+.inr{width:1200px;margin:0 auto;position: relative;}
+
+/* header */
+.header {position:fixed;left:0;right:0;bottom:120px;z-index: 100;top:auto;height:0;padding:0;}
+.header .inner {position: relative;width: 940px;margin: 0 auto;}
+.header .share.on ul{width:412px;height:40px;box-shadow: 9px 14px 24px 0px rgba(152, 150, 150, 0.3);border-radius: 50px;}
+.header .share.on ul:after{display:none;}
+.header .share ul{position: absolute;text-align: center;top: 0;display: flex;right: -130px;justify-content: center;background: #333;height:40px;width:40px;overflow: hidden;transition: width .4s;border-radius: 50px;border:1px solid #333;box-sizing: border-box;}
+.header .share ul:after{content:'';display:inline-block;width:40px;border-radius: 100%;height:40px;background:#333 url(../../../images/theme/travel100scene/icon_share04_1.gif) 11px 11px no-repeat;position:absolute;left:0;top:0;box-sizing: border-box;cursor: pointer;}
+.header .share.on ul li{margin: 10px 20px 0;}
+.header .share ul li{float:left;height:20px;position: relative;font-size:15px;font-weight: 300;color:#666;line-height:18px;}
+.header .share.on ul li span{display:inline-block;color:#fff;}
+.header .share ul li:after{content:'';display:inline-block;width:1px;height:15px;background:#b5b5b5;position:absolute;right:-18px;top:3px;}
+.header .share ul li:last-child:after{display:none;}
+.header .share ul li em{position:absolute;text-indent: -9999px;font-size:0;}
+.header .share ul li a{display:inline-block;height:20px;color:#666;}
+.header .share ul li.icon1:before{content:'';float:left;width:24px;height:20px;margin-right:8px;background:url(../../../images/theme/travel100scene/icon_share01_1.gif) no-repeat;}
+.header .share ul li.icon2 a:before{width:19px;background:url(../../../images/theme/travel100scene/icon_share02_1.gif) no-repeat;}
+.header .share ul li.icon2.on a:before {background-position: 0 -20px;}
+.header .share ul li.icon3 a:before{width:17px;background:url(../../../images/theme/travel100scene/icon_share03_1.gif) no-repeat;}
+.header .share ul li.icon4 a:before{width:18px;background:url(../../../images/theme/travel100scene/icon_share04_2.gif) no-repeat;}
+.header .share ul li a:before{content:'';float:left;width:24px;height:20px;margin-right:8px;background:url(../../../images/theme/travel100scene/icon_share.png) no-repeat;}
+.header .share.on ul li.icon2{display:inline-block;}
+.header .share.on ul li.icon2{display:inline-block;}
+.header .share ul li.icon2{display:none;}
+.header .share ul li.icon2{display:none;}
+.header .share ul li a:before{display:none;}
+.header .share.on ul li a:before{display:inline-block;}
+.header .share ul li.icon1:before{display:none;}
+.header .share.on ul li.icon1:before{display:inline-block;}
+
+.header .share button.good{position: absolute;right: -130px;top: 0;box-sizing: border-box;border-radius: 50px;width:40px;height:40px;background: #333 url(../../../images/theme/travel100scene/icon_share02_2.gif) 50% 50% no-repeat;text-indent: -9999px;}
+
+/* 검색 */
+.search_box{background:url(../../../images/theme/travel100scene/bg_search_box.gif) 50% 0 / 100% 100% repeat-y;margin:235px 0 0;min-height:638px;padding:0 0 70px;}
+.search_box button.tooltip{position:absolute;top:3px;left:348px;width:20px;height:21px;z-index: 10;text-indent: -9999px;background:url(../../../images/theme/travel100scene/btn_tooltip.png) no-repeat;}
+.search_box button.tooltip.on + .layer{display:block;}
+.search_box .layer{display:none;width: 450px;padding:20px;position: absolute;left:25px;top:-130px;z-index: 110;background: #fff;color:#393e46;border-radius: 7px;border:1px solid #ececec;}
+.search_box .layer:after{content:'';display:inline-block;position:absolute;right:111px;bottom:-9px;width:11px;height:9px;background: url(../../../images/theme/travel100scene/layer_arw01.png) no-repeat;}
+.search_box .layer strong{display:block;font-size:17px;font-weight: 700;letter-spacing: -0.7px;line-height:20px;}
+.search_box .layer p{padding:5px 0 0;font-size:15px;line-height:18px;color:#767676;letter-spacing: -0.7px;}
+.search_box h2{position:absolute;left:0;top:-55px;width:338px;height:81px;background:url(../../../images/theme/travel100scene/tit_search_box.png) no-repeat;}
+.search_box h2 a{display:block;text-indent: -9999px;height:100%;}
+.search_box .search{width:475px;padding:64px 0 0;}
+.search_box .search .pdt_search{position:relative;border-radius: 50px;height:60px;}
+.search_box .search .pdt_search input{width:100%;height:100%;padding:0 0 0 30px;border:0;border:1px solid #737373;color:#333;border-radius:50px;box-sizing:border-box;font-size:20px;letter-spacing:-1px;}
+.search_box .search .pdt_search input:focus{/*outline: 2px solid #393e46;border:0;*/outline: 0;border:2px solid red !important;}
+.search_box .search .pdt_search input::placeholder{color:#737373;font-weight: 300;}
+.search_box .search .pdt_search button{position: absolute;right: 20px;top: 18px;width: 23px;height: 23px;background: url(../../../images/theme/travel100scene/btn_search.png) no-repeat;text-indent: -9999px;}
+.search_box .search .form_tit{display:block;padding:27px 0 18px;font-weight: 700;font-size: 20px;letter-spacing: -1px;line-height:23px;color:#333;}
+.search_box .search .form.on input{background-position: 22px -59px !important;border:2px solid #393e46 !important;}
+.search_box .search .form.on input::placeholder{color:#333 !important;}
+.search_box .search .form button{display:none;width:50px;height:50px;position:absolute;right:11px;top:5px;text-indent: -9999px;background:url(../../../images/theme/travel100scene/btn_search_del.png) no-repeat;}
+.search_box .search .form.on button{display:inline-block;}
+.search_box .search .form{border-radius: 50px;height:60px;position: relative;}
+.search_box .search .form button.random{right:10px;top:10px;width:100px;height:40px;background:url(../../../images/theme/travel100scene/btn_random.png) no-repeat;}
+.search_box .search .form input::placeholder{color:#737373;font-weight: 300;}
+.search_box .search .form input{width:100%;height:100%;padding:0 0 0 68px;border:0;border:1px solid #737373;color:#333;border-radius:50px;box-sizing:border-box;font-size:20px;letter-spacing:-1px;background:#fff url('../../../images/theme/travel100scene/icon_input.png') 23px 0 no-repeat;}
+.search_box .search .form input:focus{background-position: 22px -59px !important;border:2px solid red !important;/*border:2px solid #393e46 !important;*/outline:none;}
+.search_box .search .form + .form{margin-top:10px;}
+.search_box .search .form + .form input{background:#fafafa url('../../../images/theme/travel100scene/icon_input01.png') 23px 0 no-repeat;border:1px dashed #737373;}
+.search_box .theme h3{padding:28px 0 18px;font-weight: 700;font-size:20px;line-height:24px;color:#333;letter-spacing: -1px;}
+.search_box .theme .swiper-container{margin-left:-10px;text-align: center;}
+.search_box .theme ul li{padding-top: 4px;}
+.search_box .theme ul li span{float:left;margin:0 0 10px 10px;z-index: 100; position: relative;}
+.search_box .theme .swiper-container button{width:100%;height:48px;border:1px solid #dcdcdc;padding:0 30px;color:#333;box-sizing: border-box;border-radius: 50px;font-size:18px;letter-spacing: -0.7px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;background:#fff;}
+.search_box .theme .swiper-container .on button{font-weight: 700; padding: 0 29px; border: 2px solid #333; color: #333; box-shadow: 4px 4px 6px 0px rgb(57 62 70 / 18%);}
+.search_box .theme .swiper-container button:focus{outline: none;}
+.search_box .theme .swiper-container button:focus:after{content:'';display:block;width:calc(100% + 2px);height:calc(100% + 2px);border:3px solid red;position:absolute;left:-4px;top:-4px;}
+.search_box .theme .swiper-container button.choice_close{display: none;}
+.search_box .theme .swiper-container .on button.choice_close{display: block; padding: 0; position: absolute; background: url(../../../images/theme/travel100scene/btn_close.png) no-repeat; width: 22px; height: 22px; top: -4px; right: -4px; text-indent: -9999px; border: none; }
+.search_box .theme .swiper-container .on button.choice_close:after{content: none;}
+.search_box .theme .page_wrap{display:none;height:18px;line-height:18px;margin-top:10px;}
+.search_box .theme.js_slider .page_wrap{display:inline-block;position: relative;}
+.search_box .theme .swiper-pagination{position:static;display:inline-block;padding:0 35px;font-size:17px;color:#333;}
+.search_box .theme .swiper-pagination-current{font-weight: 800;}
+.search_box .theme .swiper-button-next, .search_box .theme .swiper-button-prev{opacity:1;text-indent: -9999px;margin:0;top:0;display:inline-block;width:20px;height:20px;}
+.search_box .theme .swiper-button-next:focus, .search_box .theme .swiper-button-prev:focus{outline:none;}
+.search_box .theme .swiper-button-next:focus:after, .search_box .theme .swiper-button-prev:focus:after {content: '';display: block;position: absolute;left: 0;right: 0;top: 0;bottom: 0;border: 3px solid red;}
+.search_box .theme .swiper-button-prev{left:0;background: url('../../../images/theme/travel100scene/button_prev01.png') no-repeat;}
+.search_box .theme .swiper-button-next{right:0;background: url('../../../images/theme/travel100scene/button_next01.png') no-repeat;}
+.search_box .theme .swiper-button-disabled{background-position: 0 -20px !important;}
+.search_box .theme .btn{padding:28px 0 0;text-align: center;}
+.search_box .theme .btn a{display:inline-block;height:60px;width:160px;line-height:60px;color:#fff;border-radius: 50px;background:#393e46;font-weight: 700;font-size:20px;letter-spacing: -1px;}
+.search_box .theme .btn a:before{content:'';display:inline-block;width:23px;height:23px;margin-right:4px;vertical-align: -5px;background: url('../../../images/theme/travel100scene/icon_button_search.png') no-repeat;}
+.search_box .theme .btn a:focus{outline:3px solid red;outline-offset: 2px;}
+.search_box .theme .btn .random{background:#69717f;margin-left:8px;}
+.search_box .theme .btn .random:before{width:21px;height:20px;background:url(../../../images/theme/travel100scene/btn_random1.png) no-repeat;vertical-align: -2px;}
+.search_box .img{width:675px;height:748px;position: absolute;right:0;top:-61px;}
+.search_box .img .mo_page{display:none;}
+.search_box .img .swiper-container{position:static;box-shadow: 15px 23px 40px 0px rgba(80, 78, 77, 0.36);border-radius: 0 80px 0 80px;}
+.search_box .img .swiper-slide{overflow: hidden;}
+.search_box .img a{position:relative;display:block;height:690px;background-position: 50% 50%;background-size:cover;border-radius: 0 80px 0 80px;}
+.search_box .img a:after{content: "";display: block;position: absolute;right: 0;top: 0;left: 0;height: 50%;background-image:linear-gradient(to top,transparent,rgba(0,0,0,.6));border-radius: 0 80px 0 0;}
+.search_box .img .swiper-slide a:focus{border: 3px solid red;}
+.search_box .img .cont_wrap{position:absolute;left:0;top:0;width:100%;z-index: 3;padding:95px 0 0 58px;}
+.search_box .img .tit{position:relative;font-size:40px;line-height: 48px;letter-spacing: -2px;color:#fff;font-weight: 300;margin:0 0 16px;}
+
+.search_box .img .swiper-slide .view{position:relative;display:block;}
+.search_box .img .swiper-slide .view span{display:inline-block;padding:0 12px;height:28px;line-height:28px;color:#fff;font-weight: 300;font-size:14px;border:1px solid rgba(255,255,255,.5);position: absolute;left: 0;top: 0;}
+
+.search_box .img strong{font-weight: 700;}
+.search_box .img .swiper-pagination{display:inline-block;width:auto;left:54px;top:50px;bottom:auto;text-align: left;}
+.search_box .img .swiper-pagination-bullet {text-align: center;min-width:16px;margin:0 6px;height:15px;line-height: 15px;font-size: 12px;opacity: .5;background:none;color: #fff;font-weight: 300;font-size:14px;}
+.search_box .img .swiper-pagination-bullet-active {font-weight: 700;opacity:1;}
+.search_box .img .swiper-pagination-bullet-active:after{content:'';display:block;height:2px;background:#fff;margin-top:2px;}
+.search_box .img .swiper-button-next, .search_box .img .swiper-button-prev{width:43px;height:43px;left:265px;top:auto;bottom:37px;margin:0;text-indent: -9999px;background: url('../../../images/theme/travel100scene/btn_slide01.png') no-repeat;}
+.search_box .img .swiper-button-next{left:auto;right:303px;background-position: 0 -43px;}
+.search_box .img .swiper-button-disabled{opacity: 1;}
+
+.search_box .btn_autoArea{position:absolute;right:241px;bottom:37px;display: inline-block;z-index: 5;}
+/* .search_box .btn_autoArea .btn_autoPlay {overflow: hidden;display: none;width: 43px;height: 43px;background: url(../../../images/theme/travel100scene/btn_slide_play02.png) 0 0 / 100% 100% no-repeat;text-indent: -9999px;vertical-align: top;} */
+.search_box .btn_autoArea .btn_autoStop {overflow: hidden;display: inline-block;width: 43px;height: 43px;background: url(../../../images/theme/travel100scene/btn_slide_stop02.png) 0 0 / 100% 100% no-repeat;text-indent: -9999px;vertical-align: top;}
+/* .search_box .img.active .btn_autoArea .btn_autoPlay {display: inline-block;} */
+.search_box .img.active .btn_autoArea .btn_autoStop {background: url(../../../images/theme/travel100scene/btn_slide_play02.png) 0 0 / 100% 100% no-repeat;}
+
+/* 100선 컴포넌트1 */
+.component_100scene01{margin:0 auto;color:#333;margin-top:65px;}
+.component_100scene01 + .component_100scene01{padding:0;}
+h2.tit_component{padding:61px 0 15px;text-align: center;color: #333;font-size:38px;font-weight: 400;letter-spacing: -2px;line-height:44px;}
+.component_100scene01 h3{padding:0 0 35px;font-weight: 700;font-size:28px;line-height: 32px;letter-spacing: -1.5px;}
+.component_100scene01 h3 span{display:inline-block;padding-left:15px;font-size:18px;font-weight: 300;letter-spacing: -1px;color:#666;}
+.component_100scene01 .swiper-slide{width:auto;float:left;}
+.component_100scene01 .swiper-container{overflow: inherit;padding:0 0 47px;margin: 0;left: -155px;}
+.component_100scene01 a{position: relative;display:block;width:270px;border-radius:20px;text-align: center;}
+.component_100scene01 a:focus{outline:3px solid red;}
+.component_100scene01 a .img_wrap{position: relative;width:270px;height:270px;overflow: hidden;border-radius:20px;border:0;padding:0;margin:0;}
+.component_100scene01 a .img{position:relative;overflow:hidden;display: block;height: 270px;background-position: 50% 50%;background-size: cover;border-radius:20px;transition: all .7s;}
+.component_100scene01 a .img:after{content:'';display:block;height: 25%;position: absolute;width:100%;top:0;background-image:linear-gradient(to top,transparent,rgba(0,0,0,.6));}
+.component_100scene01 a .img:hover{transform: scale(1.2);}
+.component_100scene01 a em{position:absolute;left:20px;top:0;width:50px;height:50px;color:#fff;font-size: 17px;line-height:50px;background:#4c4a4f;}
+.component_100scene01 a .provider{/*display:inline-block;*/display:none;margin:17px 0 0;font-size: 16px;line-height:20px;font-weight: 300;color:#666;}
+.component_100scene01 a .provider:after{content:'';display:block;height:1px;background:#dcdcdc;margin-top:2px;}
+.component_100scene01 a .tit{display:block;font-size:20px;font-weight:700;margin-top:18px;line-height:24px;letter-spacing: -1px;overflow:hidden;display: -webkit-box;height: 48px;word-break: keep-all;text-overflow: ellipsis;-webkit-line-clamp: 2;-webkit-box-orient: vertical;color:#000;}
+.component_100scene01 a .tit span{color:#fe5d63;}
+.component_100scene01 a div{border-top:1px dashed #dbd9d9;line-height:20px;padding:15px 0 0;margin-top:13px;}
+.component_100scene01 a .price{display:inline-block;font-size:17px;font-weight:700;color:#FE5D63;}
+.component_100scene01 a .date{display:inline-block;color:#666;font-size:17px;font-weight:300;letter-spacing: -0.5px;}
+.component_100scene01 a .date:before{content:'';display:inline-block;width:1px;height:15px;background:#dfdfdf;margin:0 15px 0 13px;vertical-align: -2px;}
+.component_100scene01 a span.good{position:absolute;right:20px;top:15px;display:flex;align-items: center;color:#fff;font-size:16px;}
+.component_100scene01 a button{width:33px;height:33px;margin-left:10px;font-size:0;background: url('../../../images/theme/travel100scene/btn_good.png') no-repeat;text-indent: -9999px;}
+.component_100scene01 a button.on{background-position: 0 -33px;}
+
+.component_100scene01 .swiper-button-next, .component_100scene01 .swiper-button-prev{margin-top:0;top:0;text-indent: -9999px;}
+.component_100scene01 .button_wrap{width:1200px;position: absolute;left:50%;top:0;margin-left: -443px;height:50px;}
+.component_100scene01 .swiper-button-next, .component_100scene01 .swiper-button-prev{width:86px;height:86px;left:-43px;margin-top:0;top:96px;text-indent: -9999px;background: url('../../../images/theme/travel100scene/btn_slide03.png') no-repeat;}
+.component_100scene01 .swiper-button-next{right:-43px;left:auto;background-position: 0 -86px;}
+.component_100scene01 .swiper-container:before {content: "";position: absolute;top: 0;left: -90%;width: 100%;height: 100%;background: #fff;opacity: .7;z-index: 5;}
+.component_100scene01 .swiper-container:after {content: "";position: absolute;top: 0;right: -116%;width: 100%;height: 100%;background: #fff;opacity: .7;z-index: 5;}
+.component_100scene01 .swiper-pagination{left: 50%;height:10px;bottom:0;margin-left: -443px;}
+.component_100scene01 .swiper-pagination-bullet{width:12px;height:12px;opacity: 1;vertical-align: top;border: 1px solid #333;background:#fff;transition: .5s ease-in-out;}
+.component_100scene01 .swiper-pagination-bullet-active{background:#333;width:30px;border-radius: 50px;}
+.component_100scene01 .swiper-pagination-bullet:focus{outline:2px solid red;transition:none;outline-offset:1px}
+
+/* 100선 컴포넌트2 */
+.component_100scene02{padding:70px 0 30px;margin-top:65px;background:#fafafa;overflow: hidden;position: relative;}
+
+.component_100scene02 h3{float:left;width:210px;font-size: 28px;line-height: 34px;letter-spacing: -1.5px;color:#333;font-weight: 700;}
+.component_100scene02 h3 span{position:relative;display:block;padding:17px 0 0;margin:17px 0 0;font-size: 16px;line-height: 24px;font-weight: 300;letter-spacing: -0.6px;color: #666;}
+.component_100scene02 h3 span:before{content:'';position:absolute;left:0;top:0;display:inline-block;width:20px;height:3px;background:#666;}
+.component_100scene02 .swiper-wrapper{flex-wrap: wrap;}
+.component_100scene02 .swiper-slide{width:auto;float:left;margin:0 0 40px 40px;}
+.component_100scene02 .cont_box{position:absolute;left:15px;right:15px;bottom:0;padding:0 15px;height:146px;background:#fff;border-radius:5px;box-shadow: 0px 1px 24px 0px rgba(187, 179, 175, 0.24);}
+.component_100scene02 a{position: relative;display:block;width:290px;height:370px;border-radius:10px;}
+.component_100scene02 a:focus{outline:none;}
+.component_100scene02 a:focus:after{content: '';display: block;position: absolute;left: 0;top: 0;width: 100%;height: 100%;border: 3px solid red;box-sizing: border-box;}
+.component_100scene02 a .img{display: block;height: 290px;background-position: 50% 50%;background-size: cover;border-radius:10px;}
+.component_100scene02 a .img:after{content:'';display:block;height: 25%;position: absolute;border-radius: 10px 10px 0 0;width:100%;top:0;background-image:linear-gradient(to top,transparent,rgba(0,0,0,.6));}
+.component_100scene02 a .img em{position:absolute;left:20px;top:0;width:50px;height:50px;z-index: 5;color:#fff;font-size: 17px;line-height:50px;background:#3b4552;text-align: center;}
+.component_100scene02 a .provider{/*display:inline-block;*/display:none;margin:17px 0 18px;font-size: 16px;line-height:20px;font-weight: 300;color:#666;}
+.component_100scene02 a .provider:after{content:'';display:block;height:1px;background:#dcdcdc;margin-top:2px;}
+.component_100scene02 a .tit{display:block;margin-top:18px;font-size:20px;font-weight:700;line-height:24px;letter-spacing: -1px;overflow:hidden;display: -webkit-box;height: 48px;word-break: keep-all;text-overflow: ellipsis;-webkit-line-clamp: 2;-webkit-box-orient: vertical;color:#000;}
+.component_100scene02 a .info{line-height:20px;padding:7px 0 15px;}
+.component_100scene02 a .price{display:inline-block;font-size:17px;font-weight:700;color:#FE5D63;}
+.component_100scene02 a .date{display:inline-block;color:#666;font-size:17px;font-weight:300;letter-spacing: -0.5px;}
+.component_100scene02 a .date:before{content:'';display:inline-block;width:1px;height:15px;background:#dfdfdf;margin:0 15px 0 13px;vertical-align: -2px;}
+.component_100scene02 a span.good{position:absolute;right:20px;top:15px;display:flex;align-items: center;color:#fff;font-size:16px;}
+.component_100scene02 a button{width:33px;height:33px;margin-left:10px;background: url('../../../images/theme/travel100scene/btn_good.png') no-repeat;text-indent: -9999px;}
+.component_100scene02 a button.on{background-position: 0 -33px;}
+.component_100scene02 a .tag{text-overflow: ellipsis;white-space: nowrap;overflow: hidden;margin-left:-7px;}
+.component_100scene02 a .tag span{display:inline-block;font-size:15px;line-height:18px;color:#767676;font-weight: 300;margin-left:7px;}
+.component_100scene02 .swiper-scrollbar{display:none;}
+
+/* 100선 컴포넌트3 */
+.component_100scene03{padding:78px 0 0;overflow: hidden;position: relative;}
+.component_100scene03 h3{float:left;width:210px;font-size: 28px;line-height: 34px;letter-spacing: -1.5px;color:#333;font-weight: 700;}
+.component_100scene03 h3 span{position:relative;display:block;padding:17px 0 0;margin:17px 0 0;font-size: 16px;line-height: 24px;font-weight: 300;letter-spacing: -0.6px;color: #666;}
+.component_100scene03 h3 span:before{content:'';position:absolute;left:0;top:0;display:inline-block;width:20px;height:3px;background:#666;}
+.component_100scene03 .swiper-slide{width:auto !important;float:left;}
+.component_100scene03 .cont_box{position:absolute;left:20px;right:20px;height:170px;bottom: -75px;padding:0 10px 13px;border-radius:5px;z-index: 5;transition: bottom .3s ease-out;}
+
+.component_100scene03 a{overflow: hidden;position: relative;display:block;width:300px;height:380px;border-radius:10px;}
+.component_100scene03 a:focus{outline:none;}
+.component_100scene03 a:focus:before{content:'';display:block;position:absolute;left:0;top:0;width:100%;height:100%;border:3px solid red;z-index: 10;box-sizing: border-box;}
+.component_100scene03 a:after{content: "";display: block;position: absolute;right: 0;bottom: 0;left: 0;height: 40%;background-image:linear-gradient(to bottom,transparent,rgba(0,0,0,.9));border-radius:0 0 10px 10px;}
+.component_100scene03 a .img{display: block;height: 100%;background-position: 50% 50%;background-size: cover;border-radius:10px;}
+.component_100scene03 a .img:after{content:'';display:block;height: 25%;position: absolute;border-radius: 10px 10px 0 0;width:100%;top:0;background-image:linear-gradient(to top,transparent,rgba(0,0,0,.6));}
+.component_100scene03 a .img em{position:absolute;left:20px;top:0;width:50px;height:50px;z-index: 5;color:#fff;font-size: 17px;line-height:50px;background:#424b55;text-align: center;}
+
+.component_100scene03 a:hover .cont_box, .component_100scene03 a:focus .cont_box{height:auto;background:#fff;bottom:20px;padding:0 15px 13px;}
+.component_100scene03 a:hover .tit, .component_100scene03 a:focus .tit{color:#000;}
+.component_100scene03 a:hover .provider, .component_100scene03 a:focus .provider{color:#666;}
+.component_100scene03 a:hover .provider:after, .component_100scene03 a:focus .provider:after{background:#666;}
+.component_100scene03 a:hover .info, .component_100scene03 a:focus .info{display:block;}
+.component_100scene03 a:hover .cos, .component_100scene03 a:focus .cos{display:block;}
+.component_100scene03 a .provider{color:#fff;/*display:inline-block;*/display:none;margin:17px 0 18px;font-size: 16px;line-height:20px;font-weight: 300;}
+.component_100scene03 a .provider:after{content:'';display:block;height:1px;margin-top:2px;background:#fff;}
+.component_100scene03 a .tit{display:block;margin-top:20px;font-size:20px;font-weight:700;line-height:24px;letter-spacing: -1px;overflow:hidden;display: -webkit-box;height: 48px;word-break: keep-all;text-overflow: ellipsis;-webkit-line-clamp: 2;-webkit-box-orient: vertical;color:#fff;}
+
+.component_100scene03 a .info{line-height:20px;padding:7px 0 0;display:none;}
+.component_100scene03 a .price{display:inline-block;font-size:17px;font-weight:700;color:#FE5D63;}
+.component_100scene03 a .date{display:inline-block;color:#666;font-size:17px;font-weight:300;letter-spacing: -0.5px;}
+.component_100scene03 a .date:before{content:'';display:inline-block;width:1px;height:15px;background:#dfdfdf;margin:0 15px 0 13px;vertical-align: -2px;}
+.component_100scene03 span.good{position:absolute;right:20px;top:15px;display:flex;align-items: center;color:#fff;font-size:16px;}
+.component_100scene03 span.good button{width:33px;height:33px;margin-left:10px;background: url('../../../images/theme/travel100scene/btn_good.png') no-repeat;text-indent: -9999px;}
+.component_100scene03 span.good button.on{background-position: 0 -33px;}
+.component_100scene03 a .cos{height:45px;position:relative;margin:16px 0 0;display:none;}
+.component_100scene03 a .cos:after{content:'';display:block;border-top:2px dashed #dadada;position:absolute;left:0;top:9px;width:100%;}
+.component_100scene03 a .cos ul:before{content:'';display:inline-block;width:10px;height:10px;border:2px solid #a29f9f;border-radius: 100%;box-sizing: border-box;position:absolute;left:0;top: 5px;background: #fff;z-index: 5;}
+.component_100scene03 a .cos ul:after{content:'';display:inline-block;width:10px;height:10px;border:2px solid #a29f9f;border-radius: 100%;box-sizing: border-box;position:absolute;right:0;top: 5px;background: #fff;z-index: 5;}
+.component_100scene03 a .cos ul li{float:left;padding-top:20px;width:50%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;font-size:14px;font-weight: 300;color:#888;}
+.component_100scene03 a .cos ul li:last-child{text-align: right;}
+.component_100scene03 a .cos ul li.num{padding:0;position:absolute;left:50%;top: -1px;margin-left:-17.5px;width:35px;text-align: center;height:22px;line-height:22px;border-radius: 50px;background:#a29f9f;color:#fff;z-index: 5;}
+.component_100scene03 .page_wrap{display:inline-block;position: absolute;left:52px;top:360px;height:18px;line-height: 18px;}
+.component_100scene03 .swiper-pagination{position:static;display:inline-block;padding:0 35px;font-size:17px;color:#333;}
+.component_100scene03 .swiper-pagination-current{font-weight: 800;}
+.component_100scene03 .swiper-button-next, .component_100scene03 .swiper-button-prev{opacity:1;text-indent: -9999px;margin:0;top:0;display:inline-block;width:20px;height:20px;}
+.component_100scene03 .swiper-button-next:focus, .component_100scene03 .swiper-button-prev:focus{outline:none;}
+.component_100scene03 .swiper-button-next:focus:after, .component_100scene03 .swiper-button-prev:focus:after{content:'';display:block;position:absolute;left:0;right:0;top:0;bottom: 0;border:3px solid red}
+.component_100scene03 .swiper-button-prev{left:0;background: url('../../../images/theme/travel100scene/button_prev01.png') no-repeat;}
+.component_100scene03 .swiper-button-next{right:0;background: url('../../../images/theme/travel100scene/button_next01.png') no-repeat;}
+.component_100scene03 .swiper-button-disabled{background-position: 0 -20px !important;}
+
+/* 100선 배너 */
+.banner_100scene{padding:140px 0 0;}
+.banner_100scene a{float:left;margin-left:20px;position: relative;}
+.banner_100scene a:focus{outline:none;}
+.banner_100scene a:focus:after{content:'';display:block;position:absolute;left:0;top:0;width:100%;height:100%;border:3px solid red;box-sizing: border-box;}
+.banner_100scene .swiper-container{margin-left:-20px;padding:0 0 42px;}
+.banner_100scene .swiper-slide{width:auto !important;}
+.banner_100scene .paging{position: absolute;bottom: 0;left: 0;z-index: 100;width: 100%;font-size: 0;text-align: center;padding: 0 0 3px;}
+.banner_100scene .banner_slide .btn_autoArea{display: inline-block;vertical-align: middle;}
+.banner_100scene .banner_slide .btn_autoArea button:focus{outline:2px solid red;outline-offset: 1px;}
+.banner_100scene .banner_slide .btn_autoArea .btn_autoStop {overflow: hidden;display: inline-block;width: 8px;height: 10px;background: url(../../../images/theme/travel100scene/btn_slide_stop01.png) 0 0 / 100% 100% no-repeat;text-indent: -9999px;vertical-align: top;}
+.banner_100scene.active .btn_autoArea .btn_autoStop {background: url(../../../images/theme/travel100scene/btn_slide_play01.png) 0 0 / 100% 100% no-repeat;}
+.banner_100scene .swiper-pagination{display: inline-block;position: relative;font-size: 0;text-align: center;left: auto !important;bottom: 0 !important;}
+.banner_100scene .swiper-pagination button.swiper-pagination-bullet{width:12px;height:12px;background:#fff;opacity: 1;margin-left:8px;transition: .5s ease-in-out;border: 1px solid #333;vertical-align: middle;}
+.banner_100scene .swiper-pagination button.swiper-pagination-bullet-active {width:30px;background: #333;border-radius: 50px;}
+.banner_100scene .swiper-pagination button.swiper-pagination-bullet:focus{ outline: 2px solid red;transition: none;outline-offset: 1px;}
+
+
+/* 검색결과 */
+.result_100scene {width:1200px;margin:80px auto 0;}
+.result_100scene h3{padding: 0 0 25px;font-weight: 700;font-size: 28px;line-height: 32px;letter-spacing: -1.5px;color: #333;}
+.result_100scene ul{margin-left:-40px;}
+.result_100scene ul:after{content:'';display:block;overflow: hidden;clear: both;}
+.result_100scene ul li{float:left;margin:0 0 60px 40px;}
+.result_100scene ul li a{position: relative;display:block;width:270px;border-radius:20px;text-align: center;overflow: hidden;}
+.result_100scene ul li a:focus{outline:3px solid red;}
+.result_100scene ul li a .img{position: relative;display: block;height: 270px;background-position: 50% 50%;background-size: cover;border-radius:20px;}
+.result_100scene ul li a .img:after{content: '';display: block;height: 25%;position: absolute;border-radius: 10px 10px 0 0;width: 100%;top: 0;background-image: linear-gradient(to top,transparent,rgba(0,0,0,.6));}
+.result_100scene ul li a .img em{position:absolute;left:20px;top:0;width:50px;z-index: 10;height:50px;color:#fff;font-size: 17px;line-height:50px;background:#393e46;}
+.result_100scene .cont_box{min-height: 130px;}
+.result_100scene ul li a .provider{display:none;margin:17px 0 18px;font-size: 16px;line-height:20px;font-weight: 300;color:#666;}
+.result_100scene ul li a .provider:after{content:'';display:block;height:1px;background:#666;margin-top:2px;}
+.result_100scene ul li a .tit{margin-top:18px;display:block;font-size:20px;font-weight:700;line-height:24px;letter-spacing: -1px;overflow:hidden;display: -webkit-box;height: 48px;word-break: keep-all;text-overflow: ellipsis;-webkit-line-clamp: 2;-webkit-box-orient: vertical;color:#000;}
+.result_100scene ul li a .tit em{font-weight: 700;color:#fe5d63;}
+.result_100scene ul li a .info{border-top:1px dashed #dbd9d9;line-height:20px;padding:15px 0 0;margin-top:13px;}
+.result_100scene ul li a .price{display:inline-block;font-size:17px;font-weight:700;color:#FE5D63;}
+.result_100scene ul li a .date{display:inline-block;color:#666;font-size:17px;font-weight:300;letter-spacing: -0.5px;}
+.result_100scene ul li a .date:before{content:'';display:inline-block;width:1px;height:15px;background:#dfdfdf;margin:0 15px 0 13px;vertical-align: -2px;}
+.result_100scene a span.good {position: absolute;right: 20px;top: 15px;display: flex;align-items: center;color: #fff;font-size: 16px;}
+.result_100scene ul li a button{width: 33px;height: 33px;margin-left: 10px;font-size: 0;background: url('../../../images/theme/travel100scene/btn_good.png') no-repeat;text-indent: -9999px;}
+.result_100scene ul li a button.on{background-position: 0 -33px;}
+.result_100scene .more_view{overflow: hidden;text-align: center;}
+.result_100scene .more_view button{font-size: 16px;color:#333;border:1px solid #e3dddd;height:45px;width:120px;border-radius: 50px;}
+.result_100scene .more_view button:after{content:'';display:inline-block;width:16px;height:10px;margin-left:8px;background: url('../../../images/theme/travel100scene/btn_more_view.png') no-repeat;}
+.result_100scene .none_result{text-align: center;}
+.result_100scene .none_result strong{display:block;font-weight: 700;font-size:35px;line-height:40px;letter-spacing: -2px;color:#000;}
+.result_100scene .none_result strong:before{content:'';display:block;height:113px;margin:135px 0 35px;background: url('../../../images/theme/travel100scene/bg_none_result.png') 50% 0 no-repeat;}
+.result_100scene .none_result p{padding:17px 0 0;font-size: 20px;letter-spacing: -1px;line-height: 24px;color:#666;}
+
+/* 레이어팝업 */
+.layerpop {width:475px;padding: 35px 38px 0;border:2px solid #000;border-radius: 15px;box-shadow: 14px 22px 35px 0px rgba(61, 64, 70, 0.18);}
+#travel100Pupup01 .dimmed, #travel100Pupup02 .dimmed{display:none;}
+.option_form strong{display:block;font-size:26px;line-height:30px;font-weight: 700;letter-spacing: -1.5px;color:#000;}
+.option_form p{padding:5px 0 28px;font-size:15px;line-height:18px;font-weight: 300;color:#666;}
+.option_form em{display:block;height:40px;line-height:40px;font-size: 17px;color:#333;background:#efefef;border-radius: 50px;text-align: center;}
+.option_form em:focus{outline: 3px solid red; outline-offset: 1px;}
+.option_form ul{margin:20px 0 0 -10px;}
+.option_form ul::after{content: ''; display: block; clear: both;}
+.option_form ul li{float:left;width: calc(25% - 10px);margin: 0 0 10px 10px; position: relative;}
+.option_form ul li button{width: 100%;height: 40px;border: 1px solid #dcdcdc;box-sizing: border-box;border-radius: 50px;font-size: 17px;letter-spacing: -0.5px;color:#333;}
+.option_form ul li.on button{border:2px solid #333;color:#333;box-shadow: 4px 4px 6px 0px rgba(57, 62, 70, 0.18);}
+.option_form ul li button:focus{outline:none;}
+.option_form ul li button:focus:after{content:'';display:block;width:calc(100% + 2px);height:calc(100% + 2px);outline: 3px solid red;position:absolute;left:-1px;top:-1px;}
+
+.option_form ul li button.choice_close{display: none;}
+.option_form ul li.on button.choice_close{display: block; position: absolute; background: url(../../../images/theme/travel100scene/btn_close.png) no-repeat; width: 22px; height: 22px; top: -4px; right: -4px; text-indent: -9999px; border: none; }
+.option_form .btn_area{padding:20px 0 40px;text-align: center;overflow: hidden;width:100%;}
+.option_form .btn_area a{display:inline-block;width:110px;height:40px;line-height: 40px;border-radius: 50px;color:#fff;font-size:18px;background:#393e46;}
+.option_form .btn_area a:focus{outline:3px solid red; outline-offset: 1px;}
+.layerpop .popup_close{position:absolute;right:38px;top:38px;text-indent:-9999px;width:24px;height:24px;background: url(../../../images/theme/travel100scene/btn_pop_close.png) no-repeat;}
+.layerpop .popup_close:focus{outline:3px solid red;outline-offset: 2px;}
+
+#travel100Detail .layerpop {box-shadow:none;width:610px;padding:0;border-radius: 20px;border:0;background:none;}
+#travel100Detail .pop_scr{max-height:730px;overflow-x:hidden;overflow-y:auto;border-radius: 20px;}
+#travel100Detail .layerpop .tit{height:50px;padding-left:30px;border-radius: 18px 18px 0 0;line-height:50px;font-size:22px;letter-spacing:-1px;font-weight:700;color:#fff;background:#393e46;}
+#travel100Detail .detail_100scene .top_img{position:relative;height:338px;background-position: 50% 50%;background-repeat: no-repeat;background-size: cover;}
+#travel100Detail .detail_100scene .top_img:after{content:'';display:block;height:55px;background:rgba(0,0,0,.5);position:absolute;left:0;bottom:0;width:100%;}
+#travel100Detail .top_img .area{position:absolute;left:40px;bottom:0;line-height:55px;z-index: 5;}
+#travel100Detail .top_img .area span{float:left;width:143px;height:55px;text-indent: -9999px;background: url(../../../images/theme/travel100scene/img_area.png) no-repeat;}
+#travel100Detail .top_img .area em{float:left;font-size:18px;color:#fff;margin-left:10px;}
+#travel100Detail .btn{display:inline-block;height:26px;position:absolute;right:40px;bottom:18px;z-index: 5;}
+#travel100Detail .btn button{height:22px;float:left;margin-left:10px;}
+#travel100Detail .btn button.good{width:24px;height:20px;background: url(../../../images/theme/travel100scene/btn_good01.png) no-repeat;}
+#travel100Detail .btn button.good.on{background-position: 0 -20px;}
+#travel100Detail .btn button.share{width:20px;height:22px;margin-top: 4px;background: url(../../../images/theme/travel100scene/btn_share.png) no-repeat;}
+#travel100Detail .btn span{position:absolute;text-indent: -9999px;}
+#travel100Detail .btn span.good{position:static;text-indent: 0;float:left;margin-top:4px;}
+#travel100Detail .btn span.good em{float:left;line-height:20px;height:20px;color:#fff;font-size:16px;}
+#travel100Detail .pdt_cont{padding:28px 40px 5px;position: relative;text-align: center;background:#fff;}
+#travel100Detail .pdt_cont + .btn_reserve{padding-top:25px;}
+#travel100Detail .principal_travel:before{content:'';position:absolute;left:0;top: -30px;width:100%;display:block;height:30px;background: url(../../../images/theme/travel100scene/bg_detail_pop.png) 100% 100% / 100% 100% no-repeat;}
+#travel100Detail .pdt_cont .provider{display: inline-block;margin: 0 0 18px;font-size: 18px;line-height: 22px;font-weight: 300;color: #666;letter-spacing: -0.6px;}
+#travel100Detail .pdt_cont .provider:after {content: '';display: block;height: 1px;background: #666;margin-top: 2px;}
+#travel100Detail .pdt_cont .stit{display:block;font-size:28px;line-height:35px;font-weight: 700;letter-spacing: -1.6px;color:#000;overflow:hidden;display: -webkit-box;max-height: 70px;word-break: keep-all;text-overflow: ellipsis;-webkit-line-clamp: 2;-webkit-box-orient: vertical;word-wrap: break-word;}
+#travel100Detail .pdt_cont .stit em{display:inline;padding-right:10px;color:#fe5d63;}
+#travel100Detail .pdt_cont p{padding:13px 0 15px;font-size: 18px;line-height:24px;letter-spacing: -1px;color:#666;font-weight: 300;word-break : keep-all;}
+#travel100Detail .pdt_cont .date em{padding:0 18px;height:31px;line-height:31px;color:#fff;background:#8e9299;font-size:18px;letter-spacing:-0.6px;display:inline-block;border-radius: 50px;}
+#travel100Detail .pdt_cont .date span{display:inline-block;margin-left:7px;font-size:20px;line-height: 31px;font-weight: 300;color:#333;letter-spacing: -0.7px;}
+#travel100Detail .pdt_cont .price{display:block;padding:17px 0 5px;font-size:26px;line-height:30px;font-weight: 700;letter-spacing: -1px;color:#fe5d63;}
+#travel100Detail .principal_travel{position: relative;margin-top: 30px;background:#fff;}
+#travel100Detail .principal_travel .stit{display:block;padding:13px 0 16px 40px;font-size: 22px;font-weight: 700;letter-spacing: -1px;color:#333;}
+#travel100Detail .slide_wrap{overflow: hidden;width:528px;margin:0 auto;padding:0 0 30px;text-align: center;}
+#travel100Detail .swiper-container{margin-left:-20px;}
+#travel100Detail .principal_travel .swiper-slide{width:117px !important;margin-left:20px;}
+#travel100Detail .principal_travel a{display:block;position: relative;}
+#travel100Detail .principal_travel a:focus{outline: none;}
+#travel100Detail .principal_travel a:focus:after{content: '';display: block;position: absolute;left: 0;top: 0;width: 100%;height: 100%;border: 3px solid red;box-sizing: border-box;}
+#travel100Detail .principal_travel a .img{display:block;width:100%;height: 117px;background-position: 50% 50%;background-repeat: no-repeat;background-size: cover;border-radius: 30px;}
+#travel100Detail .principal_travel a strong{display:block;padding-top:12px;font-size: 16px;line-height:19px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;text-align: center;}
+#travel100Detail .btn_reserve{padding:3px 0 20px;width:100%;text-align: center;background: #fff;}
+#travel100Detail .btn_reserve a{display: inline-block;width:530px;margin:0 auto;height: 60px;line-height: 60px;font-size: 24px;font-weight: 700;border-radius: 50px;color: #fff;letter-spacing: -1.3px;background: #393e46;}
+#travel100Detail .btn_reserve a:focus{outline:3px solid red;}
+#travel100Detail .principal_travel .page_wrap{display:none;position: relative;width:158px;height: 20px;line-height: 18px;margin:20px 0 0;}
+#travel100Detail .swiper-button-next, #travel100Detail .swiper-button-prev{opacity: 1;text-indent: -9999px;margin: 0;top: 0;display: inline-block;width: 20px;height: 20px;}
+#travel100Detail .swiper-button-next:focus, #travel100Detail .swiper-button-prev:focus{outline:none;}
+#travel100Detail .swiper-button-next:focus:after, #travel100Detail .swiper-button-prev:focus:after {content: '';display: block;position: absolute;left: 0;right: 0;top: 0;bottom: 0;border: 3px solid red;}
+#travel100Detail .swiper-button-prev {left: 0;background: url('../../../images/theme/travel100scene/button_prev01.png') no-repeat;}
+#travel100Detail .swiper-button-next {right: 0;background: url('../../../images/theme/travel100scene/button_next01.png') no-repeat;}
+#travel100Detail .swiper-pagination{position:static;}
+#travel100Detail .swiper-pagination button.swiper-pagination-bullet:focus {outline: 1px solid red;}
+#travel100Detail .swiper-pagination button.swiper-pagination-bullet {width: 8px;height: 8px;background: #c4bfbf;opacity: 1;margin: 0 4px;vertical-align: middle;}
+#travel100Detail .swiper-pagination button.swiper-pagination-bullet-active {width: 24px;background: #333;border-radius: 30px;}
+#travel100Detail .layerpop .popup_close{top:8px;right:-46px;width:36px;height:36px;background: url(../../../images/theme/travel100scene/btn_pop_close03.png) no-repeat;}
+#travel100Detail .principal_travel.js_slider.js_slider .page_wrap{display:inline-block;}
+#travel100Detail .inquiry{padding:0 0 20px;background:#fff;border-radius: 0 0 20px 20px;text-align: center;font-size:16px;letter-spacing: -0.5px;color:#666;line-height:19px;}
+
+#travel100Detail .pop_scr::-webkit-scrollbar {width: 6px;height: 6px;}
+#travel100Detail .pop_scr::-webkit-scrollbar-thumb {background: #666;}
+#travel100Detail .pop_scr::-webkit-scrollbar-track-piece {background: #e5e5e5;margin:10px;}
+
+#popShare .layerpop{border:0;box-shadow:none;line-height: normal;}
+
+#goodLoginPopup .layerpop {width:340px;padding:0;border-radius: 10px;box-shadow:none;border:0;text-align: center;}
+#goodLoginPopup .layerpop p{padding:62px 0 0;font-size:18px;letter-spacing: -0.6px;line-height:23px;color:#333;}
+#goodLoginPopup .layerpop .popup_close{top:20px;right:20px;width:16px;height:16px;background: url(../../../images/theme/travel100scene/btn_pop_close04.png) no-repeat;}
+#goodLoginPopup .layerpop .btn_area{padding:28px 0 30px;}
+#goodLoginPopup .layerpop .btn_area a{display:inline-block;color:#fff;font-size:16px;width:80px;height:40px;line-height: 40px;background:#393e46;border-radius: 5px;}
+
+/* my 찜 리스트 */
+.my_list{margin:0 auto;width:1200px;padding:45px 0 100px;text-align: center;}
+.my_list h3{padding: 0 0 85px;font-weight: 700;font-size: 28px;line-height: 32px;letter-spacing: -1.5px;color: #333;text-align: left;}
+.my_list strong{display:block;padding:155px 0 17px;font-weight: 700;font-size:35px;line-height: 39px;letter-spacing: -2px;color:#000;background: url(../../../images/theme/travel100scene/bg_my_list.gif) 50% 0 no-repeat;}
+.my_list p{font-size:20px;letter-spacing: -1px;color:#666;line-height: 23px;}
+
+.btn_topWrap .inner {right: -130px !important;}
+
+@media screen and (max-width: 1023px) {
+    .pc{display:none;}
+    .mo{display:block;}
+    .inr{width:auto;}
+    #contents{min-width: 100%;margin: 95px 0;}
+
+    /* header */    
+    .header{bottom:145px;}
+    .header .share.on ul{width:235px;height: 36px;}
+    .header .inner{width:auto;}
+    .header .share ul{width:36px;height:36px;right:15px;}
+    
+    .header .share.on ul li{margin: 10px 6px 0;}    
+    .header .share ul li span{display:none;}
+    .header .share ul li{margin:0;float:none;font-size: 12px;height:15px;line-height:15px;color:#000;}   
+    .header .share ul:after{width:36px;height:36px;background:#333 url(../../../images/theme/travel100scene/icon_share04.gif) 10px 10px / 15px 14px no-repeat;position:absolute;left:0;top:0;}
+    .header .share ul li:after{display:none;}
+    .header .share ul li a:before{width:24px;height:18px;margin-right:8px;background:url(../../../images/theme/travel100scene/icon_share.png) no-repeat;}
+    .header .share ul li a:before{margin-right: 4px;}
+    .header .share ul li.icon1:before{width: 19px;height: 15px;background: url(../../../images/theme/travel100scene/icon_share01.gif) 0 0 / 100% 100% no-repeat;}
+    .header .share ul li.icon2{height:18px;margin: 9px 6px 0;}
+    .header .share ul li.icon2 a{height:18px;}
+    .header .share ul li.icon2 span{line-height: 18px;color:#fff;}
+    .header .share ul li.icon2 a:before{width:17px;height:15px;margin-top: 2px;background: url(../../../images/theme/travel100scene/icon_share02.gif) 0 0 / 100% auto no-repeat;}
+    .header .share ul li.icon2.on a:before {background-position: 0 -15px;}
+    .header .share ul li.icon3 a:before{width:13px;height:15px;background: url(../../../images/theme/travel100scene/icon_share03.gif) 0 0 / 100% auto no-repeat;}
+    .header .share ul li.icon4 a:before{width:15px;height:14px;background: url(../../../images/theme/travel100scene/icon_share04.gif) 0 0 / 100% auto no-repeat;}    
+    .header .share button.good{width: 36px;height: 36px;right: 15px;background:#333 url(../../../images/theme/travel100scene/icon_share02_3.gif) 50% 50% / 17px auto no-repeat;}
+
+    #gnbCommon.mo .header{height:auto;}
+
+    /* 검색 */
+    .search_box{margin:0;background:#f4f4f4;min-height:auto;padding:0 0 25px;}
+    .search_box .inr{margin-top: 15px;}
+    .search_box h2{display:none;position: fixed;height:80px;left:0;top:39px;width:100%;z-index: 200;background:#fff url(../../../images/theme/travel100scene/tit_search_box01.png) 15px 22px / 176px 43px no-repeat;}
+    .search_box button.tooltip{display:none;position:fixed;right:auto;z-index: 50;left:198px;top:88px;width:15px;height:16px;background: url(../../../images/theme/travel100scene/btn_m_tooltip.png)0 0 / 100% 100% no-repeat;}
+    .search_box .layer:after {right: auto;left:185px;top: -7px;width: 9px;height: 7px;background: url(../../../images/theme/travel100scene/layer_m_arw01.png) 0 0 / 100% 100% no-repeat;}
+    .search_box .layer strong {font-size: 12px;letter-spacing: -0.3px;line-height: 15px;}
+    .search_box .layer p{padding: 3px 0 0;font-size:11px;line-height: 14px;letter-spacing:0;word-break:keep-all;}
+    .search_box .layer p br{display:none;}
+    .search_box .layer{position:fixed;width:auto;left:15px;right:25px;top: 110px;padding: 10px;}
+    .search_box .img{position:relative;top:0;width:auto;height: auto;margin-top:0;padding-left:15px;background: url(../../../images/theme/travel100scene/bg_search_box_img.gif) 0 0 / 1px 340px repeat-x;}
+    .search_box .img .swiper-container{left:0;top:-275px;width: 100%;box-shadow:none;border-radius: 0 0 0 30px;}
+    .search_box .img a{height: 340px;border-radius: 0 0 0 30px;}
+    .search_box .img a:after{border-radius: 0 0 0 30px;}
+    .search_box .img .cont_wrap{padding: 40px 0 0 25px;}
+    .search_box .img .tit{margin: 0 0 14px;font-size:19px;letter-spacing: -1.3px;line-height: 23px;}
+    .search_box .img .swiper-slide .view span{padding: 0 8px;height: 20px;line-height: 20px;font-size: 11px;}
+    .search_box .img .swiper-pagination{display:inline-block;text-align: center;position:static;height: 9px;}
+    .search_box .img .swiper-button-next, .search_box .img .swiper-button-prev{display:none;}
+    .search_box .img .mo_page{display:inline-block;position:absolute;right:15px;bottom:12px;z-index: 5;font-size:11px;line-height:14px;}
+    .search_box .img .mo_page strong{display:block;font-weight: 700;color:#fff;}
+    .search_box .img .mo_page strong:after{content:'';display:block;height:1px;background:#fff;margin:5px 0;}
+    .search_box .img .mo_page span{display:block;color:#fff;opacity: .5;}
+    .search_box .img .swiper-pagination-bullet{text-indent: -9999px;width:9px;height:9px;min-width:9px;background:#fff;opacity: .5;margin: 0 4px;vertical-align: top;}
+    .search_box .img .swiper-pagination-bullet-active:after{display:none;}
+    .search_box .img .swiper-pagination-bullet-active{opacity: 1;}
+    .search_box .img .page_wrap{left: 15px;right: 15px;height: 9px;position: absolute;bottom: 15px;text-align: center;z-index: 5;}
+    .search_box .btn_autoArea{position:static;margin-left: 3px;}
+    .search_box .btn_autoArea .btn_autoStop {width: 10px;height: 9px;background: url(../../../images/theme/travel100scene/btn_slide_m_stop02.png) 0 0 / 100% 100% no-repeat;}
+    .search_box .btn_autoArea .btn_autoPlay {width: 8px;height: 9px;background: url(../../../images/theme/travel100scene/btn_slide_m_play02.png) 0 0 / 100% 100% no-repeat;}
+    .search_box .search{width:auto;padding: 30px 15px 0;}
+    .search_box .search .pdt_search{height: 35px;top:0;transition:top .3s ease-in-out}
+    .search_box .search .pdt_search.fixed{position:fixed;width:100%;left:0;top:119px;background:#f4f4f4;padding:15px;height:auto;border-radius: 0;z-index: 200;}
+    .search_box .search .pdt_search input{height:35px;padding: 0 0 0 20px;font-size: 13px;letter-spacing: 0;}
+    .search_box .search .pdt_search.fixed button{right:30px;top:25px;}
+    .search_box .search .pdt_search button {right: 15px;top: 10px;width: 15px;height: 15px;background: url(../../../images/theme/travel100scene/btn_m_search.png) 0 0 / 100% 100% no-repeat;}
+    .search_box .search .pdt_search input:focus{outline: 1px solid #393e46;}
+    .search_box .search .form_tit {padding: 17px 0 8px;font-size: 14px;line-height: 17px;letter-spacing: -0.5px;}    
+    .search_box .search .form{height:35px;}
+    .search_box .search .form input:focus{background-position: 15px -35px !important;border: 1px solid #393e46 !important;}
+    .search_box .search .form input{padding: 0 0 0 38px;font-size:13px;letter-spacing: 0;background: #fff url('../../../images/theme/travel100scene/icon_m_input.png') 15px 0 / 14px auto no-repeat;}
+    .search_box .search .form.on input {background-position: 15px -35px !important;border: 1px solid #393e46 !important;}
+    .search_box .search .form + .form {margin-top: 10px;}
+    .search_box .search .form + .form input{background: #fafafa url('../../../images/theme/travel100scene/icon_m_input01.png') 15px 0 / 16px auto no-repeat;}
+    .search_box .search .form button{width: 24px;height:34px;top: 1px;background: url(../../../images/theme/travel100scene/btn_search_del01.png) 0 0 / 100% auto no-repeat;}
+    .search_box .search .form button.random{right: 5px;top: 5px;width: 70px;height: 25px;background: url(../../../images/theme/travel100scene/btn_m_random.png) 0 0 / 100% 100% no-repeat;}
+    .search_box .theme h3{padding: 19px 0 8px;font-size: 14px;line-height: 17px;letter-spacing: -0.5px;}
+    .search_box .theme .swiper-container{margin-left: -5px;}
+    .search_box .theme ul li span {float: left;margin: 0 0 7.5px 5px;}
+    .search_box .theme .swiper-container button {height: 28px;padding: 0 10px;font-size: 12px;letter-spacing: 0;}
+    .search_box .theme .swiper-container button:after{display:none !important;}
+    .search_box .theme .swiper-container .swiper-slide{display:inline-block;width: auto !important;}
+    .search_box .theme .swiper-wrapper{transform:inherit !important;flex-wrap: wrap;}
+    .search_box .theme.js_slider .page_wrap{display:none;}
+    .search_box .theme .swiper-container .on button{border: 1px solid #333; padding: 0 10px; box-shadow: 2px 2px 3px 0px rgb(57 62 70 / 18%);}
+    .search_box .theme .mo button{height:26px;width:100%;font-size:13px;color:#333;}
+    .search_box .theme .mo button:after{content:'';display:inline-block;width:14px;height:8px;margin-left:4px;background: url(../../../images/theme/travel100scene/btn_more.png) 0 0 / 100% 100% no-repeat;}
+    .search_box .theme .mo button.close:after{vertical-align: 1px;background: url(../../../images/theme/travel100scene/btn_more_close.png) 0 0 / 100% 100% no-repeat;}
+    .search_box .theme .btn {padding: 13px 0 0;}
+    .search_box .theme .btn a {height: 35px;width: 93px;line-height: 35px;color: #fff;font-size: 13px;letter-spacing: 0;}
+    .search_box .theme .btn a:before {width: 15px;height: 15px;margin-right: 3px;vertical-align: -3px;background: url('../../../images/theme/travel100scene/icon_button_search01.png') 0 0 / 100% 100% no-repeat;}
+    .search_box .theme .btn .random:before{margin-left: 4px;width: 14px;height: 13px;background: url(../../../images/theme/travel100scene/btn_m_random1.png) 0 0 / 100% 100% no-repeat;}
+
+    /* 100선 컴포넌트1 */
+    .component_100scene01 {margin:30px 15px 0;overflow: hidden;}
+    h2.tit_component{padding: 25px 0 10px;font-size: 19px;letter-spacing: -1.3px;line-height: 23px;font-weight: 700;}
+    .component_100scene01 h2:before{content:'';display:block;height:16px;margin:0 0 8px;background: url('../../../images/theme/travel100scene/icon_tit01.png') 50% 0 / 19px 100% no-repeat;}
+    .component_100scene01 h3 {padding: 0 0 14px;font-size: 17px;line-height: 21px;letter-spacing: -1px;}
+    .component_100scene01 h3 span {display:block;padding:5px 0 0 0;font-size: 11px;letter-spacing: 0;line-height: 13px;}
+    .component_100scene01 .swiper-container{overflow: hidden;left:0;margin-left:-15px;padding: 0 0 26px;}
+    .component_100scene01 .swiper-slide{width:calc(50% - 15px);margin-left:15px;}
+    .component_100scene01 a{width:auto;}
+    .component_100scene01 .swiper-slide.swiper-slide-duplicate-next+.swiper-slide, .component_100scene01 .swiper-slide-next+.swiper-slide {margin:0 0 0 15px !important;}
+    .component_100scene01 .swiper-button-next, .component_100scene01 .swiper-button-prev{display:none;}
+    .component_100scene01 .swiper-container:before{display:none;}
+    .component_100scene01 .swiper-container:after{display:none;}
+    .component_100scene01 a .img_wrap{height: 138px;width:auto;border-radius: 10px;}
+    .component_100scene01 a .img {height: 138px;border-radius:10px;}
+    .component_100scene01 a .provider:after{margin-top: 1px;}
+    .component_100scene01 a em{width:28px;height:28px;line-height: 28px;font-size:11px;left:10px;}
+    .component_100scene01 a span.good{right: 10px;top: 7px;color: #fff;font-size: 11px;}
+    .component_100scene01 a button {width: 21px;height: 21px;margin-left: 5px;background: url('../../../images/theme/travel100scene/btn_m_good.png') 0 0 / 100% auto no-repeat;}
+    .component_100scene01 a button.on {background-position: 0 -21px;}
+    .component_100scene01 a .provider {margin: 10px 0 10px;font-size: 11px;line-height: 13px;}
+    .component_100scene01 a .tit{margin-top: 10px;font-size: 14px;line-height: 18px;letter-spacing: -0.5px;height: 36px;}
+    .component_100scene01 a div{line-height: 17px;padding: 9px 0 0;margin-top: 0;border-top:0;}
+    .component_100scene01 a .price{font-size: 13px;}
+    .component_100scene01 a .date{font-size: 13px;}
+    .component_100scene01 a .date:before {height: 12px;margin: 0 7px 0 5px;vertical-align: -2px;}
+    .component_100scene01 .swiper-pagination{left:15px;right:0;width:auto;bottom: 0;height: 9px;margin:0;}
+    .component_100scene01 .swiper-pagination-bullet{width:9px;height:9px;margin:0 2.5px !important;}
+    .component_100scene01 .swiper-pagination-bullet-active{width:18px;}
+
+    /* 100선 컴포넌트2 */
+    .component_100scene02 {padding: 30px 0 0;margin-top: 30px;}
+    .component_100scene02 h3 {float: none;width: auto;padding:0 0 14px 15px;font-size: 17px;line-height: 21px;letter-spacing: -1px;}
+    .component_100scene02 h3 br{display:none;}
+    .component_100scene02 h3 span{display: block;margin: 0;padding: 5px 0 0 0;font-size: 11px;letter-spacing: 0;line-height: 13px;}
+    .component_100scene02 h3 span:before{display:none;}
+    .component_100scene02 .swiper-container{margin:0 0 0 -15px;padding:0 0 53px;position:static;}
+    .component_100scene02 .slide_wrap{margin:0 15px;overflow: hidden;position: relative;}
+    .component_100scene02 .swiper-wrapper{flex-wrap:inherit;}
+    .component_100scene02 .swiper-slide{margin:0;width: 65%;}
+    .component_100scene02 a{width:auto;margin-left:15px;height: 224px;}
+    .component_100scene02 a .img em{width:28px;height:28px;line-height: 28px;font-size:11px;left:10px;}    
+    .component_100scene02 a span.good{right: 10px;top: 7px;color: #fff;font-size: 11px;}
+    .component_100scene02 a button {margin-left: 5px;width: 21px;height: 21px;background: url('../../../images/theme/travel100scene/btn_m_good.png') 0 0 / 100% auto no-repeat;}
+    .component_100scene02 a button.on {background-position: 0 -21px;}
+    .component_100scene02 a .img {height: 180px;}
+    .component_100scene02 .cont_box{box-shadow: 0px 1px 12px 0px rgba(187, 179, 175, 0.24);left: 10px;right: 10px;padding: 0 10px;height: 100px;}
+    .component_100scene02 a .provider {margin: 11px 0 10px;font-size: 11px;line-height: 13px;}
+    .component_100scene02 a .provider:after{margin-top: 1px;}
+    .component_100scene02 a .tit {margin-top: 10px;font-size: 14px;line-height: 18px;letter-spacing: -0.5px;height: 36px;}
+    .component_100scene02 a .info{line-height: 17px;padding: 9px 0 0;}
+    .component_100scene02 a .price{font-size: 13px;}
+    .component_100scene02 a .date{font-size: 13px;}
+    .component_100scene02 a .date:before {height: 12px;margin: 0 7px 0 5px;vertical-align: -2px;}
+    .component_100scene02 a .tag{margin-left: -2px;}
+    .component_100scene02 a .tag span {margin-left: 2px;font-size: 11px;line-height: 13px;}
+    .component_100scene02 .swiper-pagination-progressbar{display:block;height:2px;top:auto;bottom:25px;opacity: 1 !important;left: 0;width: auto;right: 0;}
+    .component_100scene02 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{background:#000;}
+    .component_100scene02:before, .component_100scene02:after{display:none;}
+
+    /* 100선 컴포넌트3 */
+    .component_100scene03 {padding: 30px 0 0;margin:0 0 0 15px;}
+    .component_100scene03 h3{float: none;width: auto;padding: 0 0 14px 0;font-size: 17px;line-height: 21px;letter-spacing: -1px;}
+    .component_100scene03 h3 br{display:none;}
+    .component_100scene03 h3 span:before{display:none;}
+    .component_100scene03 h3 span {display: block;margin: 0;padding: 5px 0 0 0;font-size: 11px;letter-spacing: 0;line-height: 13px;}
+    .component_100scene03 .swiper-container{margin-left:-15px;}
+    .component_100scene03 a{height:228px;width:auto;margin-left:15px;}
+    .component_100scene03 a:after{height: 80%;background-image:linear-gradient(to bottom,transparent,rgba(0,0,0,.5));border-radius:0 0 10px 10px;}
+    .component_100scene03 a .img em{width:28px;height:28px;line-height: 28px;font-size:11px;left:10px;}    
+    .component_100scene03 span.good{right: 10px;top: 7px;color: #fff;font-size: 11px;}
+    .component_100scene03 span.good button {margin-left: 5px;width: 21px;height: 21px;background: url('../../../images/theme/travel100scene/btn_m_good.png') 0 0 / 100% auto no-repeat;}    
+    .component_100scene03 span.good button.on {background-position: 0 -21px;}
+    .component_100scene03 .cont_box{bottom:0;padding: 0 0 10px !important;height:auto !important;}
+    .component_100scene03 a:hover .cont_box, .component_100scene03 a:focus .cont_box{background:none;bottom: 0;}    
+    .component_100scene03 a .info{display:block !important;line-height: 17px;padding: 6px 0 0;}
+    .component_100scene03 a .price {font-size: 13px;color:#fff}
+    .component_100scene03 a .date{font-size: 13px;color:#fff}
+    .component_100scene03 a .date:before {height: 12px;margin: 0 7px 0 5px;vertical-align: -2px;}
+    .component_100scene03 a .cos{display:block !important;margin: 12px 0 0;}
+    .component_100scene03 a .cos:after{border-top: 1px dashed #dadada;width: auto;left: 6px;right: 6px;}
+    .component_100scene03 a .cos ul li{padding-top: 19px;font-size: 11px;color:#fff;line-height: 13px;}
+    .component_100scene03 a .cos ul:before{width: 7px;height: 7px;border: 1px solid #fff;top: 6px;background: none;}
+    .component_100scene03 a .cos ul:after{width: 7px;height: 7px;border: 1px solid #fff;top: 6px;background: none;}
+    .component_100scene03 a .cos ul li.num{top: 1px;margin-left: -13px;width: 26px;height: 15px;line-height: 15px;background: #fff;color: #333;}
+    .component_100scene03 a .provider{margin: 0 0 8px;color:#fff !important;font-size: 11px;line-height: 13px;}
+    .component_100scene03 a .tit{color:#fff !important;font-size: 14px;line-height: 18px;letter-spacing: -0.5px;max-height: 36px;height:auto;}
+    .component_100scene03 a:hover .provider:after{background:#fff;}
+    .component_100scene03 .swiper-slide{width: 65% !important;margin:0 !important;}
+    .component_100scene03 .swiper-button-next, .component_100scene03 .swiper-button-prev{display:none;}
+    .component_100scene03 .page_wrap{top:0;right:0;left:auto;}
+    .component_100scene03 .swiper-pagination{height:25px;line-height:25px;padding:0 15px 0 18px;background:#f4f4f4;font-size:13px;border-radius:50px 0 0 50px}
+
+    /* 100선 배너 */
+    .banner_100scene {padding: 50px 0 0;margin:0 15px;}
+    .banner_100scene img{width:100%;}
+    .banner_100scene .swiper-container{margin-left: 0;padding: 0 0 25px;}
+    .banner_100scene a{margin-left: 0;float:none;display:block;}
+    .banner_100scene .swiper-slide {width: 100% !important;}
+    .banner_100scene .swiper-pagination button.swiper-pagination-bullet{width:9px;height:9px;margin: 0 2.5px !important;}
+    .banner_100scene .swiper-pagination button.swiper-pagination-bullet-active{width: 18px;}
+    .banner_100scene .banner_slide .btn_autoArea{margin-right:2.5px;}
+    .banner_100scene .banner_slide .btn_autoArea .btn_autoStop{width:10px;height:9px;background: url(../../../images/theme/travel100scene/btn_slide_stop01.png) 0 0 / 100% 100% no-repeat;}
+    .banner_100scene.active .banner_slide .btn_autoArea .btn_autoStop{width:8px;height:9px;background: url(../../../images/theme/travel100scene/btn_slide_play01.png) 0 0 / 100% 100% no-repeat;}
+
+    /* 검색결과 */
+    .result_100scene{width:auto;margin: 25px 15px 0;}
+    .result_100scene h3{padding: 0 0 14px;font-size: 17px;line-height: 21px;letter-spacing: -1px;}
+    .result_100scene ul {margin-left: 0;}
+    .result_100scene ul li {float: none;margin: 0 0 20px 0;}
+    .result_100scene ul li a{width:100%;display:flex;border-radius: 0;}
+    .result_100scene .cont_box{flex-grow: 1;min-width:0;text-align: left;padding-left:15px;position: relative; min-height: auto;}
+    .result_100scene ul li a .img {flex-shrink: 0;width:90px;height: 90px;border-radius:10px;}
+    .result_100scene ul li a .img em{width:28px;height:28px;line-height: 28px;font-size:11px;left:0;border-radius: 10px 0 0 0;z-index: 5;}
+    .result_100scene a span.good{right:0;top:0;color:#333;font-size:11px;}
+    .result_100scene ul li a button {right: 0;top: 0;width: 21px;margin-left:5px;height: 21px;background: url('../../../images/theme/travel100scene/btn_m_good02.png') 0 0 / 100% auto no-repeat;}
+    .result_100scene ul li a button.on {background-position: 0 -21px;}
+    .result_100scene ul li a .provider {margin: 0 0 8px;font-size: 11px;line-height: 13px;}
+
+    .result_100scene ul li a .tit{word-wrap: break-word;word-break:keep-all;font-size: 14px;line-height: 18px;letter-spacing: -0.5px;max-height: 36px;height:auto;margin-top:25px;}
+    .result_100scene ul li a .tit em{display:inline;margin-right:3px;color:#fe5d63;font-weight: 400;}
+    .result_100scene ul li a .info{line-height: 17px;padding: 5px 0 0;margin-top: 0;border-top:0;}
+    .result_100scene ul li a .price{font-size: 13px;}
+    .result_100scene ul li a .date{font-size: 13px;}
+    .result_100scene ul li a .date:before {height: 12px;margin: 0 7px 0 5px;vertical-align: -2px;}
+    .result_100scene .more_view{padding:10px 0 0;}
+    .result_100scene .more_view button {font-size: 13px;height: 35px;width: 90px;}
+    .result_100scene .more_view button:after {width: 13px;height: 7px;margin-left: 4px;background: url('../../../images/theme/travel100scene/btn_more_view01.png') 0 0 / 100% 100% no-repeat;}
+    .result_100scene .none_result strong{font-size:18px;line-height:22px;letter-spacing: -1.2px;}
+    .result_100scene .none_result strong:before{height:64px;margin:25px 0 15px;background: url('../../../images/theme/travel100scene/bg_none_result01.png') 50% 0 / 149px auto no-repeat;}
+    .result_100scene .none_result p{padding:7px 0 0;font-size: 11px;letter-spacing: 0;line-height: 13px;}
+
+    /* 레이어팝업 */
+    .layerpop{padding: 18px 20px 0;left: 15px !important;right: 15px !important;width: auto !important;margin-left: 0 !important;border: 1px solid #393e46;border-radius: 8px;}
+    .option_form strong {font-size: 15px;line-height: 19px;letter-spacing: -0.5px;}
+    .option_form p {padding: 5px 0 15px;font-size: 11px;line-height: 14px;}
+    .option_form em {height: 28px;line-height: 28px;font-size: 12px;}
+    .option_form ul {margin: 15px 0 0 -5px;}
+    .option_form ul li {width: calc(25% - 5px);margin: 0 0 8px 5px;}
+    .option_form ul li button {height: 28px;font-size: 12px;letter-spacing:0;}
+    .option_form ul li.on button{border: 1px solid #333;font-weight: 700; box-shadow: 2px 2px 3px 0px rgb(57 62 70 / 18%);}
+    .option_form ul li.on button.choice_close{display: none;}
+    .option_form .btn_area {padding: 7px 0 20px;}
+    .option_form .btn_area a {width: 75px;height: 28px;line-height: 28px;font-size: 13px;font-weight: 700;}
+    .layerpop .popup_close {right: 20px;top: 20px;width: 14px;height: 14px;background: url(../../../images/theme/travel100scene/btn_pop_close01.png) 0 0 / 100% 100% no-repeat;}
+    #popShare.wrap_layerpop{z-index: 305;}
+    #travel100Detail.wrap_layerpop{z-index: 300;}
+    #travel100Detail .layerpop:focus-visible{border: 0;outline: none;}
+    #travel100Detail .layerpop{border-radius: 10px;}
+    #travel100Detail .layerpop .tit {height: 35px;padding-left: 15px;border-radius: 8px 8px 0 0;line-height: 35px;font-size: 14px;letter-spacing: 0;}
+    #travel100Detail .layerpop .popup_close {top: -33px;right: 0;width: 23px;height: 23px;background: url(../../../images/theme/travel100scene/btn_pop_m_close03.png) 0 0 / 100% 100% no-repeat;}
+    #travel100Detail .pop_scr{max-height: 500px;border-radius: 10px;}
+    #travel100Detail .detail_100scene .top_img {height: 175px;}
+    #travel100Detail .detail_100scene .top_img:after{height:28px;}
+    #travel100Detail .top_img .area {left: 20px;line-height: 28px;}
+    #travel100Detail .top_img .area span {width: 86px;height: 28px;background: url(../../../images/theme/travel100scene/img_m_area.png) 0 0 / 100% 100% no-repeat;}
+    #travel100Detail .top_img .area em {font-size: 11px;margin-left: 5px;font-weight: 11px;}
+    #travel100Detail .btn {height: 16px;right: 20px;bottom: 6px;}
+    #travel100Detail .btn span.good{margin-top: 3px;}
+    #travel100Detail .btn span.good em{height: 10px;line-height: 10px;font-size:11px;}
+    #travel100Detail .btn button.good {width: 12px;margin-left: 5px;height: 10px;background: url(../../../images/theme/travel100scene/btn_m_good01.png) 0 0 / 100% auto no-repeat;}
+    #travel100Detail .btn button.good.on {background-position: 0 -10px;}
+    #travel100Detail .btn button.share {width: 13px;height: 16px;margin-top: 0px;background: url(../../../images/theme/travel100scene/btn_m_share.png) 0 0 / 100% 100% no-repeat;}
+    #travel100Detail .pdt_cont{padding: 18px 20px 5px;}
+    #travel100Detail .pdt_cont .provider {margin: 0 0 8px;font-size: 11px;line-height: 13px;letter-spacing:0;}
+    #travel100Detail .pdt_cont .stit {font-size: 17px;line-height: 22px;letter-spacing: -1px;max-height: 44px;}
+    #travel100Detail .pdt_cont p {padding: 7px 0 8px;font-size: 11px;line-height: 15px;letter-spacing: 0;}
+    #travel100Detail .pdt_cont .date em {padding: 0 8px;height: 20px;line-height: 20px;font-size: 12px;letter-spacing: -0.6px;}
+    #travel100Detail .pdt_cont .date span {margin-left: 5px;font-size: 12px;line-height: 20px;letter-spacing:0;}
+    #travel100Detail .pdt_cont .price {padding: 17px 0 0;font-size: 16px;line-height: 19px;letter-spacing: -1px;}
+    #travel100Detail .principal_travel:before{top: -15px;height: 15px;background: url(../../../images/theme/travel100scene/bg_detail_pop01.png) 100% 100% / 100% 100% no-repeat;}
+    #travel100Detail .principal_travel{margin-top: 15px;}
+    #travel100Detail .principal_travel .stit {padding: 7px 0 19px 20px;font-size: 13px;letter-spacing: 0;}
+    #travel100Detail .slide_wrap{width:auto;margin:0 20px;padding: 0 0 15px;}
+    #travel100Detail .principal_travel .swiper-slide{width:33.3% !important;margin-left: 0;}
+    #travel100Detail .principal_travel .swiper-slide a{margin-left:10px;}
+    #travel100Detail .swiper-container {margin-left: -10px;}
+    #travel100Detail .principal_travel a .img{height:77px;border-radius: 15px;}
+    #travel100Detail .principal_travel a strong{padding-top: 7px;font-size: 12px;line-height: 15px;}
+    #travel100Detail .page_wrap {width: auto;height: 9px;line-height: 9px;margin: 13px 0 0;}
+    #travel100Detail .swiper-button-next, #travel100Detail .swiper-button-prev{display:none;}
+    #travel100Detail .swiper-pagination button.swiper-pagination-bullet{width:9px;height:9px;margin:0 2px;}
+    #travel100Detail .swiper-pagination button.swiper-pagination-bullet-active{width:18px;}
+    #travel100Detail .btn_reserve{padding: 0 20px 10px;bottom: 10px;}
+    #travel100Detail .btn_reserve a{width:auto;display:block;font-size: 16px;height: 45px;line-height: 45px;letter-spacing: -0.8px;}
+    #travel100Detail .inquiry{font-size:12px;margin-top: -1px;letter-spacing: 0;border-radius: 0 0 10px 10px;}
+
+    #travel100Detail.search .layerpop{left: 0 !important;right: 0 !important;border-radius: 0;height:100%;background:#fff;}
+    #travel100Detail.search .pop_scr {max-height: 100%;border-radius: 0;}
+    #travel100Detail.search .inquiry{border-radius: 0;}
+    #travel100Detail.search .pdt_cont:after{content:'';display:inline-block;width:15px;height:15px;z-index: 10;position:absolute;left:0;bottom:-15px;background:#fff}
+    #travel100Detail.search .pdt_cont:before{content:'';display:inline-block;width:15px;height:15px;z-index: 10;position:absolute;right:0;bottom:-15px;background:#fff}
+    #travel100Detail.search .layerpop .tit {height: 45px;padding-left: 0;border-radius:0;line-height: 45px;text-align: center;}
+    #travel100Detail.search .layerpop .tit .back{position:absolute;left:15px;top:15px;width:17px;height:16px;text-indent: -9999px;background: url(../../../images/theme/travel100scene/btn_pop_back.png) 0 0 / 100% 100% no-repeat;}
+
+    #goodLoginPopup .layerpop {border-radius: 5px;}
+    #goodLoginPopup .layerpop p {padding: 45px 0 0;font-size: 14px;letter-spacing: -0.5px;line-height: 18px;}
+    #goodLoginPopup .layerpop .btn_area {padding: 18px 0 20px;}
+    #goodLoginPopup .layerpop .btn_area a {font-size: 13px;width: 75px;height: 30px;line-height: 30px;border-radius: 3px;}
+    #goodLoginPopup .layerpop .popup_close {top: 15px;right: 15px;width: 14px;height: 14px;background: url(../../../images/theme/travel100scene/btn_pop_m_close04.png) 0 0 / 100% 100% no-repeat;}
+
+    /* my 찜 리스트 */
+    .my_list{width:auto;margin:0 15px;padding:28px 0 30px;}
+    .my_list h3{padding: 0 0 45px;font-size: 17px;line-height: 21px;letter-spacing: -1px;}
+    .my_list strong {padding:82px 0 8px;font-size: 18px;line-height:21px;letter-spacing: -1px;background: url(../../../images/theme/travel100scene/bg_my_list1.gif) 50% 0 / 149px 69px no-repeat;}
+    .my_list p{font-size:11px;letter-spacing:0;line-height:14px;}
+
+    .btn_topWrap .inner {right: 0 !important;}
+
+}
+
+@media all and (min-width:768px) and (max-width:1023px) {
+    #travel100Detail .layerpop{left: 240px !important;right: 240px !important;}
+    .component_100scene01 .swiper-slide{width: calc(138px - 15px);}
+    .component_100scene02 .swiper-slide{width:180px;}
+    .component_100scene03 .swiper-slide{width: 180px !important;}
+}
+
+
