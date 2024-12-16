@@ -7,9 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 게시판 관리</title>
-<link rel="stylesheet" type="text/css" href="../common/css/admin.css?after">
-<link rel="stylesheet" type="text/css" href="css/admin_boardlist.css?after">
-<script src="js/admin_boardlist.js" defer></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/common/css/admin.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_boardlist/css/admin_boardlist.css">
+<script src="${pageContext.request.contextPath}/admin/admin_boardlist/js/admin_boardlist.js" defer></script>
 </head>
 <body>
 <jsp:include page="../common/admin.jsp" />
@@ -77,6 +77,6 @@
     <jsp:include page="boardlist_add_modal.jsp" />
 </div>
 </div>
-<script src="../common/js/admin.js"></script>
+<script src="${pageContext.request.contextPath}/admin/common/js/admin.js"></script>
 </body>
 </html>

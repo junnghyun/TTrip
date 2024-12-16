@@ -1,20 +1,16 @@
-<%@page import="kr.co.triptrip.user.store.StoreVO"%>
 <%@page import="java.util.List"%>
-<%@page import="kr.co.triptrip.user.store.StoreSearchVO"%>
 <%@page import="java.sql.SQLException"%>
-<%@page import="kr.co.triptrip.user.store.StoreDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../common/session_chk.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>숙소 관리</title>
-    <link rel="stylesheet" type="text/css" href="../common/css/admin.css">
-    <link rel="stylesheet" type="text/css" href="css/admin_lodging.css?after">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/common/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_lodging/css/admin_lodging.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="js/admin_lodging.js" defer></script>
+    <script src="${pageContext.request.contextPath}/admin/admin_lodging/js/admin_lodging.js" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script>
     
@@ -27,70 +23,11 @@
 </head>
 <body>
 
-<jsp:include page="../common/admin.jsp" />
+<jsp:include page="${pageContext.request.contextPath}/admin/common/admin.jsp" />
     
     <div class="common_admin">
         <div><h1 class="store" id="store">숙소 관리</h1></div>
-        <jsp:useBean id="sVO" class="kr.co.triptrip.user.store.StoreSearchVO" scope="page"/>
-        <jsp:setProperty property="*" name="sVO"/>
-        <%
-        // 총 매장의 수 구하기
-        int totalCount=0;
-        
-//       StoreDAO sDAO=StoreDAO.getInstance();
-//       try{
-//       	totalCount=sDAO.selectTotalCount(sVO);
-//        } catch(SQLException se) {
-//        	se.printStackTrace();
-//        }
-        
-        // 한 화면에 보여줄 레코드의 수 
-        int pageScale=15;
-        
-        // 총 페이지 수
-        int totalPage=(int)Math.ceil((double)totalCount/pageScale);
-        
-        // 검색의 시작 번호 구하기
-        String paramPage=request.getParameter("currentPage");
-        
-        int currentPage=1;
-        if(paramPage != null) {
-        	try{
-        		currentPage=Integer.parseInt(paramPage);
-        	} catch (NumberFormatException nfe){
-        		nfe.printStackTrace();
-        	}
-        }
-        
-        // 시작 번호
-        int startNum = currentPage * pageScale - pageScale + 1;
-        
-        // 끝 번호
-        int endNum = startNum + pageScale - 1;
-        
-        sVO.setCurrentStorePage(currentPage);
-        sVO.setStartNum(startNum);
-        sVO.setEndNum(endNum);
-        sVO.setTotalPage(totalPage);
-        sVO.setTotalCount(totalCount);
-        
-//        List<StoreVO> storeList = null;
-//        try {
-//            storeList = sDAO.selectStore(sVO); // 새로운 페이지의 데이터 가져오기
-//        } catch (SQLException se) {
-//            se.printStackTrace();
-//        }
-        
-//        pageContext.setAttribute("totalCount", totalCount);
-//        pageContext.setAttribute("pageScale", pageScale);
-//        pageContext.setAttribute("totalPage", totalPage);
-//        pageContext.setAttribute("currentPage", currentPage);
-//        pageContext.setAttribute("storeList", storeList);
-        
-//        pageContext.setAttribute("startNum", startNum);
-//        pageContext.setAttribute("endNum", endNum);
-        
-        %> 
+       
         <!-- 매장 요약 정보 -->
        <%--  <div class="store-summary">
             <span>매장 수: <strong id="store-count"><c:out value="${totalCount}"/></strong></span>
@@ -190,6 +127,6 @@
     <!-- 매장 수정 모달 -->
     <jsp:include page="lodging_edit_modal.jsp" />
 
-    <script src="../common/js/admin.js"></script>
+    <script src="${pageContext.request.contextPath}/admin/common/js/admin.js"></script>
 </body>
 </html>
