@@ -208,7 +208,7 @@
     <header class="header">
         <nav class="nav-container">
             <a href="#" class="logo">
-                <img src="logo.png" alt="로고" style="height: 40px;">
+                <img src="${pageContext.request.contextPath}/common/header/images/logo.png" alt="로고" style="height: 40px;">
             </a>
             <ul class="nav-menu">
                 <li class="nav-item">
