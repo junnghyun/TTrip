@@ -35,10 +35,5 @@ public class TravelController {
     	
     	return "ttrip/travel/travel_detail";
     }
-    @RequestMapping("/tt")
-    public String tt() {
-    	
-    	return "ttrip/travel/travel_test";
-    }
 
 }
