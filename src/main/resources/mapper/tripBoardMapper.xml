@@ -4,10 +4,50 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ttrip"><!-- namespace: 자바의 패키지와 비슷 -->
 
-<!-- 여행 코스테이블을 조회하는 mapper -->
-<select id="tbAll" resultType="tripBoardDomain">
-select	*
-from	trip_board
-</select>
+<!-- 여행 일정과 숙소 추가 -->
+  <!-- <insert id="addTripPlan" parameterType="map">
+    INSERT INTO trip_plan (course_id, trip_date, type, name)
+    VALUES 
+    <foreach collection="tripDetails" item="detail" separator=",">
+      (#{courseId}, #{detail.tripDate}, #{detail.type}, #{detail.name})
+    </foreach>
+  </insert>
 
+ 특정 여행 코스 조회
+  <select id="getTripCourse" parameterType="int" resultMap="tripCourseResultMap">
+    SELECT
+      tp.course_id,
+      tp.trip_date,
+      tp.type,
+      tp.name
+    FROM
+      trip_plan tp
+    WHERE
+      tp.course_id = #{courseId}
+    ORDER BY
+      tp.trip_date ASC,
+      FIELD(tp.type, 'dstnt', 'accom') ASC
+  </select>
+
+  여행 코스 결과 매핑
+  <resultMap id="tripCourseResultMap" type="tripCourseDomain">
+    <id property="courseId" column="course_id" />
+    <result property="tripDate" column="trip_date" />
+    <result property="type" column="type" />
+    <result property="name" column="name" />
+  </resultMap> -->
+  
+  <!-- 선택된 지역의 여행지 조회 -->
+  <select id="getDestinationsByRegion" parameterType="string" resultType="com.ttrip.tripboard.TripBoardDomain">
+    SELECT 
+      dstnt_id,
+      dstnt_name,
+      description,
+      address
+    FROM 
+      destinations
+    WHERE 
+      region = #{region}
+  </select>
+  
 </mapper>
