@@ -37,17 +37,38 @@
     <result property="name" column="name" />
   </resultMap> -->
   
-  <!-- 선택된 지역의 여행지 조회 -->
-  <select id="getDestinationsByRegion" parameterType="string" resultType="com.ttrip.tripboard.TripBoardDomain">
+  <select id="getDestinationsByRegion" parameterType="int" resultType="com.ttrip.dstmt.DstntDomain">
     SELECT 
-      dstnt_id,
-      dstnt_name,
-      description,
-      address
+        DSTNTID AS dstntId,
+        name,
+        addr,
+        phone,
+        status,
+        img,
+        detail,
+        lat,
+        lng
     FROM 
-      destinations
+        DSTNT
     WHERE 
-      region = #{region}
-  </select>
+        regionID = #{regionId}
+</select>
+
+
+<select id="getAccommodationsByRegion" parameterType="int" resultType="com.ttrip.accom.AccomDomain">
+    SELECT 
+        accomID AS accomId,
+        name,
+        addr,
+        phone,
+        status,
+        lat,
+        lng
+    FROM 
+        ACCOM
+    WHERE 
+        regionID = #{regionId}
+</select>
+
   
 </mapper>
