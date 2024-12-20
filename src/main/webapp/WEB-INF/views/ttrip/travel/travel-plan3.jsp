@@ -1,3 +1,6 @@
+<%@page import="com.ttrip.accom.AccomDomain"%>
+<%@page import="java.util.List"%>
+<%@page import="com.ttrip.dstmt.DstntDomain"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,9 +14,19 @@
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f4b38fb42b57cde2b0919f29b1e7215"></script>
 </head>
 <body>
+<%
+    // travel-plan2.jsp에서 전달된 지역 정보를 가져옵니다.
+    String regionId = request.getParameter("regionId");
+    if (regionId == null || regionId.isEmpty()) {
+        regionId = "선택된 지역 없음"; // 기본값
+    }
+ // Controller에서 전달받은 여행지와 숙소 데이터를 JSP로 전달받습니다.
+    List<DstntDomain> destinations = (List<DstntDomain>) request.getAttribute("destinations");
+    List<AccomDomain> accommodations = (List<AccomDomain>) request.getAttribute("accommodations");
+%>
 <!-- 사이드바 영역 -->
 <div class="sidebar">
-    <h2 id="travel-name">인천</h2>
+    <h2 id="travel-name"><%= regionId %></h2>
     <div id="selection-summary">
         <h3>선택한 기간</h3>
         <p id="selected-range"></p>
@@ -29,22 +42,20 @@
             <h2>장소 선택</h2>
             <input type="text" placeholder="장소를 검색하세요">
             <ul class="location-list">
-                <li>
-                    <img src="example1.jpg" alt="장소 이미지">
-                    <div>
-                        <h3>인천 차이나타운</h3>
-                        <p>문화거리 | 차이나타운 거리</p>
-                    </div>
-                    <button onclick="addPlaceToDayPrompt('인천 차이나타운', 'example1.jpg')">+</button>
-                </li>
-                <li>
-                    <img src="example2.jpg" alt="장소 이미지">
-                    <div>
-                        <h3>월미공원</h3>
-                        <p>역사적인 장소 | 월미산 정상</p>
-                    </div>
-                    <button onclick="addPlaceToDayPrompt('월미공원', 'example2.jpg')">+</button>
-                </li>
+                <% if (destinations != null && !destinations.isEmpty()) { %>
+                    <% for (DstntDomain dstnt : destinations) { %>
+                        <li>
+                            <img src="<%= dstnt.getImg() %>" alt="<%= dstnt.getName() %>">
+                            <div>
+                                <h3><%= dstnt.getName() %></h3>
+                                <p><%= dstnt.getDetail() %></p>
+                            </div>
+                            <button onclick="addPlaceToDayPrompt('<%= dstnt.getName() %>', '<%= dstnt.getImg() %>')">+</button>
+                        </li>
+                    <% } %>
+                <% } else { %>
+                    <p>해당 지역에 등록된 여행지가 없습니다.</p>
+                <% } %>
             </ul>
         </div>
     </div>
@@ -54,20 +65,19 @@
             <h2>숙소 설정</h2>
             <input type="text" placeholder="숙소를 검색하세요">
             <ul class="accommodation-list">
-                <li>
-                    <div>
-                        <h3>네스트 호텔</h3>
-                        <p>인천 영종도 | 바다 전망</p>
-                    </div>
-                    <button onclick="addAccommodationToDayPrompt('네스트 호텔', 'hotel1.jpg')">+</button>
-                </li>
-                <li>
-                    <div>
-                        <h3>파라다이스시티</h3>
-                        <p>럭셔리 호텔 | 엔터테인먼트</p>
-                    </div>
-                    <button onclick="addAccommodationToDayPrompt('파라다이스시티', 'hotel2.jpg')">+</button>
-                </li>
+                <% if (accommodations != null && !accommodations.isEmpty()) { %>
+                    <% for (AccomDomain accom : accommodations) { %>
+                        <li>
+                            <div>
+                                <h3><%= accom.getName() %></h3>
+                                <p><%= accom.getAddr() %></p>
+                            </div>
+                            <button onclick="addAccommodationToDayPrompt('<%= accom.getName() %>', 'accommodation.jpg')">+</button>
+                        </li>
+                    <% } %>
+                <% } else { %>
+                    <p>해당 지역에 등록된 숙소가 없습니다.</p>
+                <% } %>
             </ul>
         </div>
     </div>
@@ -105,6 +115,8 @@
         });
         marker.setMap(map);
     }
+    
 </script>
+
 </body>
 </html>

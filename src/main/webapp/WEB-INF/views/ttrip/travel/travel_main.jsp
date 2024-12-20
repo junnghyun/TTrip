@@ -81,6 +81,7 @@ input[type="button"]:hover {
             $(this).css("background-color", "#333333").css("color", "#fff");
             // 선택된 값 저장
             selectedRegion = $(this).val();
+            $("#regionForm input[name='regionId']").val(selectedRegion); // 폼에 값 설정
         });
 
         $("#btn18").click(function () {
@@ -88,7 +89,7 @@ input[type="button"]:hover {
                 alert("여행지를 선택해 주세요.");
             } else {
                 // 폼에 값 설정 후 전송
-                $("#regionForm input[name='region']").val(selectedRegion);
+                $("#regionForm input[name='regionId']").val(selectedRegion);
                 $("#regionForm").submit();
             }
         });
@@ -106,8 +107,8 @@ input[type="button"]:hover {
         </div>
 
         <div class="select_area">
-            <form id="regionForm" method="post" action="nextPage.jsp">
-                <input type="hidden" name="region" value="">
+            <form id="regionForm" method="get" action="tr2">
+                <input type="hidden" name="regionId" value="">
             </form>
             <ul>
                 <li>

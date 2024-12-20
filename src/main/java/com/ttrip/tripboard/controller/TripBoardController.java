@@ -7,9 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ttrip.accom.AccomDomain;
+import com.ttrip.dstmt.DstntDomain;
 import com.ttrip.tripboard.TripBoardDomain;
 import com.ttrip.tripboard.TripBoardService;
 import com.ttrip.tripboard.TripBoardVO;
@@ -17,7 +21,25 @@ import com.ttrip.tripboard.TripBoardVO;
 @Controller
 public class TripBoardController {
 
-	@GetMapping("/tripBoard/get_trip_board_list")
+	@Autowired
+    private TripBoardService tripBoardService;
+	
+	@GetMapping("/travelPlan3")
+    public ModelAndView loadTravelPlan3(@RequestParam("regionId") int regionId) {
+		List<DstntDomain> destinations = tripBoardService.getDestinationsByRegion(regionId);
+        List<AccomDomain> accommodations = tripBoardService.getAccommodationsByRegion(regionId);
+        
+//        // 디버깅 로그 추가
+//        System.out.println("Destinations: " + destinations);
+//        System.out.println("Accommodations: " + accommodations);
+        
+        ModelAndView mav = new ModelAndView("travel-plan3");
+        mav.addObject("destinations", destinations);
+        mav.addObject("accommodations", accommodations);
+        return mav;
+    }
+
+	@GetMapping("/get_trip_board_list")
 	public String getTripBoardList(String str,Model model) {
 		return str;
 	}
@@ -72,13 +94,6 @@ public class TripBoardController {
 		return null;
 	}
 
-	@Autowired
-    private TripBoardService tripBoardService;
-
-    @PostMapping("/getDestinations")
-    public List<TripBoardDomain> getDestinationsByRegion(@RequestParam("region") String region) {
-        return tripBoardService.getDestinationsByRegion(region);
-    }
 //	@GetMapping("/tripBoard/insertDstnt")
 //	public String insertDstnt(dstntId[] dstntArr) {
 //		
