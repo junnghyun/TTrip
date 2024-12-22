@@ -30,29 +30,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
-	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
-    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
-    implementation 'javax.servlet:jstl:1.2'
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-
-	implementation 'com.servlets:cos:05Nov2002'
-
-	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:11.0.1'
-	implementation 'jakarta.el:jakarta.el-api:6.0.1'
 	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2'
-	
+	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	annotationProcessor 'org.projectlombok:lombok'
-	
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
-	providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
 
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:11.0.1'
+	implementation 'jakarta.el:jakarta.el-api:6.0.1'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'

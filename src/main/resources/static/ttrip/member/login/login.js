@@ -15,7 +15,7 @@ $(document).ready(function() {
         const password = $('.password').val();
 
         $.ajax({
-            url: "/api/auth",
+            url: "/api/login",
             type: "POST",
             data: JSON.stringify({
                 email: email,
@@ -25,6 +25,8 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 if(response.status === 'success') {
+                    // 토큰을 localStorage에 저장
+                    localStorage.setItem('jwt_token', response.token);
                     alert('Login successful!');
                     window.location.href = "/";
                 } else {
