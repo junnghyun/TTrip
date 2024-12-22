@@ -59,24 +59,31 @@ public class BoardController {
 		return "board/board_delete";
 	}
 
-	@ResponseBody
-	@GetMapping("/board/board_recommend_insert")
-	public String boardRecommendInsert(int recommendId,String nick) {
+//	@ResponseBody
+//	@GetMapping("/board/board_recommend_insert")
+//	public String boardRecommendInsert(int recommendId,String nick) {
 		
-		return "board/board_recommend_insert";
-	}
+//		String jsonObj="";
+		
+//		jsonObj=bs.addRecommend(recommendId, nick);
+		
+//		return jsonObj;
+		
+//	}
 	
-	@ResponseBody
 	@GetMapping("/board/board_recommend_delete")
+	@ResponseBody
 	public String boardRecommendDelete(int recommendId,String nick) {
 		return "board/board_recommend_delete";
 	}
 
-	@GetMapping("/board/board_report")
-	public String boardReport(ReportVO rVO) {
+//	@GetMapping("/board/board_report")
+//	public String boardReport(ReportVO rVO) {
 		
-		return "board/board_report";
-	}
+//		String jsonObj="";
+//		jsonObj=bs.reportBoard(rVO);
+//		return "board/board_report";
+//	}
 
 	
 }//BoardController

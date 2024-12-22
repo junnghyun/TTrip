@@ -1,15 +1,15 @@
 package com.ttrip.user.board;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 
 import com.ttrip.dao.MyBatisHandler;
 import com.ttrip.user.report.ReportVO;
 
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 
 @Resource
 public class BoardDAO {
@@ -27,10 +27,55 @@ public class BoardDAO {
 		return bDAO;
 	}//getInstance
 
-	public List<BoardDomain> selectBoardList(BoardDomain boardDomain){
+	
+	/**
+	 * 총 게시물의 수 검색
+	 * @param sVO
+	 * @return 게시물의 수
+	 * @throws SQLException
+	 */
+	public int selectTotalCount( SearchVO sVO )throws PersistenceException{
+		int totalCount=0;
+		
+		MyBatisHandler mbh=MyBatisHandler.getInstance();
+		
+		SqlSession handler=mbh.getHanlder();
+		try {
+			totalCount=handler.selectOne("",sVO);
+		}finally {
+			mbh.closeHandler(handler);
+		}//end finally
+		
+		return totalCount;
+	}//selectTotalCount
+	
+	
+	public List<BoardDomain> selectBoard( SearchVO sVO )throws PersistenceException{
+		List<BoardDomain> list=null;
+		MyBatisHandler mbh=MyBatisHandler.getInstance();
+		
+		SqlSession handler=mbh.getHanlder();
+		try {
+			list=handler.selectList("",sVO);
+		}finally {
+			mbh.closeHandler(handler);
+		}//end finally
+		return list;
+	}//selectBoard
+	
+	
+	
+	public List<BoardDomain> selectBoardList(BoardDomain bd) throws PersistenceException{
 		List<BoardDomain> list=null;
 		
+		MyBatisHandler mbh=MyBatisHandler.getInstance();
 		
+		SqlSession handler=mbh.getHanlder();
+		try {
+			list=handler.selectList("",bd);
+		}finally {
+			mbh.closeHandler(handler);
+		}//end finally
 		
 		return list;
 	}//selectBoardList
@@ -72,25 +117,59 @@ public class BoardDAO {
 	public int deleteBoard(int boardId,String nick) {
 		int rowCnt=0;
 		
+		MyBatisHandler mbh=MyBatisHandler.getInstance();
+		
+		SqlSession handler=mbh.getHanlder( true );
+		try {
+			rowCnt=handler.update("",boardId);
+		}finally {
+			mbh.closeHandler(handler);
+		}//end finally
+		
 		return rowCnt;
 	}
 	
 	public int insertRecommend(int recommendId,String nick) {
 		int cnt=0;
+
+		MyBatisHandler mbh=MyBatisHandler.getInstance();
 		
+		SqlSession handler=mbh.getHanlder( true );
+		try {
+			cnt=handler.update("",recommendId);
+		}finally {
+			mbh.closeHandler(handler);
+		}//end finally
 		
 		return cnt; 
 	}
 	
 	public int deleteRecommend(int recommendId,String nick) {
 		int rowCnt=0;
+		MyBatisHandler mbh=MyBatisHandler.getInstance();
+		
+		SqlSession handler=mbh.getHanlder( true );
+		try {
+			rowCnt=handler.update("",recommendId);
+		}finally {
+			mbh.closeHandler(handler);
+		}//end finally
 		
 		return rowCnt;
 	}
 	
 	public int insertReport(ReportVO rVO) {
 		int cnt=0;
+
+		MyBatisHandler mbh=MyBatisHandler.getInstance();
 		
-		return cnt;
+		SqlSession handler=mbh.getHanlder( true );
+		try {
+			cnt=handler.insert("",rVO);
+		}finally {
+			mbh.closeHandler(handler);
+		}//end finally
+		
+		return cnt; 
 	}
 }//BoardDAO
