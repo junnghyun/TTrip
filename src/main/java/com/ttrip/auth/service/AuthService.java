@@ -22,7 +22,6 @@ public class AuthService {
     }
 
     public String authenticateUser(LoginRequest loginRequest) throws Exception {
-        // 인증 시도
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
@@ -30,11 +29,12 @@ public class AuthService {
                 )
         );
 
-        // 권한 가져오기
         Iterator<? extends GrantedAuthority> iterator = authentication.getAuthorities().iterator();
         String role = iterator.next().getAuthority();
 
-        // JWT 토큰 생성
-        return jwtUtil.createJwt(authentication.getName(), role, 60 * 60 * 10L);
+        // 디버깅을 위한 로그 추가
+        System.out.println("Role during token creation: " + role);
+
+        return jwtUtil.createJwt(authentication.getName(), role, 6 * 60 * 60 * 1000L);
     }
 }

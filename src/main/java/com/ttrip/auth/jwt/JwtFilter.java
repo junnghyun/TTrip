@@ -2,6 +2,7 @@ package com.ttrip.auth.jwt;
 
 import com.ttrip.auth.domain.User;
 import com.ttrip.auth.dto.CustomUserDetails;
+import com.ttrip.auth.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,54 +17,41 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public JwtFilter(JwtUtil jwtUtil) {
-
+    public JwtFilter(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService) {
         this.jwtUtil = jwtUtil;
+        this.customUserDetailsService = customUserDetailsService;
     }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String authorization = request.getHeader("Authorization");
 
-        //request에서 Authorization 헤더를 찾음
-        String authorization= request.getHeader("Authorization");
+        if (authorization == null) {
+            System.out.println("Authorization header is null");
+        } else if (!authorization.startsWith("Bearer ")) {
+            System.out.println("Invalid Authorization format");
+        }
 
-        //Authorization 헤더 검증
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-
-            System.out.println("token null");
             filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료 (필수)
             return;
         }
 
         String token = authorization.split(" ")[1];
+        System.out.println("Token extracted: " + token);
 
-        //토큰 소멸 시간 검증
         if (jwtUtil.isExpired(token)) {
-
-            System.out.println("token expired");
+            System.out.println("Token expired");
             filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료 (필수)
             return;
         }
 
-
         String email = jwtUtil.getEmail(token);
-        String role = jwtUtil.getRole(token);
-
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword("temppassword");
-        user.setRole(role);
-
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
+        CustomUserDetails customUserDetails = (CustomUserDetails) customUserDetailsService.loadUserByUsername(email);
 
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);

@@ -1,4 +1,13 @@
 // script.js
+$(document).ready(function() {
+    function addAuthHeader(xhr) {
+        const token = localStorage.getItem('jwt_token');
+        if (token) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        }
+    }
+});
+
 const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
 const timeSelection = document.getElementById("time-selection");
