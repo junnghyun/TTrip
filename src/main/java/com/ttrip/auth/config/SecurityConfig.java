@@ -2,10 +2,12 @@ package com.ttrip.auth.config;
 
 import com.ttrip.auth.jwt.JwtFilter;
 import com.ttrip.auth.jwt.JwtUtil;
+import com.ttrip.auth.service.CustomOAuth2UserService;
 import com.ttrip.auth.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,10 +25,12 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
-    public SecurityConfig(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfig(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService, CustomOAuth2UserService customOAuth2UserService) {
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
+        this.customOAuth2UserService = customOAuth2UserService;
     }
 
     //AuthenticationManager Bean 등록
@@ -45,6 +49,9 @@ public class SecurityConfig {
 
         http
                 .csrf((auth) -> auth.disable())
+                .oauth2Login((oauth2) -> oauth2
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService)))
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login", "/", "/signup","/ttrip/**", "/signup/**","/auth/**", "/api/**").permitAll()
                         .requestMatchers("/WEB-INF/**").permitAll()

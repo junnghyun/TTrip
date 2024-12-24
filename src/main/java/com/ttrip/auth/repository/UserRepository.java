@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     // Oracle compatible email check query
@@ -26,4 +28,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     }
 
     User findByEmail(String email);
+
+    Optional<User> findByEmailAndProvider(String email, String provider);
+
 }
