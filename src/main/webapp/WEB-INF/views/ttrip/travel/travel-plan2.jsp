@@ -13,13 +13,13 @@
 <body>
 <%
     // 전달된 지역 정보를 가져옵니다.
-    String regionId = request.getParameter("regionId");
-    if (regionId == null || regionId.isEmpty()) {
-        regionId = "선택된 지역 없음"; // 기본값
+    String region = request.getParameter("region");
+    if (region == null || region.isEmpty()) {
+        region = "선택된 지역 없음"; // 기본값
     }
 %>
 <div class="sidebar">
-    <strong id="trip_grand"><%= regionId %></strong>
+    <strong id="trip_grand"><%= region %></strong>
 
     <div class="date-picker-container">
         <input type="date" id="start-date" class="date-input">
@@ -32,7 +32,7 @@
     </div>
 	<form action="tr3" method="GET">
         <!-- 지역 값을 Hidden Field로 전달 -->
-        <input type="hidden" name="regionId" value="<%= regionId %>">
+        <input type="hidden" name="region" value="<%= region %>">
     <button id="complete-button" class="hidden">시간 설정 완료</button>
     </form>
 </div>
