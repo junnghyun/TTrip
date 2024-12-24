@@ -15,18 +15,19 @@
 </head>
 <body>
 <%
-    // travel-plan2.jsp에서 전달된 지역 정보를 가져옵니다.
-    String regionId = request.getParameter("regionId");
-    if (regionId == null || regionId.isEmpty()) {
-        regionId = "선택된 지역 없음"; // 기본값
+    // travel-plan2.jsp에서 전달된 지역 정보
+    String region = request.getParameter("region");
+    if (region == null || region.isEmpty()) {
+        region = "선택된 지역 없음"; // 기본값
     }
- // Controller에서 전달받은 여행지와 숙소 데이터를 JSP로 전달받습니다.
-    List<DstntDomain> destinations = (List<DstntDomain>) request.getAttribute("destinations");
-    List<AccomDomain> accommodations = (List<AccomDomain>) request.getAttribute("accommodations");
+ 	// Controller에서 전달받은 여행지와 숙소 데이터
+    List<DstntDomain> destinations = (List<DstntDomain>) request.getAttribute("destinations"); 
+ 	List<AccomDomain> accommodations = (List<AccomDomain>) request.getAttribute("accommodations"); 
+
 %>
 <!-- 사이드바 영역 -->
 <div class="sidebar">
-    <h2 id="travel-name"><%= regionId %></h2>
+    <h2 id="travel-name"><%= region %></h2>
     <div id="selection-summary">
         <h3>선택한 기간</h3>
         <p id="selected-range"></p>
@@ -36,7 +37,7 @@
         <button class="tab-link active" onclick="openTab(event, 'location')">장소 선택</button>
         <button class="tab-link" onclick="openTab(event, 'accommodation')">숙소 설정</button>
     </div>
-
+<form id="courseDetail">
     <div id="location" class="tab-content active">
         <div class="location-selection">
             <h2>장소 선택</h2>
@@ -50,7 +51,7 @@
                                 <h3><%= dstnt.getName() %></h3>
                                 <p><%= dstnt.getDetail() %></p>
                             </div>
-                            <button onclick="addPlaceToDayPrompt('<%= dstnt.getName() %>', '<%= dstnt.getImg() %>')">+</button>
+                            <button type="button" onclick="addPlaceToDayPrompt('<%= dstnt.getName() %>', '<%= dstnt.getImg() %>')">+</button>
                         </li>
                     <% } %>
                 <% } else { %>
@@ -72,7 +73,7 @@
                                 <h3><%= accom.getName() %></h3>
                                 <p><%= accom.getAddr() %></p>
                             </div>
-                            <button onclick="addAccommodationToDayPrompt('<%= accom.getName() %>', 'accommodation.jpg')">+</button>
+                            <button type="button" onclick="addAccommodationToDayPrompt('<%= accom.getName() %>', 'accommodation.jpg')">+</button>
                         </li>
                     <% } %>
                 <% } else { %>
@@ -81,7 +82,7 @@
             </ul>
         </div>
     </div>
-
+</form>
     <button id="finalize-button">최종 선택 완료</button>
 </div>
 <div class="main-content">
@@ -91,6 +92,15 @@
     </div>
     <div class="resize-handle"></div>
 </div>
+<script>
+    // Finalize 버튼 클릭 시 폼 데이터 전송
+    document.getElementById('finalize-button').addEventListener('click', function () {
+        const form = document.getElementById('courseDetail');
+        form.action = '<%= request.getContextPath() %>/td';
+        form.method = 'POST';
+        form.submit();
+    });
+</script>
 
 <!-- 메인 콘텐츠 영역 -->
 <div id="map" style="width: 70%; height: 100vh; float: right;"></div>
