@@ -1,6 +1,9 @@
 package com.ttrip.tripboard;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.ttrip.tripplan.TripPlanDomain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +14,9 @@ import lombok.ToString;
 @ToString
 public class TripBoardDomain {
 	
-	private String title, status, detail, dayDetail;
-	private int tripBoardId, regionId, lat, lng, day;
-	private Date startDate, endDate;
+	private String title, status, nick;
+	private int tripBoardId, regionId;
+	private Date startDate, endDate, inputDate;
+	
+	private List<TripPlanDomain> tripPlans;
 }
