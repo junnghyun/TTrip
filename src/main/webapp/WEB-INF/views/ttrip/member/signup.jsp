@@ -41,15 +41,15 @@
       <div class="line"></div>
 
       <div class="media-options">
-        <a href="#" class="field kakao">
-          <img src="${pageContext.request.contextPath}/ttrip/member/images/kakao_logo.png" alt="Kakao" class="kakao-img">
+        <a href="/oauth2/authorization/kakao" class="field kakao">
+          <img src="${pageContext.request.contextPath}/ttrip/member/images/Kakao.png" alt="Kakao" class="kakao-img">
           <span>Signup with Kakao</span>
         </a>
       </div>
 
       <div class="media-options">
-        <a href="#" class="field naver">
-          <img src="${pageContext.request.contextPath}/ttrip/member/images/naver_logo.png" alt="Naver" class="naver-img">
+        <a href="/oauth2/authorization/naver" class="field naver">
+          <img src="${pageContext.request.contextPath}/ttrip/member/images/Naver.png" alt="Naver" class="naver-img">
           <span>Signup with Naver</span>
         </a>
       </div>
