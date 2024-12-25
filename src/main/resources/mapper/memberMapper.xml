@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ttrip.admin.member.memberMapper">
+    <!-- 모든 회원 조회 -->
+    <select id="selectAllMembers" resultType="com.ttrip.admin.member.MemberVO">
+        SELECT * FROM member ORDER BY join_date DESC
+    </select>
+    
+    <!-- 닉네임으로 회원 검색 -->
+	<select id="searchMembersByNick" parameterType="string" 
+	        resultType="com.ttrip.admin.member.MemberVO">
+	    SELECT * FROM member 
+	    WHERE nick LIKE '%'||#{searchTerm}||'%'
+	    ORDER BY join_date DESC
+	</select>
+	
+	<select id="selectMemberByNick" parameterType="string" resultType="com.ttrip.admin.member.MemberVO">
+	SELECT * FROM member WHERE nick = #{nick}
+	</select>
+	
+    
+    
+    
+</mapper>

@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 .member-filter {
 	display: flex;
     justify-content: space-between;
@@ -67,6 +68,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    color: black;
+    text-decoration: none;
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #f2f2f2;
+}
+
+.pagination span {
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
 }
 
 .prev-page, .next-page {
@@ -102,3 +126,5 @@
 .input-group:focus-within {
     transform: translateY(-2px);
 }
+
+
