@@ -1,5 +1,7 @@
 package com.ttrip.auth.config;
 
+import com.ttrip.auth.exception.CustomAccessDeniedHandler;
+import com.ttrip.auth.exception.CustomAuthenticationEntryPoint;
 import com.ttrip.auth.jwt.JwtFilter;
 import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.auth.service.CustomOAuth2UserService;
@@ -26,7 +28,9 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
 
-    public SecurityConfig(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService, CustomOAuth2UserService customOAuth2UserService) {
+    public SecurityConfig(JwtUtil jwtUtil,
+                          CustomUserDetailsService customUserDetailsService,
+                          CustomOAuth2UserService customOAuth2UserService) {
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
         this.customOAuth2UserService = customOAuth2UserService;
@@ -48,10 +52,10 @@ public class SecurityConfig {
 
         http
                 .csrf((auth) -> auth.disable())
-//                .oauth2Login((oauth2) -> oauth2
-//                        .loginPage("/custom-login")
-//                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-//                                .userService(customOAuth2UserService)))
+                .oauth2Login((oauth2) -> oauth2
+                        .loginPage("/custom-login")
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService)))
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login", "/", "/signup","/ttrip/**", "/signup/**","/auth/**", "/api/**").permitAll()
                         .requestMatchers("/WEB-INF/**").permitAll()
@@ -68,7 +72,8 @@ public class SecurityConfig {
         // 인증, 인가 실패 핸들러 설정
         http.exceptionHandling(
                 exceptionHandling -> {
-                    // 여기서 예외 처리 로직
+                    exceptionHandling.accessDeniedHandler(new CustomAccessDeniedHandler());
+                    exceptionHandling.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
                 }
         );
 
