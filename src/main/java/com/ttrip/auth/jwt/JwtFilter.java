@@ -1,6 +1,5 @@
 package com.ttrip.auth.jwt;
 
-import com.ttrip.auth.domain.User;
 import com.ttrip.auth.dto.CustomUserDetails;
 import com.ttrip.auth.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
@@ -28,13 +27,9 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
 
-        if (authorization == null) {
-            System.out.println("Authorization header is null");
-        } else if (!authorization.startsWith("Bearer ")) {
-            System.out.println("Invalid Authorization format");
-        }
-
+        // Authorization 헤더 확인
         if (authorization == null || !authorization.startsWith("Bearer ")) {
+            System.out.println("Authorization header is missing or incorrect format");
             filterChain.doFilter(request, response);
             return;
         }
@@ -42,18 +37,33 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = authorization.split(" ")[1];
         System.out.println("Token extracted: " + token);
 
+        // 토큰 만료 체크
         if (jwtUtil.isExpired(token)) {
-            System.out.println("Token expired");
-            filterChain.doFilter(request, response);
+            System.out.println("Token is expired");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token is expired");
             return;
         }
 
-        String email = jwtUtil.getEmail(token);
-        CustomUserDetails customUserDetails = (CustomUserDetails) customUserDetailsService.loadUserByUsername(email);
+        try {
+            // 이메일을 통해 사용자 정보를 로드
+            String email = jwtUtil.getEmail(token);
+            System.out.println("Extracted email from token: " + email);
 
-        Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+            CustomUserDetails customUserDetails = (CustomUserDetails) customUserDetailsService.loadUserByUsername(email);
+            System.out.println("User details loaded for: " + customUserDetails.getUsername());
 
+            // 인증된 사용자 정보를 SecurityContext에 설정
+            Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        } catch (Exception e) {
+            // 예외 처리: 토큰 파싱 실패 시 Unauthorized 반환
+            System.out.println("Error during token parsing or user details loading: " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
+            return;
+        }
+
+        // 필터 체인 계속 진행
         filterChain.doFilter(request, response);
     }
 }

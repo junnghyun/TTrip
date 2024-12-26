@@ -48,10 +48,10 @@ public class SecurityConfig {
 
         http
                 .csrf((auth) -> auth.disable())
-                .oauth2Login((oauth2) -> oauth2
-                        .loginPage("/custom-login")
-                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService)))
+//                .oauth2Login((oauth2) -> oauth2
+//                        .loginPage("/custom-login")
+//                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+//                                .userService(customOAuth2UserService)))
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login", "/", "/signup","/ttrip/**", "/signup/**","/auth/**", "/api/**").permitAll()
                         .requestMatchers("/WEB-INF/**").permitAll()
@@ -60,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
                 .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         // JwtFilter에 CustomUserDetailsService를 주입하여 필터를 추가합니다.
         http.addFilterBefore(new JwtFilter(jwtUtil, customUserDetailsService), UsernamePasswordAuthenticationFilter.class);
@@ -82,6 +82,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
         config.addAllowedHeader("*"); // 모든 헤더 허용
         config.addAllowedMethod("*"); // 모든 HTTP 메소드 허용
         config.addAllowedHeader("Authorization");

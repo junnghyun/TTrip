@@ -49,30 +49,18 @@ public class AuthController {
     }
 
     @GetMapping("/validate-token")
-    public ResponseEntity<?> validateToken(HttpServletRequest request) {
-        try {
-            String authorization = request.getHeader("Authorization");
-            if (authorization != null && authorization.startsWith("Bearer ")) {
-                String token = authorization.substring(7);
-                if (!jwtUtil.isExpired(token)) {
-                    String email = jwtUtil.getEmail(token);
-                    String role = jwtUtil.getRole(token);
-                    return ResponseEntity.ok(Map.of(
-                            "status", "valid",
-                            "email", email,
-                            "role", role
-                    ));
-                }
-            }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                    "status", "invalid",
-                    "message", "Invalid or expired token"
-            ));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                    "status", "error",
-                    "message", e.getMessage()
-            ));
+    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return new ResponseEntity<>("Invalid or missing Authorization header", HttpStatus.BAD_REQUEST);
         }
+
+        String token = authorization.split(" ")[1]; // "Bearer " 이후의 토큰을 추출
+
+        if (jwtUtil.isExpired(token)) {
+            return new ResponseEntity<>("Token expired", HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>("{\"status\": \"valid\"}", HttpStatus.OK);
     }
+
 }
