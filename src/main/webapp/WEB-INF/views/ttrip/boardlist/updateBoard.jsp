@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info="" %>
+    info="자유게시판 편집" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    
 <!DOCTYPE html>
@@ -26,7 +26,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 글 작성</title>
+<title>게시판 글 수정</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -84,33 +84,6 @@
       ]
     });
   });
-  
-  //적용하기 버튼 클릭
-  $("#btnWrite").click(function(){
-	  chkNull();
-  });//click
-  
-  //취소하기 버튼 클릭시 메인 페이지로 이동
-  $("#btnBack").click(function(){
-	  location.href="../boardlist/mainBoardlist.jsp";
-  });//click
-  
-  function chkNull(){
-		if($("#subject").val().trim()==""){
-			alert("제목은 필수 입력");
-			$("#subject").focus();
-			return;
-		}//end if
-		
-		if($("#contents").val().trim()==""){
-			alert("내용은 필수 입력");
-			return;
-		}//end if
-		
-		$("#btnWrite").submit();
-	}//chkNull 
-  
-  
 </script>
 </head>
 <body>
@@ -136,13 +109,13 @@
   <!-- 내용 -->
   <div class="writeMain">
     <label for="contents">내용</label>
-    <textarea id="summernote" id="contents" name="contents"></textarea>
+    <textarea id="summernote" name="contents"></textarea>
   </div>
 
   <!-- 버튼 -->
   <div class="buttons">
-    <button type="button" id="btnBack"  class="btn btn-secondary">취소하기</button>
-    <button type="button" id="btnWrite" class="btn btn-primary">적용하기</button>
+    <button type="button" class="btn btn-secondary">취소하기</button>
+    <button type="button" class="btn btn-primary">적용하기</button>
   </div>
 </div>
 </body>

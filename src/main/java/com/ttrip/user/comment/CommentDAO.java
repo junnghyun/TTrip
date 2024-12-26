@@ -2,13 +2,13 @@ package com.ttrip.user.comment;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import com.ttrip.dao.MyBatisHandler;
 import com.ttrip.user.report.ReportVO;
 
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 
 @Resource
 public class CommentDAO {
@@ -27,6 +27,12 @@ public class CommentDAO {
 		return cDAO; 
 	}//get
 	
+	
+	/** 입력 값을 코켄트 테이블에 추가하는 일
+	 * @param cVO
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public int insertComment(CommentVO cVO) throws PersistenceException {
 		int cnt=0; 
 		
@@ -50,7 +56,7 @@ public class CommentDAO {
 		MyBatisHandler mbh=MyBatisHandler.getInstance();
 		SqlSession handler=mbh.getHanlder(true);
 		try {
-			cnt=handler.insert("com.ttrip.user.board.insertComment");
+			cnt=handler.update("com.ttrip.user.board.insertComment");
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally

@@ -88,7 +88,7 @@ public class BoardDAO {
 		
 		SqlSession handler=mbh.getHanlder( true );
 		try {
-			cnt=handler.insert("",bVO);
+			cnt=handler.insert("com.ttrip.user.board.insertBoard",bVO);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally

@@ -60,7 +60,7 @@
         padding: 5px 30px 5px 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        background: url('../common/images/search.png') no-repeat right center;
+        background: url('../boardlist/images/search.png') no-repeat right center;
         background-size: 20px 20px;
     }
     .write-btn {
@@ -84,6 +84,27 @@
         color: #0056b3;
     }
 </style>
+<script type="text/javascript">
+
+$(document).ready(function() {
+    // 검색 기능
+    $('#search-input').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        $('#board-content tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+
+    // 제목 클릭 이벤트 (추가적인 페이지 이동 처리 가능)
+    $('.clickable-title').on('click', function(e) {
+        e.preventDefault(); // 기본 동작 막기
+        const url = $(this).attr('href'); // href 값 가져오기
+        console.log(`Navigating to: ${url}`);
+        window.location.href = ""; // 페이지 이동
+    });
+});
+</script>
+
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
@@ -141,24 +162,6 @@
     <input type="text" id="search-input" placeholder="Search" />
     <button type="button" class="write-btn" onclick="location.href='writeBoard.jsp'">글쓰기</button>
 </div>
-<script>
-$(document).ready(function() {
-    // 검색 기능
-    $('#search-input').on('keyup', function() {
-        var value = $(this).val().toLowerCase();
-        $('#board-content tr').filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-    });
 
-    // 제목 클릭 이벤트 (추가적인 페이지 이동 처리 가능)
-    $('.clickable-title').on('click', function(e) {
-        e.preventDefault(); // 기본 동작 막기
-        const url = $(this).attr('href'); // href 값 가져오기
-        console.log(`Navigating to: ${url}`);
-        window.location.href = ""; // 페이지 이동
-    });
-});
-</script>
 </body>
 </html>

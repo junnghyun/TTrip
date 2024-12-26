@@ -3,6 +3,7 @@ package com.ttrip.user.board;
 import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class BoardService {
 		List<BoardDomain> list=null;
 		
 		try {
-		BoardDAO.getInstance().selectBoardList(boardDomain);
+			list=BoardDAO.getInstance().selectBoardList(boardDomain);
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
 		}//end catch
@@ -28,8 +29,16 @@ public class BoardService {
 		
 	}//getBoardList
 	
-	//게시판
-//	public BoardDomain getBoardDetail(int boardId) {
+//  게시판
+//	public List<BoardDomain> getBoardDetail(int boardId) {
+//		List<BoardDomain>list=null;
+//		try {
+//			BoardDAO.getInstance().getBoardDetail(boardId);
+//		}catch(PersistenceException pe) {
+//			pe.printStackTrace();
+//		}
+//		return list; 
+		
 //	}
 	
 	//게시판 작성 
@@ -60,8 +69,8 @@ public class BoardService {
 
 	}
 	
-	//게시판 삭제
-	public boolean removeBoard(int boardId ,String nick) {
+	//게시판 삭제(int boardId, String nick)
+	public boolean removeBoard(int boardId, String nick) {
 	
 		boolean flag=false;
 		
@@ -74,7 +83,6 @@ public class BoardService {
 		return flag;	
 
 	}
-	
 		
 	//댓글 추가
 	public boolean addRecommend(int boardId ,String nick) {
