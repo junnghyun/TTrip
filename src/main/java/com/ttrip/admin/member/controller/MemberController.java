@@ -3,10 +3,14 @@ package com.ttrip.admin.member.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -53,10 +57,48 @@ public class MemberController {
         return "/admin/admin_member/admin_member";
     }
     
+    // 회원 상세정보 조회
     @GetMapping("/admin_member/detail/{nick}")
-    @ResponseBody
-    public MemberVO getMemberDetail(@PathVariable String nick) {
-        return memberService.getMemberByNick(nick);
+    public String getMemberDetail(@PathVariable(name = "nick") String nick, Model model) {
+        try {
+            MemberVO member = memberService.getMemberByNick(nick);
+            if (member != null) {
+                model.addAttribute("member", member);
+                return "/admin/admin_member/member_modal"; // :: content 부분 제거
+            } else {
+                return "error";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
-
+    
+    @PostMapping("/admin_member/update")
+    @ResponseBody
+    public ResponseEntity<String> updateMember(@RequestBody MemberVO member) {
+        try {
+            System.out.println("Updating member - Original Nick: " + member.getMemberNick() + ", New Nick: " + member.getNick());
+            memberService.updateMember(member);
+            return ResponseEntity.ok("{\"status\":\"success\", \"message\":\"회원 정보가 수정되었습니다.\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\":\"error\", \"message\":\"회원 정보 수정에 실패했습니다.\"}");
+        }
+    }
+    
+    @PostMapping("/admin_member/delete/{nick}")
+    @ResponseBody
+    public ResponseEntity<String> deleteMember(@PathVariable(name = "nick") String nick) {
+        try {
+            memberService.deleteMember(nick);
+            return ResponseEntity.ok("{\"status\":\"success\", \"message\":\"회원이 삭제되었습니다.\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\":\"error\", \"message\":\"회원 삭제에 실패했습니다.\"}");
+        }
+    }
+    
 }
