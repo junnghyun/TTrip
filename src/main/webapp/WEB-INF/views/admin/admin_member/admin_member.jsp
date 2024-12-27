@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_member/css/admin_member.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/common/css/admin.css">
 <script src="${pageContext.request.contextPath}/admin/admin_member/js/admin_member.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
 //편집 화면 버튼
@@ -80,7 +81,6 @@ function updateMember() {
     const birthValue = form.birth.value;
     const nickValue = form.nick.value;
 
-    // 필수값 체크
     if (!nameValue || nameValue.trim() === '') {
         alert('이름은 필수 입력값입니다.');
         form.name.focus();
@@ -106,29 +106,28 @@ function updateMember() {
         birth: birthValue
     };
 
-    fetch('/admin_member/update', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+    $.ajax({
+        url: '/admin_member/update',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(formData),
+        success: function(data) {
+            if (data.status === 'success') {
+                alert('회원 정보가 수정되었습니다.');
+                closeMemverModal();
+                location.reload();
+            } else {
+                alert('회원 정보 수정에 실패했습니다.');
+            }
         },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert(data.message);
-            closeMemverModal();
-            location.reload(); 
-        } else {
-            alert(data.message);
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            alert('회원 정보 수정 중 오류가 발생했습니다.');
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('회원 정보 수정 중 오류가 발생했습니다.');
     });
 }
-    
+
 function deleteMember2(nick, accountFlag) {
     if(accountFlag === 'N') {
         alert('이미 탈퇴된 회원입니다.');
@@ -139,24 +138,23 @@ function deleteMember2(nick, accountFlag) {
         return;
     }
 
-    fetch('/admin_member/delete/' + encodeURIComponent(nick), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+    $.ajax({
+        url: '/admin_member/delete/' + encodeURIComponent(nick),
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data) {
+            if (data.status === 'success') {
+                alert('회원이 삭제되었습니다.');
+                location.reload();
+            } else {
+                alert('회원 삭제에 실패했습니다.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            alert('회원 삭제 중 오류가 발생했습니다.');
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert(data.message);
-            location.reload();
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('회원 삭제 중 오류가 발생했습니다.');
     });
 }
 
