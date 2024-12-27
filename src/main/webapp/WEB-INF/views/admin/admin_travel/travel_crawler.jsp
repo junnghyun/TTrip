@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>매장 데이터 가져오기</title>
+<title>여행지 정보 가져오기</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_travel/css/admin_travel_crawler.css?after">
 <script src="${pageContext.request.contextPath}/admin/admin_travel/js/admin_travel_crawler.js" defer></script>
+<script type="text/javascript">
+$(function(){
+	
+});//ready
+</script>
 </head>
 <body>
     <div class="container">
@@ -40,7 +45,7 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="checkAll"/></th>
-                        <th>매장명</th>
+                        <th>여행지명</th>
                         <th>주소</th>
                         <th>연락처</th>
                         <th>위도</th>

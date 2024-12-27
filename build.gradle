@@ -41,6 +41,8 @@ dependencies {
 	implementation 'jakarta.el:jakarta.el-api:6.0.1'
 	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2'
 	
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.16.1'
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-	@GetMapping("/main_monthbest")
-    public String main_monthbest() {
+	@GetMapping("/")
+    public String index() {
 
-        return "ttrip/main/main_monthbest";
+        return "/index";
     }//
 	
 	@GetMapping("/main_mytripcourse")
