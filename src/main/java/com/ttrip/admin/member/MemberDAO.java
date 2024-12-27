@@ -27,9 +27,11 @@ public class MemberDAO {
     }
 
     public void updateMember(MemberVO member) {
-        sqlSession.update(NAMESPACE + ".updateMember", member);
+        sqlSession.update("com.ttrip.admin.member.memberMapper.updateMember", member);
     }
     
-    
+    public void deleteMember(String nick) {
+        sqlSession.update(NAMESPACE + ".deleteMember", nick);
+    }
     
 }

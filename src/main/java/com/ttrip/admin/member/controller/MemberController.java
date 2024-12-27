@@ -7,11 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ttrip.admin.member.MemberService;
 import com.ttrip.admin.member.MemberVO;
+
+import net.minidev.json.JSONObject;
 
 @Controller
 public class MemberController {
@@ -54,9 +58,46 @@ public class MemberController {
     }
     
     @GetMapping("/admin_member/detail/{nick}")
-    @ResponseBody
-    public MemberVO getMemberDetail(@PathVariable String nick) {
-        return memberService.getMemberByNick(nick);
+    public String getMemberDetail(@PathVariable(name = "nick") String nick, Model model) {
+        try {
+            MemberVO member = memberService.getMemberByNick(nick);
+            if (member != null) {
+                model.addAttribute("member", member);
+                return "/admin/admin_member/member_modal";
+            } else {
+                return "error";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
-
+    
+    @PostMapping("/admin_member/update")
+    @ResponseBody
+    public String updateMember(@RequestBody MemberVO member) {
+        JSONObject json = new JSONObject();
+        try {
+            memberService.updateMember(member);
+            json.put("status", "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.put("status", "error");
+        }
+        return json.toString();
+    }
+    
+    @PostMapping("/admin_member/delete/{nick}")
+    @ResponseBody
+    public String deleteMember(@PathVariable(name = "nick") String nick) {
+        JSONObject json = new JSONObject();
+        try {
+            memberService.deleteMember(nick);
+            json.put("status", "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.put("status", "error");
+        }
+        return json.toString();
+    }
 }

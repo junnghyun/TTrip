@@ -1,4 +1,4 @@
-package com.ttrip.main;
+package com.ttrip.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

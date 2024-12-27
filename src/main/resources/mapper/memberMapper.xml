@@ -17,10 +17,21 @@
 	</select>
 	
 	<select id="selectMemberByNick" parameterType="string" resultType="com.ttrip.admin.member.MemberVO">
-	SELECT * FROM member WHERE nick = #{nick}
+	    SELECT * FROM member WHERE nick = #{nick}
 	</select>
+    
+    <update id="updateMember" parameterType="com.ttrip.admin.member.MemberVO">
+	    UPDATE member 
+	    SET name = #{name},
+	        phone = #{phone},
+	        birth = #{birth}
+	    WHERE nick = #{nick}
+	</update>
 	
-    
-    
+	<update id="deleteMember" parameterType="string">
+	    UPDATE member 
+	    SET account_flag = 'N'
+	    WHERE nick = #{nick}
+	</update>
     
 </mapper>

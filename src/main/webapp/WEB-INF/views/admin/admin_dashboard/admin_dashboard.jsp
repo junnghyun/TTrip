@@ -10,30 +10,37 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="${pageContext.request.contextPath}admin/admin_dashboard/js/admin_dashboard.js" defer></script>
+    <style>
+	.chart-container {
+	    height: 400px;
+	    margin: 20px;
+	    padding: 10px;
+	}
+</style>
 </head>
 <body>
    <jsp:include page="../common/admin.jsp" />
     <div class="common_admin">
         <h1>대시보드</h1>
         <div class="dashboard-grid">
-            <!-- 매출 분석 차트 -->
+            <!-- 여행 코스 지역 차트 -->
             <div class="dashboard-item" id="box1">
-                <h2>여행 코스 지역 추천 순위</h2>
-                <div class="chart-container">
-                    <canvas id="salesChart"></canvas>
-                </div>
-            </div>
+	    <h2>여행 코스 지역 추천 순위</h2>
+	    <div class="chart-container">
+	        <canvas id="regionChart"></canvas>
+	    </div>
+	</div>
+	
 
-            <!-- 매출 요약 -->
-            <div class="dashboard-item" id="box2">
-			    <h2>누적 사용자</h2>
-			    <div class="chart-container">
-                    <canvas id="peopleChart"></canvas>
-                </div>
-			</div>
+           <!-- 누적 사용자 요약 -->
+           <div class="dashboard-item" id="box2">
+		    <h2>누적 사용자</h2>
+		    <div class="chart-container">
+                   <canvas id="peopleChart"></canvas>
+               </div>
+		</div>
 
-
-            <!-- 인기 제품 차트 -->
+            <!-- 여행지 관심 차트 -->
             <div class="dashboard-item" id="box3">
                 <h2>여행지 관심 순위</h2> 
                 <div class="chart-container">
@@ -41,7 +48,7 @@
                 </div>
             </div>
 
-            <!-- 누적 사용자 차트 -->
+            <!-- 신규 신고 차트 -->
             <div class="dashboard-item" id="box4">
                 <h2>신규 신고</h2>
                 <div class="chart-container">

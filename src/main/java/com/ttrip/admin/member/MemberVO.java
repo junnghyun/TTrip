@@ -14,7 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberVO {
-    private String nick;           
+    private String nick;   
+    private String memberNick;
     private String name;           
     private String pass;          
     private String birth;          

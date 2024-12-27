@@ -9,38 +9,156 @@
 <title>관리자 회원관리</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_member/css/admin_member.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/common/css/admin.css">
-<script src="${pageContext.request.contextPath}/admin/admin_member.js/admin_member.js" defer></script>
+<script src="${pageContext.request.contextPath}/admin/admin_member/js/admin_member.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <script>
-  
-  		//편집 화면 버튼
-	function MemberModal() {
-        const modal = document.getElementById('MemberModal');
-        const overlay = modal.querySelector('.modal-overlay');
+<script>
+//편집 화면 버튼
+function MemberModal() {
+    const modal = document.getElementById('MemberModal');
+    if(modal) {
         modal.style.display = 'block';
-        overlay.style.display = 'block';
-    }
-
-    function closeMemverModal() {
-        const modal = document.getElementById('MemberModal');
+        const modalContent = modal.querySelector('.modal-content');
         const overlay = modal.querySelector('.modal-overlay');
-        modal.style.display = 'none';
-        overlay.style.display = 'none';
+        if(overlay) {
+            overlay.style.display = 'block';
+        }
+        if(modalContent) {
+            modalContent.style.pointerEvents = 'auto';
+        }
     }
+}
+
+function closeMemverModal() {
+    const modal = document.getElementById('MemberModal');
+    if(modal) {
+        modal.style.display = 'none';
+        const overlay = modal.querySelector('.modal-overlay');
+        if(overlay) {
+            overlay.style.display = 'none';
+        }
+    }
+}
+
+function showMemberModal(nick) {
+    if (!nick) {
+        alert('회원 정보가 없습니다.');
+        return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/admin_member/detail/' + encodeURIComponent(nick), true);
     
-
-
-    // 모달 외부 클릭 시 닫기
-    window.onclick = function(event) {
-        const modal = document.getElementById('MemberModal');
-        const modalOverlay = modal ? modal.querySelector('.modal-overlay') : null;
-        
-        if (event.target === modalOverlay) {
-            closeMemverModal();
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            if (xhr.responseText.includes("error")) {
+                alert('회원 정보를 불러오는데 실패했습니다.');
+                return;
+            }
+            const modalContainer = document.getElementById('MemberModal');
+            if(modalContainer) {
+                modalContainer.innerHTML = xhr.responseText;
+                MemberModal();
+            }
+        } else {
+            console.error('Error:', xhr.status);
+            alert('회원 정보를 불러오는데 실패했습니다.');
         }
     };
     
-    </script>
+    xhr.onerror = function() {
+        console.error('Request failed');
+        alert('서버 연결에 실패했습니다.');
+    };
+    
+    xhr.send();
+}
+
+function updateMember() {
+    const form = document.getElementById('memberForm');
+    const nameValue = form.name.value;
+    const phoneValue = form.phone.value;
+    const birthValue = form.birth.value;
+    const nickValue = form.nick.value;
+
+    if (!nameValue || nameValue.trim() === '') {
+        alert('이름은 필수 입력값입니다.');
+        form.name.focus();
+        return;
+    }
+
+    if (!phoneValue || phoneValue.trim() === '') {
+        alert('전화번호는 필수 입력값입니다.');
+        form.phone.focus();
+        return;
+    }
+
+    if (!birthValue || birthValue.trim() === '') {
+        alert('생년월일은 필수 입력값입니다.');
+        form.birth.focus();
+        return;
+    }
+
+    const formData = {
+        nick: nickValue,
+        name: nameValue,
+        phone: phoneValue,
+        birth: birthValue
+    };
+
+    $.ajax({
+        url: '/admin_member/update',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(formData),
+        success: function(data) {
+            if (data.status === 'success') {
+                alert('회원 정보가 수정되었습니다.');
+                closeMemverModal();
+                location.reload();
+            } else {
+                alert('회원 정보 수정에 실패했습니다.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            alert('회원 정보 수정 중 오류가 발생했습니다.');
+        }
+    });
+}
+
+function deleteMember2(nick, accountFlag) {
+    if(accountFlag === 'N') {
+        alert('이미 탈퇴된 회원입니다.');
+        return;
+    }
+
+    if (!confirm(`정말 이 회원을 삭제하시겠습니까?`)) {
+        return;
+    }
+
+    $.ajax({
+        url: '/admin_member/delete/' + encodeURIComponent(nick),
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data) {
+            if (data.status === 'success') {
+                alert('회원이 삭제되었습니다.');
+                location.reload();
+            } else {
+                alert('회원 삭제에 실패했습니다.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            alert('회원 삭제 중 오류가 발생했습니다.');
+        }
+    });
+}
+
+</script>
     
 </head>
 <body>
@@ -82,9 +200,9 @@
                     <td>${member.email}</td>
                     <td>${member.account_flag eq 'Y' ? '정상' : '탈퇴'}</td>
                     <td>
-                        <button class="action-btn" onclick="showMemberModal('${member.nick}')">회원 정보 확인</button>
-                        <button class="action-btn delete-btn" onclick="deleteMember()">삭제</button>
-                    </td>
+					    <button class="action-btn" onclick="showMemberModal('${member.nick}')">회원 정보 확인</button>
+    					<button class="action-btn delete-btn" onclick="deleteMember2('${member.nick}', '${member.account_flag}')">삭제</button>
+					</td>
                 </tr>
             </c:forEach>
         </c:when>
@@ -128,7 +246,7 @@
     
 <!-- 회원 정보 확인 모달 -->
 <div id="MemberModal" style="display: none;">
-    <jsp:include page="member_modal.jsp" />
+        <jsp:include page="member_modal.jsp" />
 </div>
 <script src="${pageContext.request.contextPath}/admin/common/js/admin.js"></script>
 </body>
