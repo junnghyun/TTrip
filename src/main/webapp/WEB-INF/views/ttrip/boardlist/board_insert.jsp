@@ -130,25 +130,7 @@ $(document).ready(function() {
             </tr>
         </thead>
         <tbody id="board-content">
-        <c:if test="${empty listBoard}">
-        	<tr>
-        		<td style="text-align:center" colspan="4">
-        		작성된 게시글이 없습니다.<br>
-        	</tr>
-        </c:if>
-        <c:if test="${ not empty param.search-input }">
-	<c:set var="searchParam" value="&field=${ param.field }&search-input=${ param.search-input }"/>
-	</c:if>
-	<c:forEach var="bVO" items="${ listBoard }" varStatus="i">
-	<!-- listBoard BoardController/commentController 둘 중 하나 택 -->
-	<tr>
-		<td><c:out value="${ totalCount-(currentPage-1)*pageScale-i.index }"/></td>
-		<td><a href="ttrip/board/writeBoard?boardId=${ bVO.boardId }&currentPage=${ currentPage }${ searchParam }"><c:out value="${ bVO.title }"/></a></td>
-		<td><c:out value="${ bVO.nick }"/></td>
-		<td><fmt:formatDate value="${ bVO.input_date }" pattern="yyyy-MM-dd EEEE HH:mm"/></td>
-	</tr>
-	</c:forEach>
-          <!-- <tr>
+            <tr>
                 <td>1</td>
                 <td>자유</td>
                 <td>
@@ -171,7 +153,7 @@ $(document).ready(function() {
                     <a href="/boardlist/commentBoard" class="clickable-title">대전에 핫플있을까요?</a>
                 </td>
                 <td>2024-06-21</td>
-            </tr> -->
+            </tr>
         </tbody>
     </table>
 </div>

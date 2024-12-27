@@ -28,7 +28,7 @@ public class CommentDAO {
 	}//get
 	
 	
-	/** 입력 값을 코켄트 테이블에 추가하는 일
+	/** 입력 값을 코멘트 테이블에 추가하는 일
 	 * @param cVO
 	 * @return
 	 * @throws PersistenceException
@@ -50,7 +50,7 @@ public class CommentDAO {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public int updateComment() throws PersistenceException {
+	public int updateComment(CommentVO cVO) throws PersistenceException {
 		int cnt=0; 
 		
 		MyBatisHandler mbh=MyBatisHandler.getInstance();
@@ -75,7 +75,7 @@ public class CommentDAO {
 		
 		SqlSession handler=mbh.getHanlder();
 		try {
-			cdDomain=handler.selectList("",commentId);
+			cdDomain=handler.selectList("com.ttrip.user.board.selectCommnetList",commentId);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally
@@ -94,7 +94,7 @@ public class CommentDAO {
 		
 		SqlSession handler=mbh.getHanlder( true );
 		try {
-			rowCnt=handler.delete("",commentId);
+			rowCnt=handler.delete("com.ttrip.user.board.deleteComment",commentId);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally

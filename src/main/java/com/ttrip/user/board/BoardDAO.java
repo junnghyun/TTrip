@@ -1,7 +1,8 @@
 package com.ttrip.user.board;
 
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
@@ -28,43 +29,6 @@ public class BoardDAO {
 	}//getInstance
 
 	
-	/**
-	 * 총 게시물의 수 검색
-	 * @param sVO
-	 * @return 게시물의 수
-	 * @throws SQLException
-	 */
-	public int selectTotalCount( SearchVO sVO )throws PersistenceException{
-		int totalCount=0;
-		
-		MyBatisHandler mbh=MyBatisHandler.getInstance();
-		
-		SqlSession handler=mbh.getHanlder();
-		try {
-			totalCount=handler.selectOne("",sVO);
-		}finally {
-			mbh.closeHandler(handler);
-		}//end finally
-		
-		return totalCount;
-	}//selectTotalCount
-	
-	
-	public List<BoardDomain> selectBoard( SearchVO sVO )throws PersistenceException{
-		List<BoardDomain> list=null;
-		MyBatisHandler mbh=MyBatisHandler.getInstance();
-		
-		SqlSession handler=mbh.getHanlder();
-		try {
-			list=handler.selectList("",sVO);
-		}finally {
-			mbh.closeHandler(handler);
-		}//end finally
-		return list;
-	}//selectBoard
-	
-	
-	
 	public List<BoardDomain> selectBoardList(BoardDomain bd) throws PersistenceException{
 		List<BoardDomain> list=null;
 		
@@ -72,7 +36,7 @@ public class BoardDAO {
 		
 		SqlSession handler=mbh.getHanlder();
 		try {
-			list=handler.selectList("",bd);
+			list=handler.selectList("com.ttrip.user.board.selectBoardList",bd);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally
@@ -80,6 +44,21 @@ public class BoardDAO {
 		return list;
 	}//selectBoardList
 	
+	public BoardDomain selectBoardOne(int boardId) throws PersistenceException {
+		
+		 BoardDomain bd = null; // 결과를 저장할 변수
+
+		    MyBatisHandler mbh = MyBatisHandler.getInstance();
+		    SqlSession handler = mbh.getHanlder();
+		    try {
+		        // selectOne 메소드를 사용하여 단일 게시물 조회
+		        bd = handler.selectOne("com.ttrip.user.board.seletBoardOne", boardId);
+		    } finally {
+		        mbh.closeHandler(handler);
+		    }
+
+		    return bd; 
+		}
 	
 	public int insertBoard(BoardVO bVO) throws PersistenceException {
 		int cnt=0;
@@ -105,7 +84,7 @@ public class BoardDAO {
 		
 		SqlSession handler=mbh.getHanlder( true );
 		try {
-			rowCnt=handler.update("",bVO);
+			rowCnt=handler.update("com.ttrip.user.board.updateBoard",bVO);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally
@@ -121,7 +100,7 @@ public class BoardDAO {
 		
 		SqlSession handler=mbh.getHanlder( true );
 		try {
-			rowCnt=handler.update("",boardId);
+			rowCnt=handler.delete("com.ttrip.user.board.deleteBoard",boardId);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally
@@ -129,14 +108,19 @@ public class BoardDAO {
 		return rowCnt;
 	}
 	
-	public int insertRecommend(int recommendId,String nick) {
+	public int insertRecommend(int boardId,String nick) {
 		int cnt=0;
 
 		MyBatisHandler mbh=MyBatisHandler.getInstance();
 		
 		SqlSession handler=mbh.getHanlder( true );
 		try {
-			cnt=handler.update("",recommendId);
+			// 파라미터를 Map으로 묶기
+	        Map<String, Object> params = new HashMap<>();
+	        params.put("boardId", boardId);
+	        params.put("nick", nick);
+			//Map을 사용하여 insert 메서드 호출
+			cnt=handler.insert("com.ttrip.user.board.insertRecommend",params);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally
@@ -144,13 +128,16 @@ public class BoardDAO {
 		return cnt; 
 	}
 	
-	public int deleteRecommend(int recommendId,String nick) {
+	public int deleteRecommend(int recomID,String nick) {
 		int rowCnt=0;
 		MyBatisHandler mbh=MyBatisHandler.getInstance();
 		
 		SqlSession handler=mbh.getHanlder( true );
 		try {
-			rowCnt=handler.update("",recommendId);
+			Map<String, Object> params=new HashMap<>();
+			params.put("recomID", recomID);
+			params.put("nick", nick);
+			rowCnt=handler.delete("com.ttrip.user.board.deleteRecommend",params);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally
@@ -165,7 +152,7 @@ public class BoardDAO {
 		
 		SqlSession handler=mbh.getHanlder( true );
 		try {
-			cnt=handler.insert("",rVO);
+			cnt=handler.insert("com.ttrip.com.user.board.insertReport",rVO);
 		}finally {
 			mbh.closeHandler(handler);
 		}//end finally

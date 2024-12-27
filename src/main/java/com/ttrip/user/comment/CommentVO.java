@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class CommentVO {
 
-	private int commentId;
+	private int commentID,boardID;
 	private String nick, detail;
 	private Date inputDate;
 	

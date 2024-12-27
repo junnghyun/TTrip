@@ -16,11 +16,11 @@ public class BoardService {
 	@Autowired(required=false)
 	private BoardDAO bDAO; 
 	
-	public List<BoardDomain> getBoardList(BoardDomain boardDomain){
+	public List<BoardDomain> getBoardList(BoardDomain bd){
 		List<BoardDomain> list=null;
 		
 		try {
-			list=BoardDAO.getInstance().selectBoardList(boardDomain);
+			list=BoardDAO.getInstance().selectBoardList(bd);
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
 		}//end catch
@@ -29,17 +29,18 @@ public class BoardService {
 		
 	}//getBoardList
 	
-//  게시판
-//	public List<BoardDomain> getBoardDetail(int boardId) {
-//		List<BoardDomain>list=null;
-//		try {
-//			BoardDAO.getInstance().getBoardDetail(boardId);
-//		}catch(PersistenceException pe) {
-//			pe.printStackTrace();
-//		}
-//		return list; 
+//  게시판 제목 얻기
+	public BoardDomain getBoardDetail(int boardId) {
+			
+		BoardDomain bd=null;
+		try {
+			BoardDAO.getInstance().selectBoardOne(boardId);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}
+		return bd; 
 		
-//	}
+	}
 	
 	//게시판 작성 
 	public boolean writeBoard(BoardVO bVO) {
@@ -84,29 +85,36 @@ public class BoardService {
 
 	}
 		
-	//댓글 추가
-	public boolean addRecommend(int boardId ,String nick) {
+	//추천 추가
+	public boolean addRecommend(Integer recommendId , String nick) {
+		
+		//유효성 검증: ID나 닉네임이 유효한지에 대한 검증
+		
+		if(recommendId == null || nick == null || nick.isEmpty()) {
+			System.out.println("닉네임 이나 ID를 확인해주시길 바랍니다.");
+			return false;
+		}//end if
 		
 		boolean flag=false;
 		
 		try {
-			flag=BoardDAO.getInstance().insertRecommend(boardId, nick)==1;
+			flag=BoardDAO.getInstance().insertRecommend(recommendId, nick)==1;
 		}catch(PersistenceException pe) {
+			  System.err.println("에러 :" + pe.getMessage());
 			pe.printStackTrace();
 		}//end catch
 		
 		return flag;	
 
 	}
-	
 		
-	//댓글 삭제
-	public boolean removeRecommend(int boardId,String nick) {
+	//추천 삭제
+	public boolean removeRecommend(int recomId,String nick) {
 		
-	boolean flag=false;
+		boolean flag=false;
 		
 		try {
-			flag=BoardDAO.getInstance().deleteRecommend(boardId, nick)==1;
+			flag=BoardDAO.getInstance().deleteRecommend(recomId, nick)==1;
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
 		}//end catch

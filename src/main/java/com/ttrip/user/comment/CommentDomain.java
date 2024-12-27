@@ -12,8 +12,8 @@ import lombok.ToString;
 @ToString
 public class CommentDomain {
 
-	private int commentId;
-	private String nick, content, status;
-	private Date DateinputDate;
+	private int commentId, boardId;
+	private String nick, detail, status;
+	private Date inputDate;
 	
 }//CommentDomain

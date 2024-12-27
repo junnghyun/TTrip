@@ -12,11 +12,15 @@ import com.ttrip.user.report.ReportVO;
 
 
 @Service
+
+//비즈니스 로직, db연동 이외 작업처리
 public class CommentService {
 
 	@Autowired(required=false)
 	private CommentDAO cDAO; 
 	
+	
+	//코멘트 작성
 	public boolean writeComment(CommentVO cVO) {
 		boolean flag=false; 
 		
@@ -28,6 +32,7 @@ public class CommentService {
 		
 		return flag;
 	}
+	//코멘트 리스트 얻기 
 	public List<CommentDomain> getCommentList(int commentId){
 		List<CommentDomain> list=null;
 		
@@ -40,56 +45,45 @@ public class CommentService {
 		return list; 
 		
 	}
-	//int -> String
-	public String modifyComment(CommentVO cVO) {
-		JSONObject jsonObj=new JSONObject();
-		jsonObj.put("modifyFlag", false);
+	//코멘트 변경 int 
+	public int modifyComment(CommentVO cVO) {
+		int cnt=0;
 		
 		try {
-			int rowCnt=CommentDAO.getInstance().updateComment();
-			jsonObj.put("modifyFlag", rowCnt==1);
-			jsonObj.put("modifyCount", rowCnt);
-			
+			cnt=CommentDAO.getInstance().updateComment(cVO);
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
-		}//end catch
-		
-		return jsonObj.toJSONString();
-		
+		}
+		return cnt;
 	}//modifyBoard
 	
 	
 	
-	//코멘트 삭제 int -> 
-	public String removeComment(int commentId,String content) {
-		
-		JSONObject jsonObj=new JSONObject();
-		jsonObj.put("removeFlag",false); 
-		try {
-			int cnt=CommentDAO.getInstance().deleteComment(commentId, content);
-			jsonObj.put("removeFlag", cnt==1);
-			jsonObj.put("removeCount", cnt);
-		}catch(PersistenceException pe) {
-			pe.printStackTrace();
-		}//end catchs
-		
-		return jsonObj.toJSONString(); 
-		
-	}
-	public String reportComment(ReportVO rVO) {
-		JSONObject jsonObj=new JSONObject();
-		jsonObj.put("reportFlag", false);
-		
-		try {
-			int rowCnt=CommentDAO.getInstance().insertReport(rVO);
-			jsonObj.put("reportyFlag", rowCnt==1);
-			jsonObj.put("reportCount", rowCnt);
-		}catch(PersistenceException pe) {
-			pe.printStackTrace();
-		}//end catch
-		
-		return jsonObj.toJSONString();
-	}
+	//코멘트 삭제 int -> String
+	public int removeComment(int commentId,String content) {
 	
+		int cnt=0;
+		
+		try {
+			cnt=CommentDAO.getInstance().deleteComment(commentId, content);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}
+		
+		return cnt;
+		
+	}
+	public int reportComment(ReportVO rVO) {
+		
+		int cnt=0;
+		
+		try {
+			cnt=CommentDAO.getInstance().insertReport(rVO);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}
+		
+		return cnt;
+	}
 	
 }//CommentService
