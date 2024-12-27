@@ -87,11 +87,15 @@
     }
 </style>
 <script>
+
+//onclick : 신고하기 버튼 클릭시 
+
 function handleReport() {
     if (confirm("신고하시겠습니까?")) {
         alert("신고 완료되었습니다.");
-    }
-}
+    }//end if
+}//handleReport
+
 </script>
 </head>
 <body>
@@ -99,39 +103,39 @@ function handleReport() {
     <h1>게시글 신고</h1>
     <div class="report-item">
         <span>내용:</span>
-        <span>제주 5박 6일 혼자 여행해보려는데 무엇을 하면 좋을까요?!!</span>
+        <span><c:out value="${bd.title}"/></span>
     </div>
     <div class="report-item">
         <span>작성자:</span>
-        <span>manani</span>
+        <span><c:out value="${bd.nick}"/></span>
     </div>
     <div class="form-group">
         <label>신고 사유</label>
         <div class="radio-group">
             <div>
-                <input type="radio" id="reason1" name="reason" value="영리목적/홍보성">
-                <label for="reason1">영리목적/홍보성</label>
+                <input type="radio" id="reason1" name="reason" value="스팸/광고">
+                <label for="reason1">스팸/광고</label>
             </div>
             <div>
-                <input type="radio" id="reason2" name="reason" value="개인정보노출">
-                <label for="reason2">개인정보노출</label>
+                <input type="radio" id="reason2" name="reason" value="욕설/비방">
+                <label for="reason2">욕설/비방</label>
             </div>
             <div>
                 <input type="radio" id="reason3" name="reason" value="불법정보">
                 <label for="reason3">불법정보</label>
             </div>
             <div>
-                <input type="radio" id="reason4" name="reason" value="욕설/인신공격">
-                <label for="reason4">욕설/인신공격</label>
+                <input type="radio" id="reason4" name="reason" value="음란물">
+                <label for="reason4">음란물</label>
             </div>
             <div>
-                <input type="radio" id="reason5" name="reason" value="같은 내용 반복(도배)">
-                <label for="reason5">같은 내용 반복(도배)</label>
+                <input type="radio" id="reason5" name="reason" value="개인정보노출">
+                <label for="reason5">개인정보노출</label>
             </div>
-            <div>
+           <!--  <div>
                 <input type="radio" id="reason6" name="reason" value="기타">
                 <label for="reason6">기타</label>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="form-group">

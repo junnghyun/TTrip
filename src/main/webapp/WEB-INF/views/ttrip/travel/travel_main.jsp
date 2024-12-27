@@ -74,13 +74,14 @@ input[type="button"]:hover {
         // 선택된 여행지 저장
         let selectedRegion = "";
 
-        $("input[type='button']").not("#btn18").click(function () {
+        $("input[type='button']").not("#btn18, #backBtn").click(function() {
             // 모든 버튼 초기화
-            $("input[type='button']").not("#btn18").css("background-color", "#F5F6F7").css("color", "#000");
+            $("input[type='button']").not("#btn18, #backBtn").css("background-color", "#F5F6F7").css("color", "#000");
             // 선택된 버튼 스타일 변경
             $(this).css("background-color", "#333333").css("color", "#fff");
-            // 선택된 값 저장
+        	// 선택된 값 저장
             selectedRegion = $(this).val();
+            $("#regionForm input[name='region']").val(selectedRegion); // 폼에 값 설정
         });
 
         $("#btn18").click(function () {
@@ -91,6 +92,13 @@ input[type="button"]:hover {
                 $("#regionForm input[name='region']").val(selectedRegion);
                 $("#regionForm").submit();
             }
+        });
+        
+     	// 뒤로 버튼
+        $("#backBtn").click(function () {
+            if(confirm("뒤로 가시겠습니까? 변경된 내용은 저장되지 않습니다.")){
+            	history.back();
+            }//end if
         });
     });
 </script>
@@ -106,7 +114,7 @@ input[type="button"]:hover {
         </div>
 
         <div class="select_area">
-            <form id="regionForm" method="post" action="nextPage.jsp">
+            <form id="regionForm" method="get" action="tr2">
                 <input type="hidden" name="region" value="">
             </form>
             <ul>

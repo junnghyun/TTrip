@@ -11,8 +11,15 @@
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f4b38fb42b57cde2b0919f29b1e7215"></script>
 </head>
 <body>
+<%
+    // 전달된 지역 정보를 가져옵니다.
+    String region = request.getParameter("region");
+    if (region == null || region.isEmpty()) {
+        region = "선택된 지역 없음"; // 기본값
+    }
+%>
 <div class="sidebar">
-    <strong id="trip_grand">인천</strong>
+    <strong id="trip_grand"><%= region %></strong>
 
     <div class="date-picker-container">
         <input type="date" id="start-date" class="date-input">
@@ -23,8 +30,11 @@
     <div class="time-selection" id="time-selection">
         <!-- 시간이 선택되면 표시될 영역 -->
     </div>
-
+	<form action="tr3" method="GET">
+        <!-- 지역 값을 Hidden Field로 전달 -->
+        <input type="hidden" name="region" value="<%= region %>">
     <button id="complete-button" class="hidden">시간 설정 완료</button>
+    </form>
 </div>
 
 <!-- 메인 콘텐츠 영역 -->

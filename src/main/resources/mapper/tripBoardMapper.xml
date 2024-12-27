@@ -2,52 +2,68 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ttrip"><!-- namespace: 자바의 패키지와 비슷 -->
+<mapper namespace="com.ttrip.tripboard.TripBoardMapper"><!-- namespace: 자바의 패키지와 비슷 -->
 
-<!-- 여행 일정과 숙소 추가 -->
-  <!-- <insert id="addTripPlan" parameterType="map">
-    INSERT INTO trip_plan (course_id, trip_date, type, name)
-    VALUES 
-    <foreach collection="tripDetails" item="detail" separator=",">
-      (#{courseId}, #{detail.tripDate}, #{detail.type}, #{detail.name})
-    </foreach>
-  </insert>
+  <!-- 특정 region(지역 이름)에 해당하는 여행지(DSTNT) 조회 -->
+    <select id="getDestinationsByRegion" parameterType="string" resultType="com.ttrip.dstnt.domain.DstntDomain">
+        SELECT 
+            d.DSTNTID AS dstntId,
+            d.name,
+            d.addr,
+            d.phone,
+            d.status,
+            d.img,
+            d.detail,
+            d.lat,
+            d.lng
+        FROM 
+            DSTNT d
+        INNER JOIN 
+            region r
+        ON 
+            d.regionID = r.regionID
+        WHERE 
+            r.region = #{region}
+    </select>
 
- 특정 여행 코스 조회
-  <select id="getTripCourse" parameterType="int" resultMap="tripCourseResultMap">
-    SELECT
-      tp.course_id,
-      tp.trip_date,
-      tp.type,
-      tp.name
-    FROM
-      trip_plan tp
-    WHERE
-      tp.course_id = #{courseId}
-    ORDER BY
-      tp.trip_date ASC,
-      FIELD(tp.type, 'dstnt', 'accom') ASC
-  </select>
+	<!-- 특정 region(지역 이름)에 해당하는 숙소(Accom) 조회 -->
+    <select id="getAccommodationsByRegion" parameterType="string" resultType="com.ttrip.accom.AccomDomain">
+        SELECT 
+            a.accomID AS accomId,
+            a.name,
+            a.addr,
+            a.phone,
+            a.status,
+            a.lat,
+            a.lng
+        FROM 
+            accom a
+        INNER JOIN 
+            region r
+        ON 
+            a.regionID = r.regionID
+        WHERE 
+            r.region = #{region}
+    </select>
 
-  여행 코스 결과 매핑
-  <resultMap id="tripCourseResultMap" type="tripCourseDomain">
-    <id property="courseId" column="course_id" />
-    <result property="tripDate" column="trip_date" />
-    <result property="type" column="type" />
-    <result property="name" column="name" />
-  </resultMap> -->
-  
-  <!-- 선택된 지역의 여행지 조회 -->
-  <select id="getDestinationsByRegion" parameterType="string" resultType="com.ttrip.tripboard.TripBoardDomain">
-    SELECT 
-      dstnt_id,
-      dstnt_name,
-      description,
-      address
-    FROM 
-      destinations
-    WHERE 
-      region = #{region}
-  </select>
+	<insert id="insertTripBoard" parameterType="com.ttrip.tripboard.TripBoardDomain">
+	    INSERT INTO trip_board (trip_boardID, title, nick, status, regionId, startDate, endDate, inputDate)
+	    VALUES (#{tripBoardId}, #{title}, #{nick}, #{status}, #{regionId}, #{startDate}, #{endDate}, #{inputDate});
+	</insert>
+	
+	<insert id="insertTripPlan" parameterType="com.ttrip.tripplan.TripPlanDomain">
+	    INSERT INTO trip_plan (trip_planID, trip_boardID, plan_title, visit_order, trip_date)
+	    VALUES (#{tripPlanID}, #{tripBoardID}, #{planTitle}, #{visitOrder}, #{tripDate});
+	</insert>
+	
+	<insert id="insertCourse" parameterType="com.ttrip.course.CourseDomain">
+	    INSERT INTO course (courseID, dstntID, trip_planID)
+	    VALUES (#{courseID}, #{dstntID}, #{tripPlanID});
+	</insert>
+	
+	<insert id="insertAccomPlan" parameterType="com.ttrip.accom.AccomDomain">
+	    INSERT INTO accom_plan (accom_planID, accomID, trip_planID)
+	    VALUES (#{accomPlanID}, #{accomID}, #{tripPlanID});
+	</insert>
   
 </mapper>
