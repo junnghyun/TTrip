@@ -1,6 +1,6 @@
 <%@page import="com.ttrip.accom.AccomDomain"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ttrip.dstmt.DstntDomain"%>
+<%@page import="com.ttrip.dstnt.domain.DstntDomain"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">

@@ -60,7 +60,7 @@
         padding: 5px 30px 5px 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        background: url('../common/images/search.png') no-repeat right center;
+        background: url('../boardlist/images/search.png') no-repeat right center;
         background-size: 20px 20px;
     }
     .write-btn {
@@ -84,6 +84,27 @@
         color: #0056b3;
     }
 </style>
+<script type="text/javascript">
+
+$(document).ready(function() {
+    // 검색 기능
+    $('#search-input').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        $('#board-content tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+
+    // 제목 클릭 이벤트 (추가적인 페이지 이동 처리 가능)
+    $('.clickable-title').on('click', function(e) {
+        e.preventDefault(); // 기본 동작 막기
+        const url = $(this).attr('href'); // href 값 가져오기
+        console.log(`Navigating to: ${url}`);
+        window.location.href = ""; // 페이지 이동
+    });
+});
+</script>
+
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
@@ -109,7 +130,25 @@
             </tr>
         </thead>
         <tbody id="board-content">
-            <tr>
+        <c:if test="${empty listBoard}">
+        	<tr>
+        		<td style="text-align:center" colspan="4">
+        		작성된 게시글이 없습니다.<br>
+        	</tr>
+        </c:if>
+        <c:if test="${ not empty param.search-input }">
+	<c:set var="searchParam" value="&field=${ param.field }&search-input=${ param.search-input }"/>
+	</c:if>
+	<c:forEach var="bVO" items="${ listBoard }" varStatus="i">
+	<!-- listBoard BoardController/commentController 둘 중 하나 택 -->
+	<tr>
+		<td><c:out value="${ totalCount-(currentPage-1)*pageScale-i.index }"/></td>
+		<td><a href="ttrip/board/writeBoard?boardId=${ bVO.boardId }&currentPage=${ currentPage }${ searchParam }"><c:out value="${ bVO.title }"/></a></td>
+		<td><c:out value="${ bVO.nick }"/></td>
+		<td><fmt:formatDate value="${ bVO.input_date }" pattern="yyyy-MM-dd EEEE HH:mm"/></td>
+	</tr>
+	</c:forEach>
+          <!-- <tr>
                 <td>1</td>
                 <td>자유</td>
                 <td>
@@ -132,7 +171,7 @@
                     <a href="/boardlist/commentBoard" class="clickable-title">대전에 핫플있을까요?</a>
                 </td>
                 <td>2024-06-21</td>
-            </tr>
+            </tr> -->
         </tbody>
     </table>
 </div>
@@ -141,24 +180,6 @@
     <input type="text" id="search-input" placeholder="Search" />
     <button type="button" class="write-btn" onclick="location.href='writeBoard.jsp'">글쓰기</button>
 </div>
-<script>
-$(document).ready(function() {
-    // 검색 기능
-    $('#search-input').on('keyup', function() {
-        var value = $(this).val().toLowerCase();
-        $('#board-content tr').filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-    });
 
-    // 제목 클릭 이벤트 (추가적인 페이지 이동 처리 가능)
-    $('.clickable-title').on('click', function(e) {
-        e.preventDefault(); // 기본 동작 막기
-        const url = $(this).attr('href'); // href 값 가져오기
-        console.log(`Navigating to: ${url}`);
-        window.location.href = ""; // 페이지 이동
-    });
-});
-</script>
 </body>
 </html>

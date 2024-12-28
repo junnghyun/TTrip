@@ -88,11 +88,11 @@ $(function(){
 				<ul>
 					<li class=""><a href="#plannerTab3" class="mo_tab"
 						onclick="getCurationMainPlannerBestContents(true)">다른 사용자코스</a></li>
-					<li id="my" class="on"><a href="mytripcourse.jsp"
+					<li id="my" class="on"><a href="/main_mytripcourse"
 						onclick="getMyPlannerCourse(true);">나의 여행코스</a></li>
-					<li id="best" class=""><a href="monthbest.jsp"
+					<li id="best" class=""><a href="/main_monthbest"
 						onclick="getCurationMainPlannerBestContents(true);">월간Best30</a></li>
-					<li id="area" class=""><a href="maintripboard.jsp"
+					<li id="area" class=""><a href="/main_tripboard"
 						onclick="settingRegionPlannerCourse(true);">여행게시판</a></li>
 				</ul>
 			</div>
@@ -116,7 +116,7 @@ $(function(){
 									<em>만든날짜</em> <span>2024. 12. 6.</span>
 								</div>
 								<div class="tag">
-									<span>#식도락</span><span>#문화.역사</span><span>#바다</span><span>#산.자연</span><span>#쇼핑</span><span>#액티비티</span><span>#축제</span><span>#카페</span>
+									<span></span>
 								</div>
 								<div class="rate">
 									<div class="grade">
@@ -135,7 +135,7 @@ $(function(){
 										alt="힐링코스"></span> <span> <img
 										src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=2772b0e9-5767-4b84-8929-51f7ebc161b1"
 										alt="힐링코스"> <a
-										href="javascript:goDetailCourse('c1b76431-4304-4840-9fdf-e3aff683fe2a');">자세히보기</a>
+										href="javascript:goDetailCourse('c1b76431-4304-4840-9fdf-e3aff683fe2a');"></a>
 									</span>
 								</div>
 							</div>

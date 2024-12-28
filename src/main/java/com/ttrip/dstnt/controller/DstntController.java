@@ -1,10 +1,10 @@
-package com.ttrip.dstmt;
+package com.ttrip.dstnt.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class DstmtController {
+public class DstntController {
 
 	@GetMapping("/dstnt_detail")
     public String dstnt_detail() {
