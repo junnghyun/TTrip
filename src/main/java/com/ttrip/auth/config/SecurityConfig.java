@@ -53,7 +53,7 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable())
                 .oauth2Login((oauth2) -> oauth2
-                        .loginPage("/custom-login")
+                        .loginPage("/login")
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService)))
                 .authorizeHttpRequests((auth) -> auth
