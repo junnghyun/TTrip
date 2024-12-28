@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TravelController {
 
-    @RequestMapping("/tr2")
+    @RequestMapping("/user/tr2")
     public String tr2() {
 
         return "ttrip/travel/travel-plan2";
