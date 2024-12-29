@@ -48,7 +48,7 @@ public class User {
     @Column(name = "oauth_user_id")
     private String oauthUserId;
 
-    @Column(name = "role")
+    @Column(name = "authority")
     private String role;
 
     @PrePersist
