@@ -239,58 +239,112 @@ $(function() {
     
 </head>
 <body>
-<%
-    // 전달된 지역 정보를 가져옵니다.
-    String region = request.getParameter("region");
-    if (region == null || region.isEmpty()) {
-        region = "선택된 지역 없음"; // 기본값
-    }
-%>
 <div id="wrap">
 
-    <!-- Trip Plan Information -->
-    <h2>일정 정보</h2>
-    <p><strong>일정 제목:</strong> ${planTitle}</p>
-    <p><strong>출발일:</strong> ${startDate}</p>
-    <p><strong>도착일:</strong> ${endDate}</p>
+    <div class="left">
+    	<div class="leftTitle">
+        <span class="journyTitle">인천</span>
+        <span style="color: #567FF2; font-family: jua">2024.12.04 ~ 2024.12.07</span>
+        </div>
+        <div>
+        <input type="text" placeholder="제작된 코스의 제목을 입력해주세요." id="courseName">
+        </div>
+        <div class="trip-plan">
 
-    <!-- Courses Section -->
-    <h2>여행지</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>일차</th>
-                <th>여행지</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="course" items="${courses}">
-                <tr>
-                    <td>${course.day}</td>
-                    <td>${course.destination}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            <!-- Day 1 -->
+            <div class="day">
+                <div class="day-header">
+                    <h3>1일차</h3>
+                    <span class="date">2024-12-04</span>
+                </div>
+                <div class="schedules">
+                    <div class="schedule">
+                        <div class="schedule-number">1</div>
+                        <span class="description">인천역</span>
+                        <img src="image1.jpg" alt="인천역" class="schedule-img">
+                    </div>
+                    <div class="schedule">
+                        <div class="schedule-number">2</div>
+                        <span class="description">송월동 동화마을</span>
+                        <img src="image1.jpg" alt="송월동 동화마을" class="schedule-img">
+                    </div>
+                    <div class="schedule">
+                        <div class="schedule-number">3</div>
+                        <span class="description">웨스턴 그레이스 호텔</span>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Accommodations Section -->
-    <h2>숙소</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>일차</th>
-                <th>숙소</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="accomPlan" items="${accomPlans}">
-                <tr>
-                    <td>${accomPlan.day}</td>
-                    <td>${accomPlan.accommodation}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            <!-- Day 2 -->
+            <div class="day">
+                <div class="day-header">
+                    <h3>2일차</h3>
+                    <span class="date">2024-12-05</span>
+                </div>
+                <div class="schedules">
+                    <div class="schedule">
+                        <div class="schedule-number">1</div>
+                        <span class="description">월미테마파크</span>
+                        <img src="image4.jpg" alt="월미테마파크" class="schedule-img">
+                    </div>
+                    <div class="schedule">
+                        <div class="schedule-number">2</div>
+                        <span class="description">월미도</span>
+                        <img src="image4.jpg" alt="월미도" class="schedule-img">
+                    </div>
+                    <div class="schedule">
+                        <div class="schedule-number">3</div>
+                        <span class="description">월미숙박</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="day">
+                <div class="day-header">
+                    <h3>3일차</h3>
+                    <span class="date">2024-12-06</span>
+                </div>
+                <div class="schedules">
+                    <div class="schedule">
+                        <div class="schedule-number">1</div>
+                        <span class="description">차이나 타운</span>
+                        <img src="image4.jpg" alt="차이나 타운" class="schedule-img">
+                    </div>
+                    <div class="schedule">
+                        <div class="schedule-number">2</div>
+                        <span class="description">부평 로데오 거리</span>
+                        <img src="image4.jpg" alt="부평 로데오 거리" class="schedule-img">
+                    </div>
+                    <div class="schedule">
+                        <div class="schedule-number">3</div>
+                        <span class="description">부평 테마 호텔</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="day">
+                <div class="day-header">
+                    <h3>4일차</h3>
+                    <span class="date">2024-12-07</span>
+                </div>
+                <div class="schedules">
+                    <div class="schedule">
+                        <div class="schedule-number">1</div>
+                        <span class="description">가정 시장</span>
+                        <img src="image4.jpg" alt="가정 시장" class="schedule-img">
+                    </div>
+                    <div class="schedule">
+                        <div class="schedule-number">2</div>
+                        <span class="description">송도 센트럴 파크</span>
+                        <img src="image4.jpg" alt="송도 센트럴 파크" class="schedule-img">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 	<div class="resizer" id="dragMe"></div>
 

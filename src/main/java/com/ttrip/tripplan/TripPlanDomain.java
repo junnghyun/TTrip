@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.ttrip.accom.AccomDomain;
+import com.ttrip.accom.AccomPlanDomain;
 import com.ttrip.course.CourseDomain;
 
 import lombok.Getter;
@@ -19,7 +20,4 @@ public class TripPlanDomain {
     private String planTitle;
     private String visitOrder;
     private Date tripDate;
-    
-    private List<CourseDomain> courses;
-    private AccomDomain accom;
 }

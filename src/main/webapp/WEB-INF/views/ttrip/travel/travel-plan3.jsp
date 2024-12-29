@@ -37,7 +37,7 @@
         <button class="tab-link active" onclick="openTab(event, 'location')">장소 선택</button>
         <button class="tab-link" onclick="openTab(event, 'accommodation')">숙소 설정</button>
     </div>
-<form id="courseDetail">
+<form id="courseDetail" method="post">
     <div id="location" class="tab-content active">
         <div class="location-selection">
             <h2>장소 선택</h2>
@@ -82,6 +82,11 @@
             </ul>
         </div>
     </div>
+    <input type="hidden" name="planTitle" id="planTitle">
+    <input type="hidden" name="startDate" id="startDate">
+    <input type="hidden" name="endDate" id="endDate">
+    <div id="coursesInputs"></div>
+    <div id="accomPlansInputs"></div>
 </form>
     <button id="finalize-button">최종 선택 완료</button>
 </div>
@@ -93,13 +98,44 @@
     <div class="resize-handle"></div>
 </div>
 <script>
-    // Finalize 버튼 클릭 시 폼 데이터 전송
-    document.getElementById('finalize-button').addEventListener('click', function () {
-        const form = document.getElementById('courseDetail');
-        form.action = '<%= request.getContextPath() %>/td';
-        form.method = 'POST';
-        form.submit();
-    });
+    // 장소 추가
+    function addPlaceToDayPrompt(name, img) {
+        const planSidebar = document.querySelector('.day-plan-sidebar');
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'day-plan-item';
+        dayDiv.innerHTML = `
+            <div>
+                <img src="${img}" alt="${name}" style="width: 50px; height: 50px;" />
+                <span>${name}</span>
+                <button type="button" onclick="removeItem(this, '${name}')">X</button>
+            </div>`;
+        planSidebar.appendChild(dayDiv);
+
+        // 지도에 마커 추가 (선택된 장소)
+        addMarkerByName(name);
+    }
+
+    // 숙소 추가
+    function addAccommodationToDayPrompt(name, img) {
+        const planSidebar = document.querySelector('.day-plan-sidebar');
+        const accomDiv = document.createElement('div');
+        accomDiv.className = 'day-plan-item';
+        accomDiv.innerHTML = `
+            <div>
+                <img src="${img}" alt="${name}" style="width: 50px; height: 50px;" />
+                <span>${name} (숙소)</span>
+                <button type="button" onclick="removeItem(this, '${name}')">X</button>
+            </div>`;
+        planSidebar.appendChild(accomDiv);
+    }
+
+    // 항목 삭제
+    function removeItem(button, name) {
+        if (confirm(`${name}을(를) 삭제하시겠습니까?`)) {
+            button.parentElement.parentElement.remove();
+        }
+    }
+
 </script>
 
 <!-- 메인 콘텐츠 영역 -->
