@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com/ttrip/user/board">
+<!-- 총 게시물 수 얻기 -->
+
+<!-- 검색값과 시작번호, 끝번호를 가진 VO를 넣어서 게시물의 목록 검색 수행  -->
+
+<!-- 좋아요 여부 확인 -->
+<!--  <select id="boardlikeCheck" resultType="int">
+	SELECT COUNT(*) FROM BOARD
+	WHERE BOARD_ID=#{boardId}
+	AND NICK=#{nick}
+</select>-->
+ 
+<!-- 좋아요 개수 조회 -->
+<!--<select id="countBoardLike" resultType="int">
+	SELECT COUNT(*) FROM BOARD
+	WHERE BOARD_ID=#{boardId}
+</select>-->
+
+<!-- 추천 삭제 쿼리 추가 -->
+<delete id="deleteRecommend" parameterType="map">
+    DELETE FROM BOARD_RECOM
+    WHERE RECOMID = #{recomID} AND NICK = #{nick}
+</delete>
+
+<!--추천 삽입 쿼리 추가 -->
+<insert id="insertRecommend" parameterType="map">
+	INSERT INTO BOARD_RECOM
+	WHERE BOARDID = #{boardID} AND NICK = # {nick}
+</insert>
+</mapper>
+
+
+
+

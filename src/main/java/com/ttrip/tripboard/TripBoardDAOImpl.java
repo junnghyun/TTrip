@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
-import com.ttrip.dstmt.DstntDomain;
+import com.ttrip.dstnt.domain.DstntDomain;
 import com.ttrip.tripplan.TripPlanDomain;
 import com.ttrip.accom.AccomDomain;
 import com.ttrip.accom.AccomPlanDomain;

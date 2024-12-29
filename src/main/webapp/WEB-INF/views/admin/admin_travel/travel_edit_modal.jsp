@@ -7,7 +7,7 @@
     <div class="bg-white rounded-lg w-full max-w-3xl mx-4">
         <!-- Modal Header -->
         <div class="bg-green-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
-            <h2 class="text-xl font-semibold">매장 정보 수정</h2>
+            <h2 class="text-xl font-semibold">여행지 정보 수정</h2>
             <button type="button" onclick="closeStoreModal()" class="text-white hover:text-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -18,26 +18,37 @@
             <!-- 수정 폼 -->
             <form class="p-6 space-y-6" method="post" action="store_edit_modal.jsp?store_id=${sVO.store_id}">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  
+                   	<!-- 여행지 이름 -->
                     <div class="input-group md:col-span-2">
-                        <label for="store_name" class="block text-sm font-medium text-gray-700 mb-1">매장명</label>
-                        <input type="text" id="store_name" name="store_name" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" value="${sVO.store_name}" placeholder="매장명을 입력해주세요" required>
+                        <label for="store_name" class="block text-sm font-medium text-gray-700 mb-1">여행지 이름</label>
+                        <input type="text" id="dstnt_name" name="dstnt_name" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" value="${sVO.store_name}" placeholder="매장명을 입력해주세요" required>
                     </div>
-
+                    
+                    <!-- 지역 (select/option)으로 지역 선택하도록 바꿔야함-->
+                    <div class="input-group md:col-span-2">
+                        <label for="region" class="block text-sm font-medium text-gray-700 mb-1">지역</label>
+                        <input type="text" id="region" name="region" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" 
+                        		value="${sVO.store_address.replaceAll('^(.*?\\s\\d+)(\\s.*)', '$2').trim()}" placeholder="지역">
+                    </div>
+                    
+                    <!-- 주소 -->
                     <div class="input-group md:col-span-2">
                         <label for="address" class="block text-sm font-medium text-gray-700 mb-1">주소</label>
-                        <input type="text" id="address" name="address" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" 
-                        		value="${sVO.store_address.replaceAll('^(.*?\\s\\d+)(\\s.*)', '$1').trim()}" placeholder="기본 주소를 입력해주세요" required>
+                        <div class="relative">
+                            <!-- 주소 입력란 -->
+                            <input type="text" id="address" name="address" class="w-full px-3 py-2 pr-24 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" placeholder="주소 검색을 통해 주소를 입력해주세요." readonly>
+                            <!-- 버튼을 입력란 안쪽으로 배치 -->
+                            <button type="button" id="findZipcode" onclick="searchZipcode('add')" class="absolute right-2 top-2 h-7 px-3 text-sm bg-green-600 text-white rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150">
+                                주소 검색
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="input-group md:col-span-2">
-                        <label for="address_detail" class="block text-sm font-medium text-gray-700 mb-1">상세주소</label>
-                        <input type="text" id="address_detail" name="address_detail" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" 
-                        		value="${sVO.store_address.replaceAll('^(.*?\\s\\d+)(\\s.*)', '$2').trim()}" placeholder="상세주소를 입력해주세요">
-                    </div>
-
+					<!--  여행지 연락처 -->
                     <div class="input-group">
-                        <label for="store_contact" class="block text-sm font-medium text-gray-700 mb-1">매장 연락처</label>
-                        <input type="tel" id="store_contact" name="store_contact" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" value="${sVO.store_phone}" placeholder="연락처를 입력해주세요" required>
+                        <label for="store_contact" class="block text-sm font-medium text-gray-700 mb-1">연락처</label>
+                        <input type="tel" id="dstnt_contact" name="dstnt_contact" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" value="${sVO.store_phone}" placeholder="연락처를 입력해주세요" required>
                     </div>
 
                     <div class="input-group">

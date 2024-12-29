@@ -6,7 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ttrip.accom.AccomDomain;
-import com.ttrip.dstmt.DstntDomain;
+import com.ttrip.course.CourseDomain;
+import com.ttrip.dstnt.domain.DstntDomain;
 import com.ttrip.tripplan.TripPlanDomain;
 
 @Mapper

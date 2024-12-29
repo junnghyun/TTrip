@@ -5,7 +5,7 @@
 <mapper namespace="com.ttrip.tripboard.TripBoardMapper"><!-- namespace: 자바의 패키지와 비슷 -->
 
   <!-- 특정 region(지역 이름)에 해당하는 여행지(DSTNT) 조회 -->
-    <select id="getDestinationsByRegion" parameterType="string" resultType="com.ttrip.dstmt.DstntDomain">
+    <select id="getDestinationsByRegion" parameterType="string" resultType="com.ttrip.dstnt.domain.DstntDomain">
         SELECT 
             d.DSTNTID AS dstntId,
             d.name,

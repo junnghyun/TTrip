@@ -20,7 +20,7 @@
                     <!-- 여행지 이름 -->
                     <div class="input-group md:col-span-2">
                         <label for="store_name" class="block text-sm font-medium text-gray-700 mb-1">여행지 이름</label>
-                        <input type="text" id="store_name" name="store_name" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        <input type="text" id="dstnt_name" name="dstnt_name" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                     </div>
                     
                     <!-- 지역 -->
@@ -42,6 +42,12 @@
                         </div>
                     </div>
                     
+                    <!-- 여행지 설명 -->
+                    <div class="input-group md:col-span-2">
+                        <label for="dstnt_detail" class="block text-sm font-medium text-gray-700 mb-1">여행지 설명</label>
+                        <input type="text" id="dstnt_detail" name="dstnt_detail" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                    </div>
+                    
                     <!-- 여행지 연락처 -->
                     <div class="input-group">
                         <label for="store_contact" class="block text-sm font-medium text-gray-700 mb-1">여행지 연락처</label>
@@ -50,8 +56,8 @@
                     
                     <!-- 여행지 상태 -->
                     <div class="input-group">
-                        <label for="store_status" class="block text-sm font-medium text-gray-700 mb-1">여행지 상태</label>
-                        <select id="store_status" name="store_status" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        <label for="dstnt_status" class="block text-sm font-medium text-gray-700 mb-1">여행지 상태</label>
+                        <select id="dstnt_status" name="dstnt_status" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                             <option value="Y">영업 중</option>
                             <option value="D">폐업</option>
                             <option value="T">임시 휴업</option>

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ttrip.accom.AccomDomain;
 import com.ttrip.accom.AccomPlanDomain;
 import com.ttrip.course.CourseDomain;
-import com.ttrip.dstmt.DstntDomain;
+import com.ttrip.dstnt.domain.DstntDomain;
 import com.ttrip.tripplan.TripPlanDomain;
 
 @Service

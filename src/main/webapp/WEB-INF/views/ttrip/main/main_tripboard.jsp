@@ -75,9 +75,9 @@ $(function(){
         <div class="tab">
             <ul>
                 <li class=""><a href="#plannerTab3" class="mo_tab" onclick="getCurationMainPlannerBestContents(true)">다른 사용자코스</a></li>
-                <li id="my"><a href="mytripcourse.jsp" onclick="getMyPlannerCourse(true);">나의 여행코스</a></li>
-                <li id="best" class=""><a href="monthbest.jsp" onclick="getCurationMainPlannerBestContents(true);">월간Best30</a></li>
-                <li id="area" class="on"><a href="maintripboard.jsp" onclick="settingRegionPlannerCourse(true);">여행게시판</a></li>
+                <li id="my"><a href="/main_mytripcourse" onclick="getMyPlannerCourse(true);">나의 여행코스</a></li>
+                <li id="best" class=""><a href="/main_monthbest" onclick="getCurationMainPlannerBestContents(true);">월간Best30</a></li>
+                <li id="area" class="on"><a href="/main_tripboard" onclick="settingRegionPlannerCourse(true);">여행게시판</a></li>
             </ul>
         </div>
 	<div id="plannerTab4" class="tab_cont active" style="display: block;">
