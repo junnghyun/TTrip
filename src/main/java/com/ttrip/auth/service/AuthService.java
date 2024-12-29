@@ -42,6 +42,6 @@ public class AuthService {
         System.out.println("Role during token creation: " + role);
         System.out.println("Nick during token creation: " + nick);
 
-        return jwtUtil.createJwt(authentication.getName(), role, nick, 6 * 60 * 60 * 1000L);
+        return jwtUtil.createJwt(authentication.getName(), role, nick);
     }
 }

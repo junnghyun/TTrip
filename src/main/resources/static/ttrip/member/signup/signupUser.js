@@ -28,9 +28,26 @@ $(document).ready(function() {
         });
     });
 
+    // 비밀번호 확인 함수
+    function validatePassword() {
+        var password = $('input[name="pass"]').eq(0).val();  // 첫 번째 비밀번호
+        var confirmPassword = $('input[name="pass"]').eq(1).val();  // 두 번째 비밀번호 확인
+
+        if (password !== confirmPassword) {
+            alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+            return false;
+        }
+        return true;
+    }
+
     // 회원가입 폼 제출
-    $('#signupForm').submit(function(event) {
+    $('#signupForm2').submit(function(event) {
         event.preventDefault();  // 기본 폼 제출을 막음
+
+        // 비밀번호 확인
+        if (!validatePassword()) {
+            return;  // 비밀번호 불일치 시 폼 제출을 막음
+        }
 
         const formData = {
             name: $('input[name="name"]').val(),
@@ -39,13 +56,13 @@ $(document).ready(function() {
             gender: $('input[name="gender"]:checked').val(),
             phone: $('input[name="phone"]').val(),
             birth: $('input[name="birthdate"]').val(),
-            password: $('input[name="password"]').val()  // 비밀번호 추가
+            password: $('input[name="pass"]').eq(0).val(),  // 첫 번째 비밀번호 값
+            oauthProvider: $('input[name="registrationId"]').val()
         };
-
 
         // 서버로 전달할 데이터 준비
         $.ajax({
-            url: '/api/signup/user',
+            url: '/api/signup/oauth',
             type: 'POST',
             data: JSON.stringify(formData),
             contentType: 'application/json; charset=utf-8',

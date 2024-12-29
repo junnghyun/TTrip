@@ -4,6 +4,8 @@ import com.ttrip.auth.exception.CustomAccessDeniedHandler;
 import com.ttrip.auth.exception.CustomAuthenticationEntryPoint;
 import com.ttrip.auth.jwt.JwtFilter;
 import com.ttrip.auth.jwt.JwtUtil;
+import com.ttrip.auth.oauth2.CustomOAuth2AuthenticationFailureHandler;
+import com.ttrip.auth.oauth2.CustomOAuth2LoginSuccessHandler;
 import com.ttrip.auth.service.CustomOAuth2UserService;
 import com.ttrip.auth.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -27,13 +29,20 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler;
+    private final CustomOAuth2AuthenticationFailureHandler customOAuth2AuthenticationFailureHandler;
+
 
     public SecurityConfig(JwtUtil jwtUtil,
                           CustomUserDetailsService customUserDetailsService,
-                          CustomOAuth2UserService customOAuth2UserService) {
+                          CustomOAuth2UserService customOAuth2UserService,
+                          CustomOAuth2AuthenticationFailureHandler customOAuth2AuthenticationFailureHandler,
+                          CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler) {
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
         this.customOAuth2UserService = customOAuth2UserService;
+        this.customOAuth2AuthenticationFailureHandler = customOAuth2AuthenticationFailureHandler;
+        this.customOAuth2LoginSuccessHandler = customOAuth2LoginSuccessHandler;
     }
 
     //AuthenticationManager Bean 등록
@@ -55,7 +64,9 @@ public class SecurityConfig {
                 .oauth2Login((oauth2) -> oauth2
                         .loginPage("/login")
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService)))
+                                .userService(customOAuth2UserService))
+                        .failureHandler(customOAuth2AuthenticationFailureHandler)
+                        .successHandler(customOAuth2LoginSuccessHandler))
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login", "/", "/signup","/ttrip/**", "/signup/**","/auth/**", "/api/**").permitAll()
                         .requestMatchers("/WEB-INF/**").permitAll()

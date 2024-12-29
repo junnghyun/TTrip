@@ -1,7 +1,9 @@
 package com.ttrip.auth.controller;
 
 import com.ttrip.auth.dto.SignupDto;
+import com.ttrip.auth.dto.SignupOAuthDto;
 import com.ttrip.auth.dto.SignupUserDto;
+import com.ttrip.auth.service.SignupOAuthService;
 import com.ttrip.auth.service.SignupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,11 @@ import java.util.Map;
 public class SignupController {
 
     private final SignupService signupService;
+    private final SignupOAuthService signupOAuthService;
 
-    public SignupController(SignupService signupService) {
+    public SignupController(SignupService signupService, SignupOAuthService signupOAuthService) {
         this.signupService = signupService;
+        this.signupOAuthService = signupOAuthService;
     }
 
     @PostMapping("/signup")
@@ -55,6 +59,23 @@ public class SignupController {
         try {
             // 회원가입 로직 처리
             signupService.registerUser(signupUserDto);
+
+            // 성공 응답
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("success", true);
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            // 오류 발생 시 응답 처리
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/signup/oauth")
+    public ResponseEntity<?> signupOauth(@RequestBody SignupOAuthDto signupOAuthDto) {
+        try {
+            // 회원가입 로직 처리
+            signupOAuthService.registerUser(signupOAuthDto);
 
             // 성공 응답
             Map<String, Boolean> response = new HashMap<>();
