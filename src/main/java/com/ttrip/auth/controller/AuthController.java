@@ -1,53 +1,66 @@
 package com.ttrip.auth.controller;
 
-import com.ttrip.auth.domain.User;
+import com.ttrip.auth.dto.LoginRequest;
+import com.ttrip.auth.dto.LoginResponse;
+import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.auth.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api")
 public class AuthController {
 
-//    @Autowired
-//    private AuthService authService;
-//
-//    // 일반 회원가입
-//    @PostMapping("/register")
-//    public ResponseEntity<String> register(@RequestBody User user) {
-//        try {
-//            authService.registerUser(user);
-//            return ResponseEntity.ok("회원가입 성공");
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-//
-//    // 일반 로그인
-//    @PostMapping("/login")
-//    public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password) {
-//        try {
-//            User user = authService.loginUser(email, password);
-//            return ResponseEntity.ok(user);
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-//
-//    // OAuth2 로그인/회원가입 (카카오, 네이버 등)
-//    @PostMapping("/oauth2/login")
-//    public ResponseEntity<User> oauthLogin(
-//            @RequestParam String oauthProvider,
-//            @RequestParam String oauthUserId,
-//            @RequestParam String email,
-//            @RequestParam String name) {
-//        try {
-//            User user = authService.registerOrLoginOAuth2User(oauthProvider, oauthUserId, email, name);
-//            return ResponseEntity.ok(user);
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-}
+    private final JwtUtil jwtUtil;
+    private final AuthService authService;
 
+    public AuthController(AuthService authService, JwtUtil jwtUtil) {
+        this.authService = authService;
+        this.jwtUtil = jwtUtil;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            // AuthService를 사용하여 인증 및 토큰 생성
+            String token = authService.authenticateUser(loginRequest);
+
+            // 응답 생성
+            LoginResponse response = new LoginResponse(
+                    "success",
+                    "Login successful",
+                    token
+            );
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            LoginResponse response = new LoginResponse(
+                    "error",
+                    e.getMessage(),
+                    null
+            );
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/validate-token")
+    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return new ResponseEntity<>("Invalid or missing Authorization header", HttpStatus.BAD_REQUEST);
+        }
+
+        String token = authorization.split(" ")[1]; // "Bearer " 이후의 토큰을 추출
+
+        if (jwtUtil.isExpired(token)) {
+            return new ResponseEntity<>("Token expired", HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>("{\"status\": \"valid\"}", HttpStatus.OK);
+    }
+
+}

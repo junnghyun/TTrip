@@ -1,52 +1,62 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입 페이지</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/ttrip/member/signup/signup.css?after">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ttrip/member/login/login.css">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-<div class="form-container">
-    <form action="#" method="post">
-        <table class="signup-table">
-            <tr>
-                <th>이름</th>
-                <td><input type="text" name="name" required></td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td><input type="email" name="email" required></td>
-            </tr>
-            <tr>
-                <th>닉네임</th>
-                <td>
-                    <div class="nickname-container">
-                        <input type="text" name="nickname" required>
-                        <button type="button" class="check-btn">중복 확인</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>성별</th>
-                <td>
-                    <label><input type="radio" name="gender" value="male"> 남자</label>
-                    <label><input type="radio" name="gender" value="female"> 여자</label>
-                    <label><input type="radio" name="gender" value="private"> 비공개</label>
-                </td>
-            </tr>
-            <tr>
-                <th>전화번호</th>
-                <td><input type="text" name="phone" required></td>
-            </tr>
-            <tr>
-                <th>생년월일</th>
-                <td><input type="date" name="birthdate" required></td>
-            </tr>
-        </table>
-        <button type="submit" class="submit-btn">회원가입</button>
-    </form>
-</div>
+<section class="container">
+  <div class="form signup">
+    <div class="form-content">
+      <header>Signup</header>
+      <form id="signupForm">
+        <div class="field input-field">
+          <input type="email" placeholder="Email" class="input" required>
+        </div>
+
+        <div class="field input-field">
+          <input type="password" placeholder="Create password" class="password" required>
+          <i class='bx bx-hide eye-icon'></i>
+        </div>
+
+        <div class="field input-field">
+          <input type="password" placeholder="Confirm password" class="password" required>
+          <i class='bx bx-hide eye-icon'></i>
+        </div>
+
+        <div class="field button-field">
+          <button type="submit">Signup</button>
+        </div>
+      </form>
+
+      <div class="form-link">
+        <span>Already have an account? <a href="/login" class="link">Login</a></span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="media-options">
+        <a href="/oauth2/authorization/kakao" class="field kakao">
+          <img src="${pageContext.request.contextPath}/ttrip/member/images/Kakao.png" alt="Kakao" class="kakao-img">
+          <span>Signup with Kakao</span>
+        </a>
+      </div>
+
+      <div class="media-options">
+        <a href="/oauth2/authorization/naver" class="field naver">
+          <img src="${pageContext.request.contextPath}/ttrip/member/images/Naver.png" alt="Naver" class="naver-img">
+          <span>Signup with Naver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/ttrip/member/login/signup.js"></script>
 </body>
 </html>

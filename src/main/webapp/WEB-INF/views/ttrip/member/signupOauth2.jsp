@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="form-container">
-    <form action="#" method="post">
+    <form id="signupForm2" action="/signup/outh2" method="post">
         <table class="signup-table">
             <tr>
                 <th>이름</th>
@@ -17,28 +17,28 @@
             </tr>
             <tr>
                 <th>이메일</th>
-                <td><input type="email" name="email" required></td>
+                <td><input type="email" name="email" value="${email}" readonly required></td>
             </tr>
             <tr>
                 <th>닉네임</th>
                 <td>
                     <div class="nickname-container">
-                        <input type="text" name="nickname" required>
-                        <button type="button" class="check-btn">중복 확인</button>
+                        <input type="text" name="nickname" id="nickname" required>
+                        <button type="button" class="check-btn" id="checkNickBtn">중복 확인</button>
                     </div>
                 </td>
             </tr>
             <tr>
                 <th>성별</th>
                 <td>
-                    <label><input type="radio" name="gender" value="male"> 남자</label>
-                    <label><input type="radio" name="gender" value="female"> 여자</label>
-                    <label><input type="radio" name="gender" value="private"> 비공개</label>
+                    <label><input type="radio" name="gender" value="M"> 남자</label>
+                    <label><input type="radio" name="gender" value="F"> 여자</label>
+                    <label><input type="radio" name="gender" value="S" checked> 비공개</label>
                 </td>
             </tr>
             <tr>
                 <th>전화번호</th>
-                <td><input type="text" name="phone" required></td>
+                <td><input type="text" name="phone" id="phone" required></td>
             </tr>
             <tr>
                 <th>생년월일</th>
@@ -53,8 +53,11 @@
                 <td><input type="text" name="pass" required></td>
             </tr>
         </table>
+        <input type="hidden" name="registrationId" value="${registrationId}">
         <button type="submit" class="submit-btn">회원가입</button>
     </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/ttrip/member/signup/signupUser.js"></script>
 </body>
 </html>

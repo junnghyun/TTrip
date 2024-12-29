@@ -15,31 +15,14 @@
     align-items: center;
     justify-content: center;
     background-color: #567FF2;
-    column-gap: 30px;
 }
 
 .form {
-    position: absolute;
     max-width: 430px;
     width: 100%;
     padding: 30px;
     border-radius: 6px;
     background: #FFF;
-}
-
-.form.signup {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.forms.show-signup .form.signup {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.forms.show-signup .form.login {
-    opacity: 0;
-    pointer-events: none;
 }
 
 header {
@@ -149,9 +132,77 @@ form {
     justify-content: center;
 }
 
+.kakao-img, .naver-img {
+    height: 20px;
+    margin-right: 10px;
+}
+
 @media screen and (max-width: 400px) {
     .form {
         padding: 20px 10px;
     }
+}
 
+/* Kakao Button */
+.media-options .kakao {
+    background-color: #FEE500;
+    color: #3c1e1e;
+    border: 1px solid #FEE500;
+    transition: none; /* 색상 변화 없애기 */
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%; /* 버튼 전체 너비 사용 */
+}
+
+/* Naver Button */
+.media-options .naver {
+    background-color: #03C75A;
+    color: white;
+    border: 1px solid #03C75A;
+    transition: none; /* 색상 변화 없애기 */
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%; /* 버튼 전체 너비 사용 */
+}
+
+/* 이미지 크기 키우고 좌측 정렬 */
+.kakao-img, .naver-img {
+    height: 30px; /* 이미지 크기를 키움 */
+    margin-right: 80px; /* 이미지와 텍스트 사이에 40px 추가한 60px 간격 */
+}
+
+/* .media-options에서 이미지와 텍스트 위치 조정 */
+.media-options {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 이미지는 왼쪽 정렬 */
+    width: 100%;
+}
+
+/* .media-options 내부에서 텍스트 왼쪽 정렬 */
+.media-options a {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: flex-start; /* 텍스트 왼쪽 정렬 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 텍스트 색상 변경 방지 */
+}
+
+/* 링크 hover 시 밑줄 및 색상 변경 방지 */
+.media-options a:hover {
+    text-decoration: none; /* hover 시 밑줄 없애기 */
+    color: inherit; /* 색상 변경 방지 */
+}
+
+/* 네이버 텍스트 색상 유지 */
+.media-options .naver a {
+    color: white; /* 네이버 버튼 텍스트 색상 설정 */
+}
+
+.media-options .naver a:hover {
+    color: white; /* hover 시 색상 변경 방지 */
 }

@@ -41,6 +41,7 @@
 <div id="map" style="width: 80%; height: 100vh; float: right;"></div>
 
 <script src="${pageContext.request.contextPath}/ttrip/travel/js/travel-plan2.js"></script>
+<script src="${pageContext.request.contextPath}/ttrip/common/Authorization.js"></script>
 <script>
     // 카카오 지도 API 초기화
     var mapContainer = document.getElementById('map'); // 지도를 표시할 div
