@@ -28,6 +28,43 @@ $(document).ready(function() {
         });
     });
 
+    // 회원가입 폼 제출
+    $('#signupForm').submit(function(event) {
+        event.preventDefault();  // 기본 폼 제출을 막음
+
+        const formData = {
+            name: $('input[name="name"]').val(),
+            email: $('input[name="email"]').val(),
+            nick: $('input[name="nickname"]').val(),
+            gender: $('input[name="gender"]:checked').val(),
+            phone: $('input[name="phone"]').val(),
+            birth: $('input[name="birthdate"]').val(),
+            password: $('input[name="password"]').val()  // 비밀번호 추가
+        };
+
+
+        // 서버로 전달할 데이터 준비
+        $.ajax({
+            url: '/api/signup/user',
+            type: 'POST',
+            data: JSON.stringify(formData),
+            contentType: 'application/json; charset=utf-8',
+            success: function(response) {
+                if (response.success) {
+                    alert('회원가입 성공!');
+                    window.location.href = '/login';  // 성공 시 로그인 페이지로 이동
+                } else {
+                    alert(response.message || '회원가입 중 오류가 발생했습니다.');
+                }
+            },
+            error: function(error) {
+                console.log(error);
+                alert('회원가입 중 서버오류가 발생했습니다.');
+            }
+        });
+    });
+
+
     // 비밀번호 확인 함수
     function validatePassword() {
         var password = $('input[name="pass"]').eq(0).val();  // 첫 번째 비밀번호

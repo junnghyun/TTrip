@@ -5,7 +5,6 @@ import com.ttrip.auth.dto.*;
 import com.ttrip.auth.exception.CustomOAuth2AuthenticationException;
 import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.auth.repository.UserRepository;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -16,11 +15,9 @@ import org.springframework.stereotype.Service;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
 
-    public CustomOAuth2UserService(UserRepository userRepository, JwtUtil jwtUtil) {
+    public CustomOAuth2UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
     }
 
     @Override
