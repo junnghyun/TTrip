@@ -46,6 +46,10 @@ dependencies {
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:11.0.1'
 	implementation 'jakarta.el:jakarta.el-api:6.0.1'
 
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+	providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
 	testImplementation 'org.springframework.security:spring-security-test'

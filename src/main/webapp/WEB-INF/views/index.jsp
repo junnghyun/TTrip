@@ -446,5 +446,5 @@ $(function(){
     </div>
 </div>
 </body>
-<jsp:include page="ttrip/common/header.jsp"/>
+<jsp:include page="ttrip/common/footer.jsp"/>
 </html>
