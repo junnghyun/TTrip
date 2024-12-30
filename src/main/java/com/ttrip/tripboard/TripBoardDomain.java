@@ -17,6 +17,4 @@ public class TripBoardDomain {
 	private String title, status, nick;
 	private int tripBoardId, regionId;
 	private Date startDate, endDate, inputDate;
-	
-	private List<TripPlanDomain> tripPlans;
 }

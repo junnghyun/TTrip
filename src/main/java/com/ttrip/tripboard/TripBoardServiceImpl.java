@@ -1,10 +1,16 @@
 package com.ttrip.tripboard;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ttrip.accom.AccomDomain;
+import com.ttrip.accom.AccomPlanDomain;
 import com.ttrip.course.CourseDomain;
 import com.ttrip.dstnt.domain.DstntDomain;
 import com.ttrip.tripplan.TripPlanDomain;
@@ -27,20 +33,5 @@ public class TripBoardServiceImpl implements TripBoardService {
     public List<AccomDomain> getAccommodationsByRegion(String region) {
         return tripBoardDAO.getAccommodationsByRegion(region);
     }
-    
-    @Override
-    public void createTripBoard(TripBoardDomain tripBoard, List<TripPlanDomain> tripPlans) {
-        tripBoardDAO.insertTripBoard(tripBoard);
-        for (TripPlanDomain tripPlan : tripPlans) {
-            tripBoardDAO.insertTripPlan(tripPlan);
-            for (CourseDomain course : tripPlan.getCourses()) {
-                tripBoardDAO.insertCourse(course);
-            }
-            if (tripPlan.getAccom() != null) {
-                tripBoardDAO.insertAccomPlan(tripPlan.getAccom());
-            }
-        }
-    }
-
     
 }
