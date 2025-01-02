@@ -289,5 +289,6 @@
         location.reload(); // 페이지 새로고침
     });
 </script>
+<script src="${pageContext.request.contextPath}/common/authCheck.js"></script>
 </body>
 </html>
