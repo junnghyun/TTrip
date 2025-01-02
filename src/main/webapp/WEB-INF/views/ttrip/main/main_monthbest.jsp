@@ -3,7 +3,6 @@
     info=""
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,13 +24,13 @@
 
 </style>
 <script type="text/javascript">
-	$(function(){
-	    let offset = 12;  // 초기 게시글 개수
+$(function(){
+    let offset = 12;  // 초기 게시글 개수
 
     // 더보기 버튼 클릭 이벤트
     $(".more button").click(function(){
         $.ajax({
-            url: "/main_tripboard/more",
+            url: "/main_monthbest/more",
             type: "POST",
             data: JSON.stringify({ offset: offset }),
             contentType: "application/json",
@@ -39,8 +38,19 @@
             success: function(data){
                 if(data.boardList && data.boardList.length > 0) {
                     data.boardList.forEach(function(board){
-                        // 날짜는 이미 서버에서 형식화되어 옴
-                        let dateStr = board.input_date || '';
+                        let dateStr = '';
+                        if(board.input_date) {
+                            try {
+                                const date = new Date(board.input_date);
+                                if(!isNaN(date.getTime())) {
+                                    dateStr = date.getFullYear() + '. ' + 
+                                            (date.getMonth() + 1) + '. ' + 
+                                            date.getDate() + '.';
+                                }
+                            } catch(e) {
+                                console.error('Date parsing error:', e);
+                            }
+                        }
 
                         let html = '<li tabindex="0">' +
                             '<span onclick="goDetailCourse(\'' + board.trip_boardID + '\')" class="img">' +
@@ -83,9 +93,8 @@
             }
         });
     });
-});
+});//ready
 </script>
-
 <jsp:include page="../common/header.jsp"/>
 </head>
 <body>
@@ -101,9 +110,9 @@
                     <span class="spot3"></span>
                 </div>
                 <div class="tag">
-                    <span>
-                        <img src="${pageContext.request.contextPath}/ttrip/main/images/curation/img_planner_tag.png" class="pc" alt="#맞춤형 코스 추천 #마음대로 편집 가능">
-                    </span>
+                                    <span>
+                                        <img src="${pageContext.request.contextPath}/ttrip/main/images/curation/img_planner_tag.png" class="pc" alt="#맞춤형 코스 추천 #마음대로 편집 가능">
+                                    </span>
                     <button type="button">
                         <img src="${pageContext.request.contextPath}/ttrip/main/images/curation/btn_planner_tag.png" class="pc" alt="#BEST 코스 도전">
                     </button>
@@ -120,11 +129,11 @@
                         <div class="pc">
                             <em>코스만들기</em>
                             <span class="arw_wrap">
-                                                <span class="left"></span>
-                                                <span class="right"></span>
-                                            </span>
+                            <span class="left"></span>
+                            <span class="right"></span>
+                            </span>
                         </div>
-                        <img src="${pageContext.request.contextPath}/ttrip/main/images/curation/btn_planner_m_cos.png" class="mo" alt="">
+                        <img src="${pageContext.request.contextPath}/ttrip/main/images/curation/btn_planner_m_cos.png" class="mo" alt=""/>
                     </a>
                     <span class="mo"><button type="button" onclick="layerPopup.layerShow('aiPlannerPop');">AI콕콕 플래너란?</button></span>
                 </div>
@@ -134,48 +143,48 @@
             <ul>
                 <li class=""><a href="#plannerTab3" class="mo_tab" onclick="getCurationMainPlannerBestContents(true)">다른 사용자코스</a></li>
                 <li id="my"><a href="/main_mytripcourse" onclick="getMyPlannerCourse(true);">나의 여행코스</a></li>
-                <li id="best" class=""><a href="/" onclick="getCurationMainPlannerBestContents(true);">월간Best30</a></li>
-                <li id="area" class="on"><a href="/main_tripboard" onclick="settingRegionPlannerCourse(true);">여행게시판</a></li>
+                <li id="best" class="on"><a href="/" onclick="getCurationMainPlannerBestContents(true);">월간Best30</a></li>
+                <li id="area" class=""><a href="/main_tripboard" onclick="settingRegionPlannerCourse(true);">여행게시판</a></li>
             </ul>
         </div>
-	<div id="plannerTab4" class="tab_cont active" style="display: block;">
-	   <h4>여행 게시판</h4>
-	   <div class="planner_list bestPlannerList">
-	       <ul>
-	           <c:forEach items="${boards}" var="board">
-	               <li tabindex="0">
-	                   <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
-	                       <img src="${board.firstImageUrl}" alt="">
-	                       <span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>
-	                   </span>
-	                   <div class="cont">
-	                       <span class="day">${board.trip_period}</span>
-	                       <a href="javascript:goDetailCourse('${board.trip_boardID}');">${board.title}</a>
-	                       <span class="area">${board.region}</span>
-	                       <div class="date">
-							    <em>만든날짜</em>
-							    <span><fmt:formatDate value="${board.input_date}" pattern="yyyy. M. d."/></span>
-							</div>
-	                       <div class="rate">
-	                           <div class="grade">
-	                               <div class="star">
-	                                   <span></span>
-	                               </div>
-	                               <span class="total"><em class="blind">추천수</em>${board.recom_count}</span>
-	                           </div>
-	                           <span class="comment"><em class="blind">댓글수</em>${board.comment_count}</span>
-	                       </div>
-	                   </div>
-	               </li>
-	           </c:forEach>
-	       </ul>
-	       <c:if test="${boards.size() >= 12}">
-			    <div class="more">
-			        <button><span>더보기</span></button>
-			    </div>
-			</c:if>
-	   </div>
-	</div>
+        <div id="plannerTab3" class="tab_cont active" style="display: block;">
+    <h4>월간 Best 30</h4>
+    <div class="planner_list bestPlannerList">
+        <ul>
+            <c:forEach items="${boards}" var="board">
+                <li tabindex="0">
+                    <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
+                        <img src="${board.firstImageUrl}" alt="">
+                        <span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>
+                    </span>
+                    <div class="cont">
+                        <span class="day">${board.trip_period}</span>
+                        <a href="javascript:goDetailCourse('${board.trip_boardID}');">${board.title}</a>
+                        <span class="area">${board.region}</span>
+                        <div class="date">
+                            <em>만든날짜</em>
+                            <span><fmt:formatDate value="${board.input_date}" pattern="yyyy. M. d."/></span>
+                        </div>
+                        <div class="rate">
+                            <div class="grade">
+                                <div class="star">
+                                    <span></span>
+                                </div>
+                                <span class="total"><em class="blind">추천수</em>${board.recom_count}</span>
+                            </div>
+                            <span class="comment"><em class="blind">댓글수</em>${board.comment_count}</span>
+                        </div>
+                    </div>
+                </li>
+            </c:forEach>
+        </ul>
+        <c:if test="${boards.size() >= 12}">
+            <div class="more">
+                <button><span>더보기</span></button>
+            </div>
+        </c:if>
+    </div>
+</div>
 
 
     </div>
