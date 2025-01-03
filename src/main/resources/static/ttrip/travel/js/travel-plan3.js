@@ -3,11 +3,17 @@ let currentListener = null; // 현재 추가된 일차 선택 이벤트 리스�
 
 const selectedDates = JSON.parse(localStorage.getItem("selectedDates"));
 const selectedRange = document.getElementById("selected-range");
+if (!selectedRange) {
+    console.error("Element with ID 'selected-range' not found in the DOM.");
+}
+
+
 
 if (selectedDates) {
+	
     const startDate = new Date(selectedDates.startDate);
     const endDate = new Date(selectedDates.endDate);
-
+	
     selectedRange.textContent = `${formatDate(startDate)} ~ ${formatDate(endDate)}`;
 
     const dayPlanSidebar = document.querySelector('.day-plan-sidebar');
@@ -30,11 +36,10 @@ if (selectedDates) {
         currentDate.setDate(currentDate.getDate() + 1);
         dayCounter++;
     }
-
+	
     // 페이지 로드 시 장소 리스트가 먼저 보이도록 설정
     showPlaces();
 }
-
 // 날짜 포맷 함수
 function formatDate(date) {
     const year = date.getFullYear();
@@ -130,6 +135,7 @@ function addPlaceToDay(day, placeName, imageUrl) {
         <button class="delete-btn" onclick="removePlaceFromDay(this)">삭제</button>
     `;
     dayPlan.appendChild(li);
+	console.log(dayPlan)
 }
 
 // 숙소를 선택한 일차에 추가
@@ -150,6 +156,7 @@ function addAccommodationToDay(day, accommodationName, imageUrl) {
         <button class="delete-btn" onclick="removePlaceFromDay(this)">삭제</button>
     `;
     dayPlan.appendChild(li);
+	console.log(dayPlan)
 }
 
 // 일정에서 장소/숙소를 삭제하는 함수
@@ -227,3 +234,48 @@ function showAccommodations() {
     // 마지막 일차의 전체 div를 숨김
     lastDay.style.display = 'none';
 }
+
+
+const finalizeButton = document.getElementById("finalize-button");
+if (finalizeButton) {
+    finalizeButton.addEventListener("click", function () {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/tc";
+
+		// region 값을 폼에 추가
+		const region = document.querySelector("input[name='region']").value;
+		form.innerHTML += `<input type="hidden" name="region" value="${region}">`;
+		
+        // 모든 일차 데이터 수집
+        const dayPlans = document.querySelectorAll(".day-plan");
+        dayPlans.forEach((dayPlan, index) => {
+            const dayCounter = index + 1; // 일차 번호 (1일부터 시작)
+
+            // 장소 리스트 수집
+            const placeList = dayPlan.querySelectorAll(".place-list li");
+            const places = Array.from(placeList).map(item => item.textContent.trim());
+
+            // 숙소 리스트 수집
+            const accommodationList = dayPlan.querySelectorAll(".accommodation-list li");
+            const accommodations = Array.from(accommodationList).map(item => item.textContent.trim());
+
+            // 수집된 데이터를 form에 추가
+            form.innerHTML += `
+                <input type="hidden" name="day${dayCounter}_places" value="${places.join(",")}">
+                <input type="hidden" name="day${dayCounter}_accommodations" value="${accommodations.join(",")}">
+				<input type="hidden" name="startDate" value="${selectedDates.startDate}">
+				<input type="hidden" name="endDate" value="${selectedDates.endDate}">
+            `;
+        });
+
+        console.log("Form HTML:", form.innerHTML); // 폼 데이터 확인
+        document.body.appendChild(form);
+        form.submit(); // 폼 제출
+    });
+} else {
+    console.error("Finalize button not found!");
+}
+
+	
+
