@@ -18,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ttrip.accom.AccomDomain;
 import com.ttrip.tripboard.TripBoardService;
 import com.ttrip.tripplan.TripPlanService;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import com.ttrip.dstnt.domain.DstntDomain;
 import com.ttrip.tripboard.TripBoardDomain;
 import com.ttrip.tripboard.TripBoardService;
@@ -48,4 +51,12 @@ public class TripBoardController {
         return mav;
     }
 	
+	@GetMapping("/td2")
+    public ModelAndView getTripBoardDetails(@RequestParam("tripBoardID") int tripBoardID) {
+        TripBoardDomain tripBoard = tripBoardService.getTripBoardById(tripBoardID);
+
+        ModelAndView mav = new ModelAndView("ttrip/travel/travel_detail2");
+        mav.addObject("tripBoard", tripBoard);
+        return mav;
+    }
 }//class
