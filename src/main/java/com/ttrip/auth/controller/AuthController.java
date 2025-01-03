@@ -14,6 +14,8 @@ import com.ttrip.auth.dto.LoginResponse;
 import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.auth.service.AuthService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -39,7 +41,9 @@ public class AuthController {
                     token
             );
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok()
+                    .header("Authorization", "Bearer " + token)
+                    .body(response);
 
         } catch (Exception e) {
             LoginResponse response = new LoginResponse(
@@ -54,16 +58,17 @@ public class AuthController {
     @GetMapping("/validate-token")
     public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authorization) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            return new ResponseEntity<>("Invalid or missing Authorization header", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest()
+                    .body(Map.of("status", "invalid", "message", "Invalid or missing Authorization header"));
         }
 
-        String token = authorization.split(" ")[1]; // "Bearer " 이후의 토큰을 추출
+        String token = authorization.split(" ")[1];
 
         if (jwtUtil.isExpired(token)) {
-            return new ResponseEntity<>("Token expired", HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("status", "expired", "message", "Token expired"));
         }
 
-        return new ResponseEntity<>("{\"status\": \"valid\"}", HttpStatus.OK);
+        return ResponseEntity.ok(Map.of("status", "valid"));
     }
-
 }
