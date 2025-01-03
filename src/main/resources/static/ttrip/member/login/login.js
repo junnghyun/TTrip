@@ -32,7 +32,6 @@ $(document).ready(function() {
                 if (response.status === 'success') {
                     console.log('Token received:', response.token);
                     localStorage.setItem('jwt_token', response.token);
-
                     // 토큰 저장 확인
                     console.log('Stored token:', localStorage.getItem('jwt_token'));
 
