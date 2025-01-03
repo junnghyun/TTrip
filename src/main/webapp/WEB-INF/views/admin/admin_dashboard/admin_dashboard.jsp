@@ -2,20 +2,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>관리자 대시보드</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/common/css/admin.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/admin/admin_dashboard/css/admin_dashboard.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="${pageContext.request.contextPath}admin/admin_dashboard/js/admin_dashboard.js" defer></script>
-    <style>
-	.chart-container {
-	    height: 400px;
-	    margin: 20px;
-	    padding: 10px;
-	}
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // 지역 데이터 가져오기
+    fetch('${pageContext.request.contextPath}/admin/dashboard/getRegionData')
+        .then(response => response.json())
+        .then(data => {
+            const regionCtx = document.getElementById('regionChart').getContext('2d');
+            new Chart(regionCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(item => item.region),
+                    datasets: [{
+                        label: '추천 수',
+                        data: data.map(item => item.recomCount),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                precision: 0
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error:', error));
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="${pageContext.request.contextPath}admin/admin_dashboard/js/admin_dashboard.js" defer></script>
+<style>
+.chart-container {
+    height: 400px;
+    margin: 20px;
+    padding: 10px;
+}
 	
 </style>
 </head>

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.main.MainDomain;
 import com.ttrip.mypage.MypageDomain;
 import com.ttrip.mypage.MypageService;
@@ -23,8 +22,8 @@ public class MypageController {
     @Autowired
     private MypageService mypageService;
     
-    @Autowired
-    private JwtUtil jwtUtil;
+//    @Autowired
+//    private JwtUtil jwtUtil;
     
     @GetMapping("/mypage_myboard")
     public String mypage_myboard(HttpServletRequest request, Model model, 
@@ -65,7 +64,7 @@ public class MypageController {
             model.addAttribute("endPage", endPage);
             model.addAttribute("nick", nick);
             
-            return "ttrip/mypage/mypage_myboard";
+            return "ttrip/user/mypage/mypage_myboard";
             
         } catch (Exception e) {
             return "redirect:/login";

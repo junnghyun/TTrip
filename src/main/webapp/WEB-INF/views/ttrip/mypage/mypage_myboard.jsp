@@ -182,6 +182,5 @@
             </section>
         </div>
     </div>
-    <script src="${pageContext.request.contextPath}/common/authCheck.js"></script>
 </body>
 </html>
