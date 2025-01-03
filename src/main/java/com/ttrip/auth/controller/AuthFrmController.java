@@ -27,7 +27,7 @@ public class AuthFrmController {
         return "ttrip/member/signupUser";
     }
 
-    @PostMapping("/signup/outh2")
+    @GetMapping("/signup/outh2")
     public String showOuth2Page(HttpServletRequest request, Model model) {
         // 이메일과 로그인 출처 파라미터 가져오기
         String email = request.getParameter("email");
@@ -37,7 +37,7 @@ public class AuthFrmController {
         model.addAttribute("email", email);
         model.addAttribute("registrationId", registrationId);
 
-        return "ttrip/member/signupOuth2";
+        return "ttrip/member/signupOauth2";
     }
 
 }

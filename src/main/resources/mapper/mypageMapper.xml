@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.mypageMapper">
+
+    <select id="selectMyCourses" resultType="com.ttrip.main.MainDomain">
+        SELECT a.* FROM (
+            SELECT ROWNUM rnum, b.* FROM (
+                SELECT tb.trip_boardID, tb.nick, tb.title, tb.start_date, tb.end_date, 
+                       tb.input_date, r.region, 
+                       d.img as firstImageUrl,
+                       (SELECT COUNT(*) FROM trip_board_recom WHERE trip_boardID = tb.trip_boardID) as recom_count,
+                       (SELECT COUNT(*) FROM trip_comment WHERE trip_boardID = tb.trip_boardID) as comment_count
+                FROM trip_board tb
+                INNER JOIN region r ON tb.regionID = r.regionID
+                LEFT JOIN trip_plan tp ON tb.trip_boardID = tp.trip_boardID
+                          AND tp.trip_day = 1 AND tp.visit_order = 1
+                LEFT JOIN course c ON tp.trip_planID = c.trip_planID
+                LEFT JOIN DSTNT d ON c.DSTNTID = d.DSTNTID
+                WHERE tb.status = 'Y' AND tb.nick = #{nick}
+                ORDER BY tb.input_date DESC
+            ) b WHERE ROWNUM &lt;= #{limit} + #{offset}
+        ) a WHERE rnum > #{offset}
+    </select>
+
+    <select id="selectTotalMyCourses" resultType="int">
+        SELECT COUNT(*)
+        FROM trip_board
+        WHERE status = 'Y' AND nick = #{nick}
+    </select>
+
+	 <select id="selectRecommendList" parameterType="map" resultType="com.ttrip.mypage.MypageDomain">
+	    SELECT * FROM (
+	        SELECT ROWNUM AS rn, A.* FROM (
+	            SELECT b.boardID, b.title, b.input_date, b.CategoryID, c.Category as category
+	            FROM board b
+	            INNER JOIN board_recom br ON b.boardID = br.boardID
+	            INNER JOIN Category c ON b.CategoryID = c.CategoryID
+	            WHERE br.nick = #{nick} AND b.status = 'Y'
+	            ORDER BY b.input_date DESC
+	        ) A WHERE ROWNUM &lt;= #{offset} + #{limit}
+	    ) WHERE rn > #{offset}
+	</select>
+    
+    <select id="selectTotalRecommends" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM board b
+        INNER JOIN board_recom br ON b.boardID = br.boardID
+        WHERE br.nick = #{nick} AND b.status = 'Y'
+    </select>
+    
+    <select id="selectMyBoardList" parameterType="map" resultType="com.ttrip.mypage.MypageDomain">
+	    SELECT * FROM (
+	        SELECT ROWNUM AS rn, A.* FROM (
+	            SELECT b.boardID, b.title, b.input_date, b.CategoryID, c.Category as category
+	            FROM board b
+	            INNER JOIN Category c ON b.CategoryID = c.CategoryID
+	            WHERE b.nick = #{nick} AND b.status = 'Y'
+	            ORDER BY b.input_date DESC
+	        ) A WHERE ROWNUM &lt;= #{offset} + #{limit}
+	    ) WHERE rn > #{offset}
+	</select>
+	
+	<select id="selectTotalMyBoards" parameterType="string" resultType="int">
+	    SELECT COUNT(*)
+	    FROM board b
+	    WHERE b.nick = #{nick} AND b.status = 'Y'
+	</select>
+	
+	<select id="selectMyCommentList" parameterType="map" resultType="com.ttrip.mypage.MypageDomain">
+	    SELECT * FROM (
+	        SELECT ROWNUM AS rn, A.* FROM (
+	            SELECT DISTINCT 
+	                b.boardID, 
+	                b.title, 
+	                b.input_date as board_date, 
+	                b.CategoryID, 
+	                c.Category as category,
+	                cm.detail as comment_text,
+	                cm.input_date as comment_date
+	            FROM board b
+	            INNER JOIN comments cm ON b.boardID = cm.boardID
+	            INNER JOIN Category c ON b.CategoryID = c.CategoryID
+	            WHERE cm.nick = #{nick} 
+	            AND b.status = 'Y' 
+	            AND cm.status = 'Y'
+	            AND cm.input_date = (
+	                SELECT MAX(input_date)
+	                FROM comments
+	                WHERE boardID = b.boardID
+	                AND nick = #{nick}
+	                AND status = 'Y'
+	            )
+	            ORDER BY cm.input_date DESC
+	        ) A WHERE ROWNUM &lt;= #{offset} + #{limit}
+	    ) WHERE rn > #{offset}
+	</select>
+	
+	<select id="selectTotalMyComments" parameterType="string" resultType="int">
+	    SELECT COUNT(DISTINCT b.boardID)
+	    FROM board b
+	    INNER JOIN comments cm ON b.boardID = cm.boardID
+	    WHERE cm.nick = #{nick} 
+	    AND b.status = 'Y' 
+	    AND cm.status = 'Y'
+	</select>
+	
+	<select id="selectMyReportList" parameterType="map" resultType="com.ttrip.mypage.MypageDomain">
+	    SELECT * FROM (
+	        SELECT ROWNUM AS rn, A.* FROM (
+	            SELECT 
+	                b.boardID, 
+	                b.title, 
+	                b.CategoryID,
+	                c.Category as category,
+	                r.status as report_status,
+	                CASE 
+	                    WHEN r.status = 'P' THEN '대기중'
+	                    WHEN r.status = 'C' THEN '처리완료'
+	                END as report_status_text
+	            FROM report r
+	            LEFT JOIN board b ON r.boardID = b.boardID
+	            LEFT JOIN Category c ON b.CategoryID = c.CategoryID
+	            WHERE r.nick = #{nick} 
+	            AND b.status IN ('Y', 'B')  -- Y: 정상, B: 블라인드
+	            ORDER BY r.input_date DESC
+	        ) A WHERE ROWNUM &lt;= #{offset} + #{limit}
+	    ) WHERE rn > #{offset}
+	</select>
+	
+	<select id="selectTotalMyReports" parameterType="string" resultType="int">
+	    SELECT COUNT(*)
+	    FROM report r
+	    LEFT JOIN board b ON r.boardID = b.boardID
+	    WHERE r.nick = #{nick} 
+	    AND b.status IN ('Y', 'B')
+	</select>
+	
+</mapper>

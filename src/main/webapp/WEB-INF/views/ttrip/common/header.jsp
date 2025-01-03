@@ -1,4 +1,4 @@
-    <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -259,7 +259,7 @@
             <div class="auth-buttons">
                 <a href="/login" id="login-btn" class="auth-link login">로그인</a>
                 <a href="/signup" id="signup-btn" class="auth-link signup">회원가입</a>
-                <a href="user/mypage" id="mypage-btn" class="auth-link login" style="display:none;">마이페이지</a>
+                <a href="/user/mypage" id="mypage-btn" class="auth-link login" style="display:none;">마이페이지</a>
                 <a href="/logout" id="logout-btn" class="auth-link logout" style="display:none;">로그아웃</a>
             </div>
         </nav>
@@ -268,7 +268,6 @@
 <script>
     // localStorage 또는 sessionStorage에서 JWT 토큰을 확인
     const token = localStorage.getItem('jwt_token'); // JWT 토큰을 저장한 경우
-    document.cookie = 'jwt_token=; Max-Age=0; path=/; domain=example.com; Secure; SameSite=Strict';
 
     // 토큰이 있으면 로그인/회원가입 버튼을 숨기고 마이페이지/로그아웃 버튼을 표시
     if (token) {
@@ -290,5 +289,6 @@
         location.reload(); // 페이지 새로고침
     });
 </script>
+<script src="${pageContext.request.contextPath}/common/authCheck.js"></script>
 </body>
 </html>
