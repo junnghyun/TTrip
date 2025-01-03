@@ -23,7 +23,6 @@
  	// Controller에서 전달받은 여행지와 숙소 데이터
     List<DstntDomain> destinations = (List<DstntDomain>) request.getAttribute("destinations"); 
  	List<AccomDomain> accommodations = (List<AccomDomain>) request.getAttribute("accommodations"); 
-
 %>
 <!-- 사이드바 영역 -->
 <div class="sidebar">
@@ -37,7 +36,8 @@
         <button class="tab-link active" onclick="openTab(event, 'location')">장소 선택</button>
         <button class="tab-link" onclick="openTab(event, 'accommodation')">숙소 설정</button>
     </div>
-<form id="courseDetail" method="post">
+<form id="courseDetail" method="get">
+	<input type="hidden" value="<%= region %>" name="region"/>
     <div id="location" class="tab-content active">
         <div class="location-selection">
             <h2>장소 선택</h2>
@@ -82,13 +82,14 @@
             </ul>
         </div>
     </div>
-    <input type="hidden" name="planTitle" id="planTitle">
-    <input type="hidden" name="startDate" id="startDate">
-    <input type="hidden" name="endDate" id="endDate">
-    <div id="coursesInputs"></div>
-    <div id="accomPlansInputs"></div>
+    <input type="hidden" name="selectedRange" id="hiddenSelectedRange">
+    <input type="hidden" name="selectedDay" id="hiddenSelectedDay">
+    <input type="hidden" name="selectedDates" id="hiddenSelectedDates">
+    <button type="submit">결과 보기</button>
+
 </form>
     <button id="finalize-button">최종 선택 완료</button>
+    
 </div>
 <div class="main-content">
     <!-- 오른쪽 일정 리스트 -->
@@ -97,6 +98,7 @@
     </div>
     <div class="resize-handle"></div>
 </div>
+
 <script>
     // 장소 추가
     function addPlaceToDayPrompt(name, img) {
@@ -135,13 +137,13 @@
             button.parentElement.parentElement.remove();
         }
     }
-
 </script>
 
 <!-- 메인 콘텐츠 영역 -->
 <div id="map" style="width: 70%; height: 100vh; float: right;"></div>
 
 <script src="${pageContext.request.contextPath}/ttrip/travel/js/travel-plan3.js"></script>
+
 <script>
     // 카카오 지도 API 초기화
     var mapContainer = document.getElementById('map'); // 지도를 표시할 div

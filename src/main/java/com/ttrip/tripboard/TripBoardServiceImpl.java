@@ -34,4 +34,9 @@ public class TripBoardServiceImpl implements TripBoardService {
         return tripBoardDAO.getAccommodationsByRegion(region);
     }
     
+    @Override
+    public TripBoardDomain getTripBoardById(int tripBoardID) {
+        return tripBoardDAO.getTripBoardById(tripBoardID);
+    }
+    
 }

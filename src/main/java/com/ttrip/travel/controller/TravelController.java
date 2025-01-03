@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TravelController {
 
-    @RequestMapping("/user/tr2")
+    @RequestMapping("/tr2")
     public String tr2() {
 
         return "ttrip/travel/travel-plan2";
@@ -34,6 +34,12 @@ public class TravelController {
     public String td() {
     	
     	return "ttrip/travel/travel_detail";
+    }
+    
+    @RequestMapping("/td2")
+    public String td2() {
+    	
+    	return "ttrip/travel/travel_detail2";
     }
 
 }

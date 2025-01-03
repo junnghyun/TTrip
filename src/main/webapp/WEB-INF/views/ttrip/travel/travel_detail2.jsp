@@ -290,43 +290,11 @@ $(function() {
     
     // dayBtn 클릭 이벤트
     $(".dayBtn").click(function() {
-    	 // 모든 버튼에서 'selected' 클래스 제거
-        $(".dayBtn").removeClass("selected");
+    	// 모든 이미지를 초기화
+        $(".dayImg").removeClass("selected");
 
-        // 클릭된 버튼에 'selected' 클래스 추가
+        // 현재 클릭된 이미지에 'selected' 클래스 추가
         $(this).addClass("selected");
-
-        // 버튼의 data-day 속성값 가져오기
-        const day = $(this).data("day");
-        const dayPlaces = places[day] || [];
-        const dayAccommodations = accommodations[day] || [];
-
-        // 상세 정보를 담을 HTML 생성
-        let contentHtml = `<h3>${day}일차 상세 정보</h3><ul>`;
-
-        if (dayPlaces.length > 0 && dayPlaces.some(place => place.trim())) {
-            dayPlaces.forEach(place => {
-                if (place.trim()) { // 유효한 데이터만 출력
-                    contentHtml += `<li>여행지: ${place}</li>`;
-                }
-            });
-        } else {
-            contentHtml += `<li>여행지 정보가 없습니다.</li>`;
-        }
-
-        if (dayAccommodations.length > 0 && dayAccommodations.some(accommodation => accommodation.trim())) {
-            dayAccommodations.forEach(accommodation => {
-                if (accommodation.trim()) { // 유효한 데이터만 출력
-                    contentHtml += `<li>숙소: ${accommodation}</li>`;
-                }
-            });
-        } else {
-            contentHtml += `<li>숙소 정보가 없습니다.</li>`;
-        }
-
-        contentHtml += "</ul>";
-        // dayContent 영역에 상세 정보 출력
-        $("#dayContent").html(contentHtml);
     });
 });
 </script>
@@ -336,52 +304,8 @@ $(function() {
 
 <div id="wrap">
     <div class="top">
-                <%
-            String courseName = request.getParameter("courseName");
-            String comment = request.getParameter("comment");
-            int totalDays = Integer.parseInt(request.getParameter("totalDays"));
-
-            java.util.Map<Integer, String[]> placesMap = new java.util.HashMap<>();
-            java.util.Map<Integer, String[]> accommodationsMap = new java.util.HashMap<>();
-
-            for (int i = 1; i <= totalDays; i++) {
-                String places = request.getParameter("day" + i + "_places");
-                String accommodations = request.getParameter("day" + i + "_accommodations");
-
-                if (places != null) placesMap.put(i, places.split(","));
-                if (accommodations != null) accommodationsMap.put(i, accommodations.split(","));
-            }
-
-            StringBuilder placesJson = new StringBuilder("{");
-            StringBuilder accommodationsJson = new StringBuilder("{");
-
-            for (int i = 1; i <= totalDays; i++) {
-                if (placesMap.containsKey(i)) {
-                    placesJson.append("\"").append(i).append("\":[");
-                    for (String place : placesMap.get(i)) {
-                        placesJson.append("\"").append(place).append("\",");
-                    }
-                    placesJson.setLength(placesJson.length() - 1); // 마지막 쉼표 제거
-                    placesJson.append("],");
-                }
-
-                if (accommodationsMap.containsKey(i)) {
-                    accommodationsJson.append("\"").append(i).append("\":[");
-                    for (String accommodation : accommodationsMap.get(i)) {
-                        accommodationsJson.append("\"").append(accommodation).append("\",");
-                    }
-                    accommodationsJson.setLength(accommodationsJson.length() - 1); // 마지막 쉼표 제거
-                    accommodationsJson.append("],");
-                }
-            }
-
-            if (placesJson.length() > 1) placesJson.setLength(placesJson.length() - 1); // 마지막 쉼표 제거
-            placesJson.append("}");
-
-            if (accommodationsJson.length() > 1) accommodationsJson.setLength(accommodationsJson.length() - 1); // 마지막 쉼표 제거
-            accommodationsJson.append("}");
-        %>
-        <h2><%= courseName != null ? courseName : "코스 이름 없음" %></h2>
+               
+        <h2>${tripBoard.title}</h2>
         <span>경기도 안산시</span>
     </div>
 
@@ -398,7 +322,7 @@ $(function() {
 <hr>
 
 <div class="middle">
-<div class="cont"><%= comment %>
+<div class="cont">디테일한 내용
 </div>
 
 <!-- 지도 영역 -->
@@ -424,39 +348,16 @@ function addMarker(lat, lng) {
     marker.setMap(map);
 }
 
-const places = <%= placesJson.toString() %>;
-const accommodations = <%= accommodationsJson.toString() %>;
-
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('.dayBtn').forEach(button => {
-        button.addEventListener('click', function() {
-            const day = this.getAttribute('data-day');
-            const dayPlaces = places[day] || [];
-            const dayAccommodations = accommodations[day] || [];
-
-            let contentHtml = `<h3>${day}일차 상세 정보</h3><ul>`;
-            dayPlaces.forEach(place => contentHtml += `<li>여행지: ${place}</li>`);
-            dayAccommodations.forEach(accommodation => contentHtml += `<li>숙소: ${accommodation}</li>`);
-            contentHtml += "</ul>";
-
-            document.getElementById('dayContent').innerHTML = contentHtml;
-        });
-    });
-});
 </script>
 <div class="detail">
         <div class="dayBtnBox">
-            <% for (int i = 1; i <= totalDays; i++) { %>
-                <button class="dayBtn" data-day="<%= i %>"><%= i %>일차</button>
-            <% } %>
+                <button class="dayBtn" data-day="1">1일차</button>
         </div>
         <div id="dayContent">
         </div>
     </div>
 
 </div>
-
-
 
 <div class="replyBox">
 <input type="text" placeholder="소중한 댓글을 남겨주세요" class="inputReply"><br>
@@ -484,7 +385,6 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 </div>
 
-</div>
 <jsp:include page="../common/footer.jsp" />
 </body>
 </html>
