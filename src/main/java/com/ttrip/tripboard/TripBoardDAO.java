@@ -15,4 +15,5 @@ public interface TripBoardDAO {
     List<DstntDomain> getDestinationsByRegion(String region);
     List<AccomDomain> getAccommodationsByRegion(String region);
     
+    TripBoardDomain getTripBoardById(int tripBoardID);
 }

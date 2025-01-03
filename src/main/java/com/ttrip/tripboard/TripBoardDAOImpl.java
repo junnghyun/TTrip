@@ -30,4 +30,26 @@ public class TripBoardDAOImpl implements TripBoardDAO {
         return tripBoardMapper.getAccommodationsByRegion(region);
     }
     
+    private final SqlSession sqlSession;
+
+    public TripBoardDAOImpl(SqlSession sqlSession) {
+        this.sqlSession = sqlSession;
+    }
+
+    @Override
+    public TripBoardDomain getTripBoardById(int tripBoardID) {
+        // MyBatis 쿼리 실행
+        TripBoardDomain tripBoard = sqlSession.selectOne("com.ttrip.tripboard.TripBoardMapper.getTripBoardById", tripBoardID);
+
+        // 디버깅: 데이터 확인
+        if (tripBoard == null) {
+            System.out.println("No data found for tripBoardID: " + tripBoardID);
+        } else {
+            System.out.println("Title: " + tripBoard.getTitle());
+        }
+
+        return tripBoard;
+    }
+    
+    
 }
