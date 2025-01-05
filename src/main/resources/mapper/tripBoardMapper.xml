@@ -75,5 +75,11 @@
         INSERT INTO accom_plan (trip_planId, accomID)
         VALUES (#{tripPlanId}, #{accomID})
     </insert>
-  
+  	
+  	<!-- 선택된 여행코스 게시판 -->
+  	<select id="getTripBoardById" parameterType="int" resultType="com.ttrip.tripboard.TripBoardDomain">
+        SELECT title
+        FROM trip_board
+        WHERE trip_boardID = #{trip_boardID}
+    </select>
 </mapper>

@@ -17,19 +17,24 @@ $(document).ready(function () {
 
         // 토큰 유효성 검증
         $.ajax({
-            url: '/api/validate-token', // 토큰을 검증하는 서버 API
+            url: '/api/validate-token',
             type: 'GET',
             success: function (response) {
+                console.log('Token validation response:', response); // 디버깅용
+                if (typeof response === 'string') {
+                    response = JSON.parse(response);
+                }
                 if (response.status !== 'valid') {
                     localStorage.removeItem('jwt_token');
                     alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-                    window.location.href = '/login'; // 로그인 페이지로 리디렉션
+                    window.location.href = '/login';
                 }
             },
-            error: function () {
+            error: function (xhr, status, error) {
+                console.error('Token validation error:', error); // 디버깅용
                 localStorage.removeItem('jwt_token');
                 alert('인증에 실패했습니다. 다시 로그인해주세요.');
-                window.location.href = '/login'; // 로그인 페이지로 리디렉션
+                window.location.href = '/login';
             }
         });
     }
