@@ -1,13 +1,5 @@
 package com.ttrip.auth.config;
 
-import com.ttrip.auth.exception.CustomAccessDeniedHandler;
-import com.ttrip.auth.exception.CustomAuthenticationEntryPoint;
-import com.ttrip.auth.jwt.JwtFilter;
-import com.ttrip.auth.jwt.JwtUtil;
-import com.ttrip.auth.oauth2.CustomOAuth2AuthenticationFailureHandler;
-import com.ttrip.auth.oauth2.CustomOAuth2LoginSuccessHandler;
-import com.ttrip.auth.service.CustomOAuth2UserService;
-import com.ttrip.auth.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +13,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.ttrip.auth.exception.CustomAccessDeniedHandler;
+import com.ttrip.auth.exception.CustomAuthenticationEntryPoint;
+import com.ttrip.auth.jwt.JwtFilter;
+import com.ttrip.auth.jwt.JwtUtil;
+import com.ttrip.auth.oauth2.CustomOAuth2AuthenticationFailureHandler;
+import com.ttrip.auth.oauth2.CustomOAuth2LoginSuccessHandler;
+import com.ttrip.auth.service.CustomOAuth2UserService;
+import com.ttrip.auth.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity

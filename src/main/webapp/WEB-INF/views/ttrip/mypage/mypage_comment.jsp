@@ -4,10 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/ttrip/mypage/css/mypage.css" rel="stylesheet">
-
-<style>
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지 - 댓글 단 글</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/ttrip/mypage/css/mypage.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
 .category-badge {
         padding: 4px 8px;
         border-radius: 4px;
@@ -103,9 +106,6 @@
         font-size: 16px;
     }
 </style>
-<head>
-    <meta charset="UTF-8">
-    <title>마이페이지 - 댓글 단 글</title>
 </head>
 <body>
     <div>
@@ -115,7 +115,7 @@
     <div class="mypage-container">
         <nav class="side-menu">
             <a href="mypage_course" class="menu-item">여행 코스</a>
-            <a href="mypage_myboard" class="menu-item ">내가 쓴 글</a>
+            <a href="mypage_myboard" class="menu-item">내가 쓴 글</a>
             <a href="mypage_comment" class="menu-item active">댓글 단 글</a>
             <a href="mypage_recommend" class="menu-item">추천한 글</a>
             <a href="mypage_report" class="menu-item">신고한 글</a>
@@ -125,66 +125,122 @@
             <section class="profile-section">
                 <div class="profile-header">
                     <div class="profile-info">
-                        <h1 class="profile-name">${nick}</h1>
+                        <h1 class="profile-name" id="profile-nickname"></h1>
                         <div class="profile-actions">
-   							<a href="edit_member" class="profile-button edit-button" style="text-decoration: none">정보수정</a>
-                            <a href="delete_member" class="profile-button delete-button"style="text-decoration: none">회원탈퇴</a>
+                            <a href="edit_member" class="profile-button edit-button" style="text-decoration: none">정보수정</a>
+                            <a href="delete_member" class="profile-button delete-button" style="text-decoration: none">회원탈퇴</a>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="content-section">
-			    <ul class="content-list">
-			        <c:choose>
-			            <c:when test="${empty comments}">
-			                <li class="no-content">
-			                    <p>작성한 댓글이 없습니다.</p>
-			                </li>
-			            </c:when>
-			            <c:otherwise>
-			                <c:forEach items="${comments}" var="comment">
-			                    <li class="content-item">
-			                        <span class="category-badge category-${comment.category}">${comment.category}</span>
-			                        <div class="content-info">
-			                            <div class="title-wrapper">
-			                                <a href="/board/detail/${comment.boardID}" class="post-link">
-			                                    <span class="content-title">${comment.title}</span>
-			                                    <p class="comment-text">${comment.comment_text}</p>
-			                                </a>
-			                            </div>
-			                            <span class="content-date">
-			                                <fmt:formatDate value="${comment.comment_date}" pattern="yyyy.MM.dd"/>
-			                            </span>
-			                        </div>
-			                    </li>
-			                </c:forEach>
-			            </c:otherwise>
-			        </c:choose>
-			    </ul>
-			    
-			    <c:if test="${totalPages > 1}">
-			        <div class="pagination">
-			            <c:if test="${startPage > 1}">
-			                <a href="?page=${startPage-5}" class="page-arrow">
-			                    <i class="material-icons">chevron_left</i>
-			                </a>
-			            </c:if>
-			            
-			            <c:forEach begin="${startPage}" end="${endPage}" var="i">
-			                <a href="?page=${i}" class="page-item ${currentPage == i ? 'active' : ''}">${i}</a>
-			            </c:forEach>
-			            
-			            <c:if test="${endPage < totalPages}">
-			                <a href="?page=${startPage+5}" class="page-arrow">
-			                    <i class="material-icons">chevron_right</i>
-			                </a>
-			            </c:if>
-			        </div>
-			    </c:if>
-			</section>
+                <ul class="content-list" id="comment-list">
+                    <!-- Comments will be loaded here dynamically -->
+                </ul>
+                
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be loaded here dynamically -->
+                </div>
+            </section>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            loadComments(1);
+        });
+
+        function loadComments(page) {
+            var token = localStorage.getItem("jwt_token");
+            
+            $.ajax({
+                url: '/user/api/mypage_comment',
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data: {
+                    page: page
+                },
+                success: function(response) {
+                    updateUI(response);
+                },
+                error: function(error) {
+                    console.error('Error fetching comments:', error);
+                    alert('댓글 정보를 불러오는데 실패했습니다.');
+                }
+            });
+        }
+
+        function updateUI(data) {
+            // Update nickname
+            $('#profile-nickname').text(data.nick);
+            
+            // Update comments list
+            var commentList = $('#comment-list');
+            commentList.empty();
+            
+            if (!data.comments || data.comments.length === 0) {
+                commentList.append('<li class="no-content"><p>작성한 댓글이 없습니다.</p></li>');
+            } else {
+                data.comments.forEach(function(comment) {
+                    var commentHtml = `
+                        <li class="content-item">
+                            <span class="category-badge category-\${comment.category}">\${comment.category}</span>
+                            <div class="content-info">
+                                <div class="title-wrapper">
+                                    <a href="/board/detail/\${comment.boardID}" class="post-link">
+                                        <span class="content-title">\${comment.title}</span>
+                                        <p class="comment-text">\${comment.comment_text}</p>
+                                    </a>
+                                </div>
+                                <span class="content-date">\${comment.formatted_date}</span>
+                            </div>
+                        </li>
+                    `;
+                    commentList.append(commentHtml);
+                });
+            }
+            
+            // Update pagination
+            updatePagination(data);
+        }
+
+        function updatePagination(data) {
+            var pagination = $('#pagination');
+            pagination.empty();
+            
+            if (data.totalPages > 1) {
+                var paginationHtml = '';
+                
+                if (data.startPage > 1) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadComments(${data.startPage-5})" class="page-arrow">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    `;
+                }
+                
+                for (var i = data.startPage; i <= data.endPage; i++) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadComments(${i})" 
+                           class="page-item ${data.currentPage == i ? 'active' : ''}">${i}</a>
+                    `;
+                }
+                
+                if (data.endPage < data.totalPages) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadComments(${data.startPage+5})" class="page-arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    `;
+                }
+                
+                pagination.html(paginationHtml);
+            }
+        }
+    </script>
     <script src="${pageContext.request.contextPath}/common/authCheck.js"></script>
 </body>
 </html>

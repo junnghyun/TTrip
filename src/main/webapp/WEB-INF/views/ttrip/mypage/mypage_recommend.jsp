@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이페이지</title>
+<title>마이페이지 - 추천한 글</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/ttrip/mypage/css/mypage.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     .category-badge {
         padding: 4px 8px;
@@ -127,7 +128,7 @@
             <section class="profile-section">
                 <div class="profile-header">
                     <div class="profile-info">
-                        <h1 class="profile-name">${nick}</h1>
+                        <h1 class="profile-name" id="profile-nickname"></h1>
                         <div class="profile-actions">
                             <a href="edit_member" class="profile-button edit-button" style="text-decoration: none">정보수정</a>
                             <a href="delete_member" class="profile-button delete-button" style="text-decoration: none">회원탈퇴</a>
@@ -137,51 +138,107 @@
             </section>
 
             <section class="content-section">
-                <ul class="content-list">
-                    <c:choose>
-                        <c:when test="${empty recommends}">
-                            <li class="no-content">
-                                <p>추천한 게시글이 없습니다.</p>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach items="${recommends}" var="recommend">
-                                <li class="content-item">
-                                    <span class="category-badge category-${recommend.category}">${recommend.category}</span>
-                                    <div class="content-info">
-                                        <a href="/board/detail/${recommend.boardID}" class="content-title">${recommend.title}</a>
-                                        <span class="content-date">
-                                            <fmt:formatDate value="${recommend.input_date}" pattern="yyyy.MM.dd"/>
-                                        </span>
-                                    </div>
-                                </li>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
+                <ul class="content-list" id="recommend-list">
+                    <!-- Recommends will be loaded here dynamically -->
                 </ul>
                 
-                <c:if test="${totalPages > 1}">
-			    <div class="pagination">
-			        <c:if test="${startPage > 1}">
-			            <a href="?page=${startPage-5}" class="page-arrow">
-			                <i class="material-icons">chevron_left</i>
-			            </a>
-			        </c:if>
-			        
-			        <c:forEach begin="${startPage}" end="${endPage}" var="i">
-			            <a href="?page=${i}" class="page-item ${currentPage == i ? 'active' : ''}">${i}</a>
-			        </c:forEach>
-			        
-			        <c:if test="${endPage < totalPages}">
-			            <a href="?page=${startPage+5}" class="page-arrow">
-			                <i class="material-icons">chevron_right</i>
-			            </a>
-			        </c:if>
-			    </div>
-			</c:if>
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be loaded here dynamically -->
+                </div>
             </section>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            loadRecommends(1);
+        });
+
+        function loadRecommends(page) {
+            var token = localStorage.getItem("jwt_token");
+            
+            $.ajax({
+                url: '/user/api/mypage_recommend',
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data: {
+                    page: page
+                },
+                success: function(response) {
+                    updateUI(response);
+                },
+                error: function(error) {
+                    console.error('Error fetching recommends:', error);
+                    alert('추천 글 정보를 불러오는데 실패했습니다.');
+                }
+            });
+        }
+
+        function updateUI(data) {
+            // Update nickname
+            $('#profile-nickname').text(data.nick);
+            
+            // Update recommends list
+            var recommendList = $('#recommend-list');
+            recommendList.empty();
+            
+            if (!data.recommends || data.recommends.length === 0) {
+                recommendList.append('<li class="no-content"><p>추천한 게시글이 없습니다.</p></li>');
+            } else {
+                data.recommends.forEach(function(recommend) {
+                    var recommendHtml = `
+                        <li class="content-item">
+                            <span class="category-badge category-\${recommend.category}">\${recommend.category}</span>
+                            <div class="content-info">
+                                <a href="/board/detail/\${recommend.boardID}" class="content-title">\${recommend.title}</a>
+                                <span class="content-date">\${recommend.formatted_date}</span>
+                            </div>
+                        </li>
+                    `;
+                    recommendList.append(recommendHtml);
+                });
+            }
+            
+            // Update pagination
+            updatePagination(data);
+        }
+
+        function updatePagination(data) {
+            var pagination = $('#pagination');
+            pagination.empty();
+            
+            if (data.totalPages > 1) {
+                var paginationHtml = '';
+                
+                if (data.startPage > 1) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadRecommends(${data.startPage-5})" class="page-arrow">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    `;
+                }
+                
+                for (var i = data.startPage; i <= data.endPage; i++) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadRecommends(${i})" 
+                           class="page-item ${data.currentPage == i ? 'active' : ''}">${i}</a>
+                    `;
+                }
+                
+                if (data.endPage < data.totalPages) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadRecommends(${data.startPage+5})" class="page-arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    `;
+                }
+                
+                pagination.html(paginationHtml);
+            }
+        }
+    </script>
     <script src="${pageContext.request.contextPath}/common/authCheck.js"></script>
 </body>
 </html>
