@@ -14,4 +14,16 @@ public class DashboardService {
     public List<DashboardDomain> getTopRecommendedRegions() {
         return dashboardDAO.getTopRecommendedRegions();
     }
+    
+    public List<DashboardDomain> getTopVisitedPlaces() {
+        return dashboardDAO.getTopVisitedPlaces();
+    }
+    
+    public List<DashboardDomain> getWeeklyLoginUsers() {
+        return dashboardDAO.getWeeklyLoginUsers();
+    }
+    
+    public List<DashboardDomain> getPendingReports() {
+        return dashboardDAO.getPendingReports();
+    }
 }

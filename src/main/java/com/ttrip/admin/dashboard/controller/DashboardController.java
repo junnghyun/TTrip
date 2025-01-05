@@ -18,16 +18,35 @@ public class DashboardController {
     @Autowired
     private DashboardService dashboardService;
     
-    // 대시보드 페이지 로드
     @GetMapping("")
     public String dashboard() {
         return "admin/admin_dashboard/admin_dashboard";
     }
     
-    // AJAX 요청을 처리하는 메서드
-    @GetMapping("/getRegionData")
+    @GetMapping(value = "/getRegionData", produces = "application/json")
     @ResponseBody
     public List<DashboardDomain> getRegionData() {
         return dashboardService.getTopRecommendedRegions();
+    }
+    
+    @GetMapping(value = "/getTopVisitedPlaces", produces = "application/json")
+    @ResponseBody
+    public List<DashboardDomain> getTopVisitedPlaces() {
+        List<DashboardDomain> result = dashboardService.getTopVisitedPlaces();
+        return result;
+    }
+    
+    @GetMapping(value = "/getWeeklyLoginUsers", produces = "application/json")
+    @ResponseBody
+    public List<DashboardDomain> getWeeklyLoginUsers() {
+        List<DashboardDomain> result = dashboardService.getWeeklyLoginUsers();
+        return result;
+    }
+    
+    @GetMapping(value = "/getPendingReports", produces = "application/json")
+    @ResponseBody
+    public List<DashboardDomain> getPendingReports() {
+        List<DashboardDomain> result = dashboardService.getPendingReports();
+        return result;
     }
 }

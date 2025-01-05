@@ -17,4 +17,17 @@ public class DashboardDAO {
     public List<DashboardDomain> getTopRecommendedRegions() {
         return sqlSession.selectList(NAMESPACE + ".getTopRecommendedRegions");
     }
+    
+    
+    public List<DashboardDomain> getTopVisitedPlaces() {
+        return sqlSession.selectList(NAMESPACE + ".getTopVisitedPlaces");
+    }
+    
+    public List<DashboardDomain> getWeeklyLoginUsers() {
+        return sqlSession.selectList(NAMESPACE + ".getWeeklyLoginUsers");
+    }
+    
+    public List<DashboardDomain> getPendingReports() {
+        return sqlSession.selectList(NAMESPACE + ".getPendingReports");
+    }
 }

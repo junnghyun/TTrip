@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.main.MainDomain;
 import com.ttrip.main.MainService;
 
@@ -21,7 +23,8 @@ public class MainController {
 
 	 @Autowired(required = false)
 	    private MainService ms;
-	    
+	 @Autowired
+	    private JwtUtil jwtUtil;
 	    
 	    @RequestMapping(value = "/main_tripboard", method = {RequestMethod.GET,RequestMethod.POST})
 	    public String tripBoardList(Model model) {
@@ -77,32 +80,25 @@ public class MainController {
 	    }
 	    
 	    @RequestMapping(value = "/main_mytripcourse", method = {RequestMethod.GET,RequestMethod.POST})
-	    public String myTripCourseList(Model model) {  // HttpSession 제거
-	        // 테스트용으로 user1로 설정
-	        String nick = "user1";  // 실제로는 세션에서 가져와야 함
-	        
-	        List<MainDomain> boards = null;  
-	        try {
-	            boards = ms.searchMyTripBoards(nick);
-	            model.addAttribute("boards", boards);  
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+	    public String myTripCourseList() {
 	        return "ttrip/main/main_mytripcourse";
 	    }
 
 	    @PostMapping("/main_mytripcourse/more")
 	    @ResponseBody
-	    public String getMoreMyBoards(@RequestBody Map<String, Integer> param) { 
+	    public String getMoreMyBoards(@RequestHeader("Authorization") String authorization, 
+	                                @RequestBody Map<String, Integer> param) {
 	        String jsonObj = "";
-	        // 테스트용으로 user1로 설정
-	        String nick = "user1";  // 실제로는 세션에서 가져와야 함
 	        
-	        try {
-	            int offset = param.get("offset");
-	            jsonObj = ms.searchMoreMyTripBoards(nick, offset);
-	        } catch (Exception e) {
-	            e.printStackTrace();
+	        if (authorization != null && authorization.startsWith("Bearer ")) {
+	            try {
+	                String token = authorization.split(" ")[1];
+	                String nick = jwtUtil.getNick(token);
+	                int offset = param.get("offset");
+	                jsonObj = ms.searchMoreMyTripBoards(nick, offset);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
 	        }
 	        return jsonObj;
 	    }

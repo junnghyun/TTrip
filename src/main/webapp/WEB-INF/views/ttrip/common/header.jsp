@@ -259,7 +259,7 @@
             <div class="auth-buttons">
                 <a href="/login" id="login-btn" class="auth-link login">로그인</a>
                 <a href="/signup" id="signup-btn" class="auth-link signup">회원가입</a>
-                <a href="/user/mypage" id="mypage-btn" class="auth-link login" style="display:none;">마이페이지</a>
+                <a href="/user/mypage_course" id="mypage-btn" class="auth-link login" style="display:none;">마이페이지</a>
                 <a href="/logout" id="logout-btn" class="auth-link logout" style="display:none;">로그아웃</a>
             </div>
         </nav>

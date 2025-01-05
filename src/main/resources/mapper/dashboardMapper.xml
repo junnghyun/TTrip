@@ -1,19 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.dashboardMapper">
     <select id="getTopRecommendedRegions" resultType="com.ttrip.admin.dashboard.DashboardDomain">
-        SELECT 
-            r.regionID as regionId,
-            r.region as region,
-            COUNT(DISTINCT tbr.nick) as recomCount,
-            COUNT(DISTINCT tb.trip_boardID) as postCount
-        FROM region r
-        LEFT JOIN trip_board tb ON r.regionID = tb.regionID AND tb.status = 'Y'
-        LEFT JOIN trip_board_recom tbr ON tb.trip_boardID = tbr.trip_boardID
-        GROUP BY r.regionID, r.region
-        ORDER BY recomCount DESC, postCount DESC
+        SELECT * FROM (
+            SELECT 
+                r.regionID as regionId,
+                r.region as region,
+                COUNT(DISTINCT tbr.nick) as recomCount,
+                COUNT(DISTINCT tb.trip_boardID) as postCount
+            FROM region r
+            LEFT JOIN trip_board tb ON r.regionID = tb.regionID AND tb.status = 'Y'
+            LEFT JOIN trip_board_recom tbr ON tb.trip_boardID = tbr.trip_boardID
+            GROUP BY r.region, r.regionID 
+            ORDER BY COUNT(DISTINCT tbr.nick) DESC NULLS LAST
+        ) WHERE ROWNUM &lt;= 5
     </select>
+    
+     <select id="getTopVisitedPlaces" resultType="com.ttrip.admin.dashboard.DashboardDomain">
+        SELECT * FROM (
+            SELECT 
+                d.name as dstntName,
+                COUNT(c.DSTNTID) as visitCount
+            FROM DSTNT d
+            LEFT JOIN course c ON d.DSTNTID = c.DSTNTID
+            LEFT JOIN trip_plan tp ON c.trip_planID = tp.trip_planID
+            LEFT JOIN trip_board tb ON tp.trip_boardID = tb.trip_boardID
+            WHERE tb.status = 'Y'
+            GROUP BY d.DSTNTID, d.name
+            ORDER BY COUNT(c.DSTNTID) DESC
+        ) WHERE ROWNUM &lt;= 5
+    </select>
+	
+	<select id="getWeeklyLoginUsers" resultType="com.ttrip.admin.dashboard.DashboardDomain">
+	    SELECT 
+	        CASE TO_CHAR(connect_date, 'D')
+	            WHEN '1' THEN '일'
+	            WHEN '2' THEN '월'
+	            WHEN '3' THEN '화'
+	            WHEN '4' THEN '수'
+	            WHEN '5' THEN '목'
+	            WHEN '6' THEN '금'
+	            WHEN '7' THEN '토'
+	        END as loginDate,
+	        COUNT(DISTINCT nick) as userCount
+	    FROM connect_history 
+	    WHERE connect_date >= TRUNC(SYSDATE, 'IW') 
+	    AND connect_date &lt; TRUNC(SYSDATE, 'IW') + 7
+	    GROUP BY TO_CHAR(connect_date, 'D')
+	    ORDER BY TO_CHAR(connect_date, 'D')
+	</select>
+	
+	<select id="getPendingReports" resultType="com.ttrip.admin.dashboard.DashboardDomain">
+    SELECT
+        board_type as boardType,
+        COUNT(*) as pendingCount
+    FROM (
+        SELECT
+            CASE
+                WHEN r.trip_boardID IS NOT NULL THEN '여행지 코스'
+                WHEN b.CategoryID = 1 THEN '자유'
+                WHEN b.CategoryID = 2 THEN '질문'
+                WHEN b.CategoryID = 3 THEN '추천'
+            END as board_type
+        FROM report r
+        LEFT JOIN board b ON r.boardID = b.boardID
+        LEFT JOIN trip_board tb ON r.trip_boardID = tb.trip_boardID
+        WHERE r.status = 'P'
+        AND (r.boardID IS NOT NULL OR r.trip_boardID IS NOT NULL)  -- 댓글 신고는 제외
+    )
+    WHERE board_type IS NOT NULL
+    GROUP BY board_type
+    ORDER BY
+        CASE board_type
+            WHEN '자유' THEN 1
+            WHEN '질문' THEN 2
+            WHEN '추천' THEN 3
+            WHEN '여행지 코스' THEN 4
+        END
+</select>
 </mapper>

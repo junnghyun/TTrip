@@ -17,7 +17,8 @@ public class MainDomain {
     private String firstImageUrl;   // 첫번째 날 첫번째 코스의 이미지 URL
     private int recom_count;        // 추천수
     private int comment_count;      // 댓글수
-    
+    private String formatted_date;  // 추가된 필드
+
     // start_date와 end_date를 이용해 여행기간을 계산하는 메서드
     public void calculateTripPeriod() {
         if(start_date != null && end_date != null) {

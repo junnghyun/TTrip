@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>나의 여행 코스</title>
 <link rel="shortcut icon" href="http://192.168.10.228/jsp_prj/common/images/favicon.ico">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ttrip/main/css/common.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ttrip/main/css/content.css?v=2023010400142124b5e-3e78-4c2d-9000-9954ac7cb338" />
@@ -15,7 +15,6 @@
 <!--  bootstrap CDN 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
 <!--  jQuery CDN 시작-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <style type="text/css">
@@ -50,91 +49,200 @@
     font-size: 14px;
 }
 </style>
+
 <script type="text/javascript">
 $(function(){
-   let offset = 12;  // 초기 게시글 개수
+    let token = localStorage.getItem("jwt_token");
+    if (!token) {
+        showLoginRequired();
+    } else {
+        loadMyTripCourses();
+    }
 
-   // 더보기 버튼 클릭 이벤트
-   $(".more button").click(function(){
-       $.ajax({
-           url: "/main_mytripcourse/more",
-           type: "POST",
-           data: JSON.stringify({ offset: offset }),
-           contentType: "application/json",
-           dataType: "json",
-           success: function(data){
-               if(data.boardList && data.boardList.length > 0) {
-                   data.boardList.forEach(function(board){
-                       let dateStr = '';
-                       if(board.input_date) {
-                           try {
-                               const date = new Date(board.input_date);
-                               if(!isNaN(date.getTime())) {
-                                   dateStr = date.getFullYear() + '. ' + 
-                                           (date.getMonth() + 1) + '. ' + 
-                                           date.getDate() + '.';
-                               }
-                           } catch(e) {
-                               console.error('Date parsing error:', e);
-                           }
-                       }
-
-                       let html = '<li tabindex="0">' +
-	                       '<button type="button" class="delete-btn" onclick="deleteCourse(\'' + board.trip_boardID + '\', this)">×</button>' +
-	                       '<span onclick="goDetailCourse(\'' + board.trip_boardID + '\')" class="img">' +
-	                           '<img src="' + board.firstImageUrl + '" alt="여행 이미지" ' +
-	                           'onerror="this.onerror=null; this.src=\'${pageContext.request.contextPath}/ttrip/main/images/default_image.jpg\'; this.classList.add(\'placeholder-img\');">' +
-	                           '<span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>' +
-	                       '</span>' +
-                           '<div class="cont">' +
-                               '<span class="day">' + board.trip_period + '</span>' +
-                               '<a href="javascript:goDetailCourse(\'' + board.trip_boardID + '\');">' + board.title + '</a>' +
-                               '<span class="area">' + board.region + '</span>' +
-                               '<div class="date">' +
-                                   '<em>만든날짜</em>' +
-                                   '<span>' + dateStr + '</span>' +
-                               '</div>' +
-                               '<div class="rate">' +
-                                   '<div class="grade">' +
-                                       '<div class="star">' +
-                                           '<span></span>' +
-                                       '</div>' +
-                                       '<span class="total"><em class="blind">추천수</em>' + board.recom_count + '</span>' +
-                                   '</div>' +
-                                   '<span class="comment"><em class="blind">댓글수</em>' + board.comment_count + '</span>' +
-                               '</div>' +
-                           '</div>' +
-                       '</li>';
-                       $(".planner_list ul").append(html);
-                   });
-                   offset += data.boardList.length;
-                   
-                   if(data.boardList.length < 12) {
-                       $(".more").hide();
-                   }
-               } else {
-                   $(".more").hide();
-               }
-           },
-           error: function(xhr, status, error) {
-               console.error("Error:", error);
-               alert("게시글을 더 불러오는데 실패했습니다.");
-           }
-       });
-   });
+ // 더보기 버튼 클릭 이벤트
+    $(document).on('click', '.more button', function(){
+        let offset = $(".my_cos li").length;
+        const token = localStorage.getItem("jwt_token");
+        
+        $.ajax({
+            url: "/main_mytripcourse/more",
+            type: "POST",
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            data: JSON.stringify({ offset: offset }),
+            contentType: "application/json",
+            dataType: "json",
+            success: function(data){
+                if(data.boardList && data.boardList.length > 0) {
+                    data.boardList.forEach(function(board){
+                        const boardHtml = createBoardHtml(board);
+                        $(".my_cos").append(boardHtml);
+                    });
+                    
+                    if(data.boardList.length < 12) {
+                        $(".more").hide();
+                    }
+                } else {
+                    $(".more").hide();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                alert("게시글을 더 불러오는데 실패했습니다.");
+            }
+        });
+    });
 });
+
+function createBoardHtml(board) {
+    return `
+        <li tabindex="0">
+            <button type="button" class="delete-btn" onclick="deleteCourse('${board.trip_boardID}', this)">×</button>
+            <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
+                <img src="\${board.firstImageUrl || '${pageContext.request.contextPath}/ttrip/main/images/default_image.jpg'}" 
+                     alt="여행 이미지" 
+                     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/ttrip/main/images/default_image.jpg'; this.classList.add('placeholder-img');">
+                <span class="profile">
+                    <img src="/resources/images/common/icon_header_profile2.png" 
+                         onerror="this.remove();" 
+                         alt="프로필">
+                </span>
+            </span>
+            <div class="cont">
+                <span class="day">\${board.trip_period}</span>
+                <a href="javascript:goDetailCourse('${board.trip_boardID}');">\${board.title}</a>
+                <span class="area">\${board.region}</span>
+                <div class="date">
+                    <em>만든날짜</em>
+                    <span>\${board.formatted_date}</span>
+                </div>
+                <div class="rate">
+                    <div class="grade">
+                        <div class="star">
+                            <span></span>
+                        </div>
+                        <span class="total"><em class="blind">추천수</em>\${board.recom_count}</span>
+                    </div>
+                    <span class="comment"><em class="blind">댓글수</em>\${board.comment_count}</span>
+                </div>
+            </div>
+        </li>
+    `;
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return '';
+    return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
+}
+
+function showLoginRequired() {
+    $(".cockcock_planner .showcase").hide();
+    $(".planner_list").html(`
+        <div class="planner_list myPannerNoData" style="text-align: center; padding: 50px 0;">
+            <div class="no_data">
+                <strong style="font-size: 24px; margin-bottom: 20px; display: block;">로그인이 필요한 서비스입니다 😊</strong>
+                <p style="font-size: 16px; color: #666; margin-bottom: 30px;">나만의 여행 코스를 관리하려면 로그인해주세요.</p>
+                <a href="/login" style="display: inline-block; padding: 12px 30px; background-color: #567FF2; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                    로그인하기
+                </a>
+            </div>
+        </div>
+    `);
+}
+
+function loadMyTripCourses() {
+    const token = localStorage.getItem("jwt_token");
+    if(!token) {
+        showLoginRequired();
+        return;
+    }
+    
+    $.ajax({
+        url: '/api/main/mytripcourse',
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        success: function(response) {
+            console.log("Response:", response); // 디버깅용 로그 추가
+            if (response.success) {
+                if (response.boards && response.boards.length > 0) {
+                    const courseList = $(".my_cos");
+                    courseList.empty();
+                    
+                    console.log("Boards:", response.boards); // 디버깅용 로그 추가
+                    
+                    response.boards.forEach(function(board) {
+                        const dateStr = board.formatted_date || formatDate(board.input_date);
+                        board.formatted_date = dateStr;
+                        const boardHtml = createBoardHtml(board);
+                        courseList.append(boardHtml);
+                    });
+                    
+                    if (response.boards.length >= 12) {
+                        if ($(".more").length === 0) {
+                            $(".planner_list").append(`
+                                <div class="more">
+                                    <button><span>더보기</span></button>
+                                </div>
+                            `);
+                        }
+                    } else {
+                        $(".more").hide();
+                    }
+                } else {
+                    showEmptyMessage();
+                }
+            } else if (response.message === 'unauthorized') {
+                showLoginRequired();
+            }
+        },
+        error: function(xhr) {
+            console.error("Error response:", xhr); // 디버깅용 로그 추가
+            if(xhr.status === 401) {
+                showLoginRequired();
+            } else {
+                alert('데이터를 불러오는데 실패했습니다.');
+            }
+        }
+    });
+}
+
+function showEmptyMessage() {
+    $(".planner_list").html(`
+        <div class="planner_list myPannerNoData">
+            <div class="no_data">
+                <strong>아직 제작한 코스가 없어요. 😨</strong>
+                <p>맞춤형 여행 코스 추천 받아보세요.</p>
+            </div>
+        </div>
+    `);
+}
 
 function deleteCourse(boardId, element) {
     if(confirm('이 코스를 삭제하시겠습니까?')) {
+        const token = localStorage.getItem("jwt_token");
+        
         $.ajax({
             url: "/deleteCourse",
             type: "POST",
-            data: JSON.stringify({ boardId: parseInt(boardId) }), // boardId를 숫자로 변환
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            data: JSON.stringify({ boardId: parseInt(boardId) }),
             contentType: "application/json",
             success: function(response) {
                 if(response.success) {
                     $(element).closest('li').remove();
                     alert('삭제되었습니다.');
+                    
+                    // 목록이 비어있는지 확인
+                    if($(".my_cos li").length === 0) {
+                        showEmptyMessage();
+                    }
                 } else {
                     alert('삭제에 실패했습니다.');
                 }
@@ -147,11 +255,11 @@ function deleteCourse(boardId, element) {
 }
 
 function goDetailCourse(boardId) {
-   window.location.href = "/courseDetail/" + boardId;
+    window.location.href = "/courseDetail/" + boardId;
 }
 
 function showAiPlannerInfo() {
-   alert("AI 기반의 맞춤형 여행 코스 추천 서비스입니다.");
+    alert("AI 기반의 맞춤형 여행 코스 추천 서비스입니다.");
 }
 </script>
 <jsp:include page="../common/header.jsp"/>
@@ -211,55 +319,49 @@ function showAiPlannerInfo() {
        <div id="plannerTab2" class="tab_cont active" style="display: block;">
            <h4>나의 여행 코스</h4>
            <div class="planner_list myPlannerList">
-               <ul class="my_cos">
-                   <c:forEach items="${boards}" var="board">
-                       <li tabindex="0">
-                           <button type="button" class="delete-btn" onclick="deleteCourse('${board.trip_boardID}', this)">×</button>
-                           <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
-							    <img src="${board.firstImageUrl}" 
-							         alt="여행 이미지" 
-							         onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/ttrip/main/images/default_image.jpg'; this.classList.add('placeholder-img');">
-							    <span class="profile">
-							        <img src="/resources/images/common/icon_header_profile2.png" 
-							             onerror="this.remove();" 
-							             alt="프로필">
-							    </span>
-							</span>
-                           <div class="cont">
-                               <span class="day">${board.trip_period}</span>
-                               <a href="javascript:goDetailCourse('${board.trip_boardID}');">${board.title}</a>
-                               <span class="area">${board.region}</span>
-                               <div class="date">
-                                   <em>만든날짜</em>
-                                   <span><fmt:formatDate value="${board.input_date}" pattern="yyyy. M. d."/></span>
-                               </div>
-                               <div class="rate">
-                                   <div class="grade">
-                                       <div class="star">
-                                           <span></span>
-                                       </div>
-                                       <span class="total"><em class="blind">추천수</em>${board.recom_count}</span>
-                                   </div>
-                                   <span class="comment"><em class="blind">댓글수</em>${board.comment_count}</span>
-                               </div>
-                           </div>
-                       </li>
-                   </c:forEach>
-               </ul>
-               <c:if test="${boards.size() >= 12}">
-                   <div class="more">
-                       <button><span>더보기</span></button>
-                   </div>
-               </c:if>
-           </div>
-           <c:if test="${empty boards}">
-               <div class="planner_list myPannerNoData">
-                   <div class="no_data">
-                       <strong>아직 제작한 코스가 없어요. 😨</strong>
-                       <p>맞춤형 여행 코스 추천 받아보세요.</p>
-                   </div>
-               </div>
-           </c:if>
+    <ul class="my_cos">
+        <c:if test="${not empty boards}">
+            <c:forEach items="${boards}" var="board">
+                <li tabindex="0">
+                    <button type="button" class="delete-btn" onclick="deleteCourse('${board.trip_boardID}', this)">×</button>
+                    <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
+                        <img src="${not empty board.firstImageUrl ? board.firstImageUrl : pageContext.request.contextPath}/ttrip/main/images/default_image.jpg" 
+                             alt="여행 이미지" 
+                             onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/ttrip/main/images/default_image.jpg'; this.classList.add('placeholder-img');">
+                        <span class="profile">
+                            <img src="/resources/images/common/icon_header_profile2.png" 
+                                 onerror="this.remove();" 
+                                 alt="프로필">
+                        </span>
+                    </span>
+                    <div class="cont">
+                        <span class="day">${board.trip_period}</span>
+                        <a href="javascript:goDetailCourse('${board.trip_boardID}');">${board.title}</a>
+                        <span class="area">${board.region}</span>
+                        <div class="date">
+                            <em>만든날짜</em>
+                            <span><fmt:formatDate value="${board.input_date}" pattern="yyyy. M. d."/></span>
+                        </div>
+                        <div class="rate">
+                            <div class="grade">
+                                <div class="star">
+                                    <span></span>
+                                </div>
+                                <span class="total"><em class="blind">추천수</em>${board.recom_count}</span>
+                            </div>
+                            <span class="comment"><em class="blind">댓글수</em>${board.comment_count}</span>
+                        </div>
+                    </div>
+                </li>
+            </c:forEach>
+        </c:if>
+    </ul>
+    <c:if test="${boards.size() >= 12}">
+        <div class="more">
+            <button><span>더보기</span></button>
+        </div>
+    </c:if>
+</div>
        </div>
    </div>
 </div>

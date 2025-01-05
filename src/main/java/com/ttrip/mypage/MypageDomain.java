@@ -26,7 +26,8 @@ public class MypageDomain {
     private String comment_text;  // 댓글 내용
     private Timestamp comment_date;  // 댓글 작성일
     private Timestamp board_date;  // 게시글 작성일
-    
+    private String formatted_date;
+
     //신고 관련 필드 추가
     private String report_status;        // 'P': 대기중, 'C': 처리완료
     private String report_status_text;   // '대기중' 또는 '처리완료'로 변환된 텍스트

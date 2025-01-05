@@ -6,9 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이페이지</title>
+<title>마이페이지 - 내가 쓴 글</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/ttrip/mypage/css/mypage.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <style>
     .category-badge {
         padding: 4px 8px;
@@ -21,15 +23,7 @@
     .category-질문 { background-color: #E8F5E9; color: #388E3C; }
     .category-추천 { background-color: #FFF3E0; color: #F57C00; }
     .category-코스 { background-color: #F3E5F5; color: #7B1FA2; }
-    
-    .content-section {
-	    min-height: 515px;  /* 기존 600px에서 570px로 수정 */
-	    display: flex;
-	    flex-direction: column;
-	    justify-content: space-between;
-	    padding-bottom: 0;  /* 하단 패딩 제거 */
-	}
-    
+
     .content-list {
         list-style: none;
         padding: 0;
@@ -57,56 +51,20 @@
     
     .content-title {
         color: #333;
-        text-decoration: none;
         font-weight: 500;
+        text-decoration: none;
     }
     
     .content-date {
         color: #666;
         font-size: 14px;
     }
-    
+
     .no-content {
         text-align: center;
         padding: 40px;
         color: #666;
         font-size: 16px;
-    }
-
-    .pagination {
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    margin-top: 0px;
-	    padding: 10px 0;  /* 패딩도 20px에서 10px로 수정 */
-	}
-
-    .page-item {
-        display: inline-block;
-        padding: 8px 12px;
-        margin: 0 4px;
-        border-radius: 4px;
-        text-decoration: none;
-        color: #333;
-    }
-
-    .page-item.active {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .page-arrow {
-        display: inline-flex;
-        align-items: center;
-        padding: 8px;
-        margin: 0 4px;
-        border-radius: 4px;
-        text-decoration: none;
-        color: #333;
-    }
-
-    .page-arrow:hover {
-        background-color: #f0f0f0;
     }
 </style>
 </head>
@@ -122,65 +80,121 @@
             <a href="mypage_recommend" class="menu-item">추천한 글</a>
             <a href="mypage_report" class="menu-item">신고한 글</a>
         </nav>
-
         <div class="content-area">
             <section class="profile-section">
                 <div class="profile-header">
                     <div class="profile-info">
-                        <h1 class="profile-name">${nick}</h1>
+                        <h1 class="profile-name" id="profile-nickname"></h1>
                         <div class="profile-actions">
-                            <a href="edit_member" class="profile-button edit-button" style="text-decoration: none">정보수정</a>
-                            <a href="delete_member" class="profile-button delete-button" style="text-decoration: none">회원탈퇴</a>
+                            <a href="edit_member" class="profile-button edit-button">정보수정</a>
+                            <a href="delete_member" class="profile-button delete-button">회원탈퇴</a>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="content-section">
-                <ul class="content-list">
-                    <c:choose>
-                        <c:when test="${empty boards}">
-                            <li class="no-content">
-                                <p>작성한 게시글이 없습니다.</p>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach items="${boards}" var="board">
-                                <li class="content-item">
-                                    <span class="category-badge category-${board.category}">${board.category}</span>
-                                    <div class="content-info">
-                                        <a href="/board/detail/${board.boardID}" class="content-title">${board.title}</a>
-                                        <span class="content-date">
-                                            <fmt:formatDate value="${board.input_date}" pattern="yyyy.MM.dd"/>
-                                        </span>
-                                    </div>
-                                </li>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
+                <ul class="content-list" id="board-list">
+                    <!-- Boards will be loaded here dynamically -->
                 </ul>
                 
-                <c:if test="${totalPages > 1}">
-			    <div class="pagination">
-			        <c:if test="${startPage > 1}">
-			            <a href="?page=${startPage-5}" class="page-arrow">
-			                <i class="material-icons">chevron_left</i>
-			            </a>
-			        </c:if>
-			        
-			        <c:forEach begin="${startPage}" end="${endPage}" var="i">
-			            <a href="?page=${i}" class="page-item ${currentPage == i ? 'active' : ''}">${i}</a>
-			        </c:forEach>
-			        
-			        <c:if test="${endPage < totalPages}">
-			            <a href="?page=${startPage+5}" class="page-arrow">
-			                <i class="material-icons">chevron_right</i>
-			            </a>
-			        </c:if>
-			    </div>
-			</c:if>
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be loaded here dynamically -->
+                </div>
             </section>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            loadBoards(1);
+        });
+
+        function loadBoards(page) {
+            var token = localStorage.getItem("jwt_token");
+            
+            $.ajax({
+                url: '/user/api/mypage_myboard',
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data: {
+                    page: page
+                },
+                success: function(response) {
+                    updateUI(response);
+                },
+                error: function(error) {
+                    console.error('Error fetching boards:', error);
+                    alert('게시글 정보를 불러오는데 실패했습니다.');
+                }
+            });
+        }
+
+        function updateUI(data) {
+            // Update nickname
+            $('#profile-nickname').text(data.nick);
+            
+            // Update boards list
+            var boardList = $('#board-list');
+            boardList.empty();
+            
+            if (!data.boards || data.boards.length === 0) {
+                boardList.append('<li class="no-content"><p>작성한 게시글이 없습니다.</p></li>');
+            } else {
+                data.boards.forEach(function(board) {
+                    var boardHtml = `
+                        <li class="content-item">
+                            <span class="category-badge category-\${board.category}">\${board.category}</span>
+                            <div class="content-info">
+                                <a href="/board/detail/\${board.boardID}" class="content-title">\${board.title}</a>
+                                <span class="content-date">\${board.formatted_date}</span>
+                            </div>
+                        </li>
+                    `;
+                    boardList.append(boardHtml);
+                });
+            }
+            
+            // Update pagination
+            updatePagination(data);
+        }
+
+        function updatePagination(data) {
+            var pagination = $('#pagination');
+            pagination.empty();
+            
+            if (data.totalPages > 1) {
+                var paginationHtml = '';
+                
+                if (data.startPage > 1) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadBoards(${data.startPage-5})" class="page-arrow">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    `;
+                }
+                
+                for (var i = data.startPage; i <= data.endPage; i++) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadBoards(${i})" 
+                           class="page-item ${data.currentPage == i ? 'active' : ''}">${i}</a>
+                    `;
+                }
+                
+                if (data.endPage < data.totalPages) {
+                    paginationHtml += `
+                        <a href="javascript:void(0)" onclick="loadBoards(${data.startPage+5})" class="page-arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    `;
+                }
+                
+                pagination.html(paginationHtml);
+            }
+        }
+    </script>
+    <script src="${pageContext.request.contextPath}/common/authCheck.js"></script>
 </body>
 </html>
