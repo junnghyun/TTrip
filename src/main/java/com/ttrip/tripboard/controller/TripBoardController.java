@@ -39,7 +39,6 @@ public class TripBoardController {
     public ModelAndView loadTravelPlan3(@RequestParam(value = "region", required = false) String region) {
 		List<DstntDomain> destinations = tripBoardService.getDestinationsByRegion(region);
         List<AccomDomain> accommodations = tripBoardService.getAccommodationsByRegion(region);
-        
         // 디버깅 로그 추가
 //        System.out.println("Destinations: " + destinations);
 //        System.out.println("Accommodations: " + accommodations);
@@ -50,6 +49,13 @@ public class TripBoardController {
         mav.addObject("accommodations", accommodations);
         return mav;
     }
+	
+	@GetMapping("/td")
+	@ResponseBody
+	public DstntDomain getDstntInfo(@RequestParam("place") String place) {
+	    return tripBoardService.getDstntByPlace(place);
+	}
+
 	
 	@GetMapping("/td2")
     public ModelAndView getTripBoardDetails(@RequestParam("tripBoardID") int tripBoardID) {

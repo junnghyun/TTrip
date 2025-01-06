@@ -46,13 +46,13 @@
                 <% if (destinations != null && !destinations.isEmpty()) { %>
                     <% for (DstntDomain dstnt : destinations) { %>
                         <li>
-                            <img src="<%= dstnt.getImg() %>" alt="<%= dstnt.getName() %>">
+                            <img src="ttrip/dstnt/images/<%= dstnt.getName()%>.jpg" alt="<%= dstnt.getName() %>">
                             <div>
                                 <h3><%= dstnt.getName() %></h3>
                                 <p><%= dstnt.getDetail() %></p>
+                                
                             </div>
-                            <button type="button" onclick="addPlaceToDayPrompt('<%= dstnt.getName() %>', '<%= dstnt.getImg() %>')">+</button>
-                            <input type="hidden" value="<%= dstnt.getImg() %>" name="dstntImg"/>
+                            <button type="button" onclick="addPlaceToDayPrompt('<%= dstnt.getName() %>', 'ttrip/dstnt/images/<%= dstnt.getName()%>.jpg')">+</button>
                         </li>
                     <% } %>
                 <% } else { %>
@@ -137,6 +137,28 @@
         }
     }
 </script>
+<script>
+    var destinations = [];
+    document.querySelectorAll('.location-list li').forEach(function (li) {
+        var name = li.querySelector('h3').innerText; // 장소 이름
+        var detail = li.querySelector('p').innerText; // 장소 상세 정보
+        destinations.push({ name: name, detail: detail });
+    });
+
+    // JSON 문자열로 변환
+    var destinationsJson = JSON.stringify(destinations);
+
+    // courseDetail 폼에 숨겨진 필드 추가
+    var courseDetailForm = document.getElementById('courseDetail'); // 기존 폼 가져오기
+    var hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'destinations';
+    hiddenInput.value = destinationsJson;
+
+    courseDetailForm.appendChild(hiddenInput);
+</script>
+
+
 
 <!-- 메인 콘텐츠 영역 -->
 <div id="map" style="width: 70%; height: 100vh; float: right;"></div>

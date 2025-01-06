@@ -46,6 +46,16 @@
             r.region = #{region}
     </select>
 
+
+<select id="getDstntByPlace" parameterType="string" resultType="com.ttrip.accom.AccomDomain">
+        SELECT 
+            detail
+        FROM 
+            DSTNT
+        WHERE 
+            name = #{name}
+    </select>
+
     <!-- TripPlan ID 자동 증가 -->
     <select id="getNextTripPlanId" resultType="int">
         SELECT COALESCE(MAX(tripPlanId), 0) + 1 AS nextId
