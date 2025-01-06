@@ -52,6 +52,7 @@
                                 <p><%= dstnt.getDetail() %></p>
                             </div>
                             <button type="button" onclick="addPlaceToDayPrompt('<%= dstnt.getName() %>', '<%= dstnt.getImg() %>')">+</button>
+                            <input type="hidden" value="<%= dstnt.getImg() %>" name="dstntImg"/>
                         </li>
                     <% } %>
                 <% } else { %>
@@ -85,8 +86,6 @@
     <input type="hidden" name="selectedRange" id="hiddenSelectedRange">
     <input type="hidden" name="selectedDay" id="hiddenSelectedDay">
     <input type="hidden" name="selectedDates" id="hiddenSelectedDates">
-    <button type="submit">결과 보기</button>
-
 </form>
     <button id="finalize-button">최종 선택 완료</button>
     

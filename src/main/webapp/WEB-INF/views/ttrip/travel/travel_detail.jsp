@@ -1,3 +1,7 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Arrays"%>
 <%@page import="net.minidev.json.JSONArray"%>
 <%@page import="net.minidev.json.JSONObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -212,7 +216,83 @@ hr {
 	margin-left: 60px;
 }
 
+/* 전체 컨테이너 스타일 */
+#dayContent {
+    margin-top: 20px;
+}
+
+/* 각 일차 정보 섹션 스타일 */
+.dayDetail {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    background-color: #f9f9f9;
+}
+
+/* 일차 제목 스타일 */
+.dayTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 여행지와 숙소를 가로로 정렬하는 컨테이너 */
+.detailContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* 여행지 및 숙소 섹션 스타일 */
+.placesSection,
+.accommodationsSection {
+    flex: 1; /* 동일한 너비로 확장 */
+    text-align: center;
+}
+
+/* 섹션 제목 스타일 */
+.placesSection h4,
+.accommodationsSection h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 리스트 컨테이너를 가로 정렬 */
+.placesList,
+.accommodationsList {
+    display: flex;
+    /* flex-wrap: wrap; /* 항목이 많을 경우 다음 줄로 넘김 */ 
+    justify-content: center; /* 항목을 가운데 정렬 */
+    gap: 8px; /* 항목 간 간격 */
+}
+
+/* 리스트 아이템 스타일 */
+.placeItem,
+.accommodationItem {
+    background-color: #e7f1ff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 100px; /* 최소 너비 설정 */
+    text-align: center;
+    width: 250px;
+}
+
+/* 비어 있을 때의 메시지 스타일 */
+.emptyMessage {
+    color: #808080;
+    font-size: 14px;
+    font-style: italic;
+    margin-top: 10px;
+}
+
 </style>
+
 <script type="text/javascript">
 $(function() {
     // 초기 버튼 스타일 설정
@@ -287,102 +367,44 @@ $(function() {
         // 현재 클릭된 이미지에 'selected' 클래스 추가
         $(this).addClass("selected");
     });
+
     
-    // dayBtn 클릭 이벤트
-    $(".dayBtn").click(function() {
-    	 // 모든 버튼에서 'selected' 클래스 제거
-        $(".dayBtn").removeClass("selected");
-
-        // 클릭된 버튼에 'selected' 클래스 추가
-        $(this).addClass("selected");
-
-        // 버튼의 data-day 속성값 가져오기
-        const day = $(this).data("day");
-        const dayPlaces = places[day] || [];
-        const dayAccommodations = accommodations[day] || [];
-
-        // 상세 정보를 담을 HTML 생성
-        let contentHtml = `<h3>${day}일차 상세 정보</h3><ul>`;
-
-        if (dayPlaces.length > 0 && dayPlaces.some(place => place.trim())) {
-            dayPlaces.forEach(place => {
-                if (place.trim()) { // 유효한 데이터만 출력
-                    contentHtml += `<li>여행지: ${place}</li>`;
-                }
-            });
-        } else {
-            contentHtml += `<li>여행지 정보가 없습니다.</li>`;
-        }
-
-        if (dayAccommodations.length > 0 && dayAccommodations.some(accommodation => accommodation.trim())) {
-            dayAccommodations.forEach(accommodation => {
-                if (accommodation.trim()) { // 유효한 데이터만 출력
-                    contentHtml += `<li>숙소: ${accommodation}</li>`;
-                }
-            });
-        } else {
-            contentHtml += `<li>숙소 정보가 없습니다.</li>`;
-        }
-
-        contentHtml += "</ul>";
-        // dayContent 영역에 상세 정보 출력
-        $("#dayContent").html(contentHtml);
-    });
 });
 </script>
+
 </head>
 <body>
 <%@include file ="../common/header.jsp" %>
 
 <div id="wrap">
     <div class="top">
-                <%
-            String courseName = request.getParameter("courseName");
-            String comment = request.getParameter("comment");
-            int totalDays = Integer.parseInt(request.getParameter("totalDays"));
+	<%
+        String courseName = request.getParameter("courseName");
+        String comment = request.getParameter("comment");
+        int totalDays = Integer.parseInt(request.getParameter("totalDays"));
+        String region = request.getParameter("region");
+        
+        Map<Integer, List<String>> placesMap = new HashMap<>();
+        Map<Integer, List<String>> accommodationsMap = new HashMap<>();
 
-            java.util.Map<Integer, String[]> placesMap = new java.util.HashMap<>();
-            java.util.Map<Integer, String[]> accommodationsMap = new java.util.HashMap<>();
+        for (int i = 1; i <= totalDays; i++) {
+            String[] places = request.getParameterValues("day" + i + "_places");
+            String[] accommodations = request.getParameterValues("day" + i + "_accommodations");
 
-            for (int i = 1; i <= totalDays; i++) {
-                String places = request.getParameter("day" + i + "_places");
-                String accommodations = request.getParameter("day" + i + "_accommodations");
-
-                if (places != null) placesMap.put(i, places.split(","));
-                if (accommodations != null) accommodationsMap.put(i, accommodations.split(","));
+            if (places != null) {
+                placesMap.put(i, Arrays.asList(places));
             }
-
-            StringBuilder placesJson = new StringBuilder("{");
-            StringBuilder accommodationsJson = new StringBuilder("{");
-
-            for (int i = 1; i <= totalDays; i++) {
-                if (placesMap.containsKey(i)) {
-                    placesJson.append("\"").append(i).append("\":[");
-                    for (String place : placesMap.get(i)) {
-                        placesJson.append("\"").append(place).append("\",");
-                    }
-                    placesJson.setLength(placesJson.length() - 1); // 마지막 쉼표 제거
-                    placesJson.append("],");
-                }
-
-                if (accommodationsMap.containsKey(i)) {
-                    accommodationsJson.append("\"").append(i).append("\":[");
-                    for (String accommodation : accommodationsMap.get(i)) {
-                        accommodationsJson.append("\"").append(accommodation).append("\",");
-                    }
-                    accommodationsJson.setLength(accommodationsJson.length() - 1); // 마지막 쉼표 제거
-                    accommodationsJson.append("],");
-                }
+            if (accommodations != null) {
+                accommodationsMap.put(i, Arrays.asList(accommodations));
             }
+        }
 
-            if (placesJson.length() > 1) placesJson.setLength(placesJson.length() - 1); // 마지막 쉼표 제거
-            placesJson.append("}");
-
-            if (accommodationsJson.length() > 1) accommodationsJson.setLength(accommodationsJson.length() - 1); // 마지막 쉼표 제거
-            accommodationsJson.append("}");
-        %>
+        request.setAttribute("placesMap", placesMap);
+        request.setAttribute("accommodationsMap", accommodationsMap);
+    %>
+    
         <h2><%= courseName != null ? courseName : "코스 이름 없음" %></h2>
-        <span>경기도 안산시</span>
+        <span><%=region %></span>
     </div>
 
     <div class="top2">
@@ -424,39 +446,101 @@ function addMarker(lat, lng) {
     marker.setMap(map);
 }
 
-const places = <%= placesJson.toString() %>;
-const accommodations = <%= accommodationsJson.toString() %>;
-
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('.dayBtn').forEach(button => {
-        button.addEventListener('click', function() {
-            const day = this.getAttribute('data-day');
-            const dayPlaces = places[day] || [];
-            const dayAccommodations = accommodations[day] || [];
-
-            let contentHtml = `<h3>${day}일차 상세 정보</h3><ul>`;
-            dayPlaces.forEach(place => contentHtml += `<li>여행지: ${place}</li>`);
-            dayAccommodations.forEach(accommodation => contentHtml += `<li>숙소: ${accommodation}</li>`);
-            contentHtml += "</ul>";
-
-            document.getElementById('dayContent').innerHTML = contentHtml;
-        });
-    });
-});
 </script>
 <div class="detail">
-        <div class="dayBtnBox">
-            <% for (int i = 1; i <= totalDays; i++) { %>
-                <button class="dayBtn" data-day="<%= i %>"><%= i %>일차</button>
-            <% } %>
+    <div class="dayBtnBox">
+        <% for (int i = 1; i <= totalDays; i++) { %>
+    <button class="dayBtn" id="dayBtn" data-day="<%=i %>"><%= i %>일차</button>
+    
+<% } %>
+
+</div>
+  <!-- 일정 표시 영역 -->
+<div id="dayContent">
+    <%
+    for (int i = 1; i <= totalDays; i++) {
+        List<String> places = placesMap.get(i);
+        List<String> accommodations = accommodationsMap.get(i);
+    %>
+        <div class="dayDetail" data-day="<%= i %>" style="display: none;">
+            <h3 class="dayTitle"><%= i %>일차 상세 정보</h3>
+            <div class="detailContainer">
+                <div class="placesSection">
+                    <h4>여행지</h4>
+                    <% if (places != null && !places.isEmpty()) { %>
+                        <div class="placesList">
+                            <% for (String place : places) { %>
+                                <div class="placeItem"><%= place %></div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <p class="emptyMessage">등록된 여행지가 없습니다.</p>
+                    <% } %>
+                </div>
+                <% if (i != totalDays) { %> <!-- 마지막 일차가 아닌 경우에만 숙소 출력 -->
+                <div class="accommodationsSection">
+                    <h4>숙소</h4>
+                    <% if (accommodations != null && !accommodations.isEmpty()) { %>
+                        <div class="accommodationsList">
+                            <% for (String accommodation : accommodations) { %>
+                                <div class="accommodationItem"><%= accommodation %></div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <p class="emptyMessage">등록된 숙소가 없습니다.</p>
+                    <% } %>
+                </div>
+                <% } %>
+            </div>
         </div>
-        <div id="dayContent">
-        </div>
-    </div>
+    <%
+    }
+    %>
+</div>
+
+
+
 
 </div>
 
 
+</div>
+<script type="text/javascript">
+$(document).ready(function () {
+	console.log("DOM 로드 완료");
+    // 'dayBtn' 클래스 버튼 클릭 이벤트
+    $(".dayBtn").on("click", function () {
+        const day = $(this).data("day"); // 현재 버튼의 data-day 값 가져오기
+        console.log("클릭된 day:", day); // 디버깅용 로그
+
+        // 모든 버튼에서 선택 효과 제거
+        $(".dayBtn").removeClass("selected");
+
+        // 현재 클릭된 버튼에 'selected' 클래스 추가
+        $(this).addClass("selected");
+
+        // 모든 일차 데이터를 숨기고 선택된 데이터만 표시
+         $("#dayContent > div").hide();
+         console.log($("#dayContent > div"));
+        const target = $("#dayContent > div[data-day='"+day+"']");
+        console.log($("#dayContent > div[data-day='"+day+"']")); // 해당 요소가 선택되는지 확인
+	    if (target.length > 0) {
+	        target.css("display", "block");
+	    } else {
+	        console.error("해당 데이터를 찾을 수 없습니다:", day);
+	    }
+
+    }); 
+    $("#dayContent > div").each(function() {
+        console.log($(this).data("day")); // 각 요소의 data-day 값 출력
+    });
+
+});
+
+
+</script>
+
+</div>
 
 <div class="replyBox">
 <input type="text" placeholder="소중한 댓글을 남겨주세요" class="inputReply"><br>
@@ -484,7 +568,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 </div>
 
-</div>
 <jsp:include page="../common/footer.jsp" />
 </body>
+
 </html>
