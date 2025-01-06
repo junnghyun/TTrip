@@ -1,13 +1,16 @@
 package com.ttrip.auth.config;
 
+import com.ttrip.auth.service.AdminUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -29,6 +32,7 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
+    private AdminUserDetailsService adminUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler;
     private final CustomOAuth2AuthenticationFailureHandler customOAuth2AuthenticationFailureHandler;
@@ -36,11 +40,13 @@ public class SecurityConfig {
 
     public SecurityConfig(JwtUtil jwtUtil,
                           CustomUserDetailsService customUserDetailsService,
+                          AdminUserDetailsService adminUserDetailsService,
                           CustomOAuth2UserService customOAuth2UserService,
                           CustomOAuth2AuthenticationFailureHandler customOAuth2AuthenticationFailureHandler,
                           CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler) {
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
+        this.adminUserDetailsService = adminUserDetailsService;
         this.customOAuth2UserService = customOAuth2UserService;
         this.customOAuth2AuthenticationFailureHandler = customOAuth2AuthenticationFailureHandler;
         this.customOAuth2LoginSuccessHandler = customOAuth2LoginSuccessHandler;
@@ -73,19 +79,20 @@ public class SecurityConfig {
                         .requestMatchers("/WEB-INF/**").permitAll()
                         .requestMatchers("/common/**").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/login").permitAll()
+                        //.requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().permitAll())
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         // JwtFilter에 CustomUserDetailsService를 주입하여 필터를 추가합니다.
-        http.addFilterBefore(new JwtFilter(jwtUtil, customUserDetailsService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtFilter(jwtUtil, customUserDetailsService, adminUserDetailsService), UsernamePasswordAuthenticationFilter.class);
 
         // 인증, 인가 실패 핸들러 설정
         http.exceptionHandling(
                 exceptionHandling -> {
                     exceptionHandling.accessDeniedHandler(new CustomAccessDeniedHandler());
-                    exceptionHandling.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+                    //exceptionHandling.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
                 }
         );
 
@@ -93,6 +100,15 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         return http.build();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider adminAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(adminUserDetailsService);
+        // BCryptPasswordEncoder 대신 NoOpPasswordEncoder 사용
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        return provider;
     }
 
     @Bean
