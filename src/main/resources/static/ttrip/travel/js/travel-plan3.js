@@ -127,7 +127,7 @@ function addPlaceToDay(day, placeName, imageUrl) {
 
     const li = document.createElement("li");
     li.innerHTML = `
-        <img src="${imageUrl}" alt="장소 이미지">
+        <img src="ttrip/dstnt/images/${placeName}.jpg" alt="장소 이미지">
         <div>
             <h3>${placeName}</h3>
             <p>방문 예정</p>
@@ -259,6 +259,7 @@ if (finalizeButton) {
             // 숙소 리스트 수집
             const accommodationList = dayPlan.querySelectorAll(".accommodation-list li");
             const accommodations = Array.from(accommodationList).map(item => item.textContent.trim());
+			
 
             // 수집된 데이터를 form에 추가
             form.innerHTML += `

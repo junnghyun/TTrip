@@ -35,6 +35,11 @@ public class TripBoardServiceImpl implements TripBoardService {
     }
     
     @Override
+    public DstntDomain getDstntByPlace(String place) {
+        return tripBoardDAO.getDstntByPlace(place);
+    }
+    
+    @Override
     public TripBoardDomain getTripBoardById(int tripBoardID) {
         return tripBoardDAO.getTripBoardById(tripBoardID);
     }

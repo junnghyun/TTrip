@@ -1,3 +1,7 @@
+<%@page import="java.io.BufferedReader"%>
+<%@page import="com.ttrip.tripboard.TripBoardServiceImpl"%>
+<%@page import="com.ttrip.tripboard.TripBoardService"%>
+<%@page import="com.ttrip.dstnt.domain.DstntDomain"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
@@ -291,6 +295,25 @@ hr {
     margin-top: 10px;
 }
 
+.dynamicDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가로 방향 가운데 정렬 */
+    justify-content: center; /* 세로 방향 가운데 정렬 */
+    margin: 10px 0;
+    padding: 20px;
+    background-color: #e0f7fa;
+    border: 1px solid #00796b;
+    border-radius: 10px; /* 테두리 둥글게 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+.dynamicDiv img {
+    max-width: 100%; /* 이미지 크기 제한 */
+    height: auto;
+    margin-top: 10px; /* 텍스트와 이미지 간격 */
+    border-radius: 5px; /* 이미지 모서리 둥글게 */
+}
+
 </style>
 
 <script type="text/javascript">
@@ -375,14 +398,15 @@ $(function() {
 </head>
 <body>
 <%@include file ="../common/header.jsp" %>
-
 <div id="wrap">
     <div class="top">
 	<%
+	
         String courseName = request.getParameter("courseName");
         String comment = request.getParameter("comment");
         int totalDays = Integer.parseInt(request.getParameter("totalDays"));
         String region = request.getParameter("region");
+        String[] destinations = request.getParameterValues("destinations");
         
         Map<Integer, List<String>> placesMap = new HashMap<>();
         Map<Integer, List<String>> accommodationsMap = new HashMap<>();
@@ -405,6 +429,7 @@ $(function() {
     
         <h2><%= courseName != null ? courseName : "코스 이름 없음" %></h2>
         <span><%=region %></span>
+        <span><%=destinations %></span>
     </div>
 
     <div class="top2">
@@ -470,7 +495,7 @@ function addMarker(lat, lng) {
                     <% if (places != null && !places.isEmpty()) { %>
                         <div class="placesList">
                             <% for (String place : places) { %>
-                                <div class="placeItem"><%= place %></div>
+                                <div class="placeItem" onclick="addDynamicDiv('<%=place %>')"><%= place %></div>
                             <% } %>
                         </div>
                     <% } else { %>
@@ -483,7 +508,7 @@ function addMarker(lat, lng) {
                     <% if (accommodations != null && !accommodations.isEmpty()) { %>
                         <div class="accommodationsList">
                             <% for (String accommodation : accommodations) { %>
-                                <div class="accommodationItem"><%= accommodation %></div>
+                                <div class="accommodationItem" onclick="addDynamicDiv('<%=accommodation %>')"><%= accommodation %></div>
                             <% } %>
                         </div>
                     <% } else { %>
@@ -491,18 +516,16 @@ function addMarker(lat, lng) {
                     <% } %>
                 </div>
                 <% } %>
+                
             </div>
         </div>
     <%
     }
     %>
 </div>
-
-
-
-
+    <!-- 동적 <div>가 추가될 컨테이너 -->
+    <div id="dynamicContainer"></div>
 </div>
-
 
 </div>
 <script type="text/javascript">
@@ -531,11 +554,30 @@ $(document).ready(function () {
 	    }
 
     }); 
+    
     $("#dayContent > div").each(function() {
         console.log($(this).data("day")); // 각 요소의 data-day 값 출력
     });
 
+    
 });
+
+function addDynamicDiv(place) {
+    // 하단 영역 선택
+    const container = document.getElementById('dynamicContainer');
+
+    // 기존 내용 초기화
+    container.innerHTML = '';
+
+    // 새 div 생성
+    const newDiv = document.createElement('div');
+    newDiv.className = 'dynamicDiv';
+    newDiv.innerHTML = '<h2><strong>' + place + '</strong></h2>' + '<img src="ttrip/dstnt/images/'+place+'.jpg">';
+
+    // 하단에 추가
+    container.appendChild(newDiv);
+}
+
 
 
 </script>
@@ -565,7 +607,6 @@ $(document).ready(function () {
 <input type="button" class="replyReportBtn">
 <input type="button" class="replyGoodBtn">
 
-</div>
 </div>
 
 <jsp:include page="../common/footer.jsp" />

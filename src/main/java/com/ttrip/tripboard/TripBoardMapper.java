@@ -12,6 +12,7 @@ import com.ttrip.course.CourseDomain;
 public interface TripBoardMapper {
     List<DstntDomain> getDestinationsByRegion(String region);
     List<AccomDomain> getAccommodationsByRegion(String region);
+    List<DstntDomain> getDestinationDetailByDstntId(String dstntId);
     
     TripBoardDomain getTripBoardById(int tripBoardID);
 }

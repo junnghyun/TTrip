@@ -11,5 +11,7 @@ public interface TripBoardService {
     List<DstntDomain> getDestinationsByRegion(String region);
     List<AccomDomain> getAccommodationsByRegion(String region);
  
+    DstntDomain getDstntByPlace(String place);
+    
     TripBoardDomain getTripBoardById(int tripBoardID);
 }

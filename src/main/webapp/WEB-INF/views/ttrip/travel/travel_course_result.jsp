@@ -1,3 +1,5 @@
+<%@page import="com.ttrip.dstnt.domain.DstntDomain"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"
          info=""
@@ -175,7 +177,7 @@
 
         .schedule .description {
             flex: 1;
-            font-size: 16px;
+            font-size: 30px;
             color: #333;
         }
 
@@ -218,6 +220,11 @@
 			margin-left: 50px;
 		}
 		
+		.schedule img {
+        width: 150px; /* 원하는 너비 */
+        height: 100px; /* 원하는 높이 */
+        object-fit: cover; /* 이미지를 잘라서 고정 크기에 맞추기 */
+    }
 </style>
 <script type="text/javascript">
 $(function() {
@@ -247,16 +254,13 @@ $(function() {
 <%	String region = request.getParameter("region"); 
 	String startDate = request.getParameter("startDate");
     String endDate = request.getParameter("endDate");
-    String dstntImg = request.getParameter("dstntImg");
     %>
 <form id="travelDetail" action="/td" method="post">
 <div id="wrap">
     <div class="left">
     <div class="leftTitle">
         <span class="journyTitle"><%=region %></span>
-        <img src="<%= dstntImg %>" alt="<%= dstntImg %>">
         <input type="hidden" value="<%= region %>" name="region"/>
-        <input type="hidden" value="<%= dstntImg %>" name="dstntImg"/>
         <span style="color: #567FF2; font-family: jua" id="selected-range"><%= startDate %> ~ <%= endDate %></span>
     </div>
     <div>
@@ -268,6 +272,7 @@ $(function() {
             java.util.Enumeration<String> parameterNames = request.getParameterNames();
             java.util.Map<String, String> dayData = new java.util.HashMap<>();
             int totalDays = 0; // 총 일차 계산용
+            String[] destinations = request.getParameterValues("destinations");
             
             while (parameterNames.hasMoreElements()) {
                 String paramName = parameterNames.nextElement();
@@ -316,7 +321,10 @@ $(function() {
                 %>
                 <div class="schedule">
                     <div class="schedule-number">여행지</div>
-                    <span class="description"><%= place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim() %></span>
+                    <span class="description">
+                    <img src="ttrip/dstnt/images/<%=place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim()%>.jpg" alt="<%=place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim()%>">
+                    <%= place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim() %>
+                    </span>
                 </div>
                 <input type="hidden" name="day<%= i %>_places" value="<%= place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim() %>">
                 <% 
@@ -343,6 +351,7 @@ $(function() {
         calendar.add(java.util.Calendar.DATE, 1);
         } %>
         <input type="hidden" name="totalDays" value="<%= totalDays %>">
+        <input type="hidden" name="destinations" value="<%= destinations%>">
     </div>
    
 </div>
