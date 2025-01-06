@@ -84,6 +84,10 @@
         });
     });
 });
+
+function GoCreateCourse(num) {
+    window.location.href = "/tm";
+}
 </script>
 
 <jsp:include page="../common/header.jsp"/>

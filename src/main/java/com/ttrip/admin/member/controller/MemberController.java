@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,6 +19,7 @@ import com.ttrip.admin.member.MemberVO;
 import net.minidev.json.JSONObject;
 
 @Controller
+@RequestMapping("/admin")
 public class MemberController {
     
     @Autowired
@@ -25,7 +27,7 @@ public class MemberController {
     
     private static final int PAGE_SIZE = 10; // 페이지당 보여줄 회원 수
     
-    @GetMapping("/admin_member")
+    @GetMapping("/member")
     public String userList(Model model, 
             @RequestParam(value="search", required=false) String searchTerm,
             @RequestParam(value="page", defaultValue="1") int currentPage) {
@@ -57,7 +59,7 @@ public class MemberController {
         return "/admin/admin_member/admin_member";
     }
     
-    @GetMapping("/admin_member/detail/{nick}")
+    @GetMapping("/member/detail/{nick}")
     public String getMemberDetail(@PathVariable(name = "nick") String nick, Model model) {
         try {
             MemberVO member = memberService.getMemberByNick(nick);
@@ -73,7 +75,7 @@ public class MemberController {
         }
     }
     
-    @PostMapping("/admin_member/update")
+    @PostMapping("/member/update")
     @ResponseBody
     public String updateMember(@RequestBody MemberVO member) {
         JSONObject json = new JSONObject();
@@ -87,7 +89,7 @@ public class MemberController {
         return json.toString();
     }
     
-    @PostMapping("/admin_member/delete/{nick}")
+    @PostMapping("/member/delete/{nick}")
     @ResponseBody
     public String deleteMember(@PathVariable(name = "nick") String nick) {
         JSONObject json = new JSONObject();
