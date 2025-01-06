@@ -247,12 +247,16 @@ $(function() {
 <%	String region = request.getParameter("region"); 
 	String startDate = request.getParameter("startDate");
     String endDate = request.getParameter("endDate");
+    String dstntImg = request.getParameter("dstntImg");
     %>
 <form id="travelDetail" action="/td" method="post">
 <div id="wrap">
     <div class="left">
     <div class="leftTitle">
         <span class="journyTitle"><%=region %></span>
+        <img src="<%= dstntImg %>" alt="<%= dstntImg %>">
+        <input type="hidden" value="<%= region %>" name="region"/>
+        <input type="hidden" value="<%= dstntImg %>" name="dstntImg"/>
         <span style="color: #567FF2; font-family: jua" id="selected-range"><%= startDate %> ~ <%= endDate %></span>
     </div>
     <div>
