@@ -56,7 +56,7 @@ public class MemberController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("search", searchTerm);
         
-        return "/admin/admin_member/admin_member";
+        return "admin/admin_member/admin_member";
     }
     
     @GetMapping("/member/detail/{nick}")
