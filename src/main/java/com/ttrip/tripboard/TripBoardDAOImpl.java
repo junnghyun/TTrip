@@ -30,6 +30,11 @@ public class TripBoardDAOImpl implements TripBoardDAO {
         return tripBoardMapper.getAccommodationsByRegion(region);
     }
     
+    @Override
+    public DstntDomain getDstntByPlace(String place) {
+        return sqlSession.selectOne("tripBoardMapper.getDstntByPlace", place);
+    }
+    
     private final SqlSession sqlSession;
 
     public TripBoardDAOImpl(SqlSession sqlSession) {
