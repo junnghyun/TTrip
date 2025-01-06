@@ -47,7 +47,7 @@ function showMemberModal(nick) {
     }
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/admin_member/detail/' + encodeURIComponent(nick), true);
+    xhr.open('GET', '${pageContext.request.contextPath}/admin/member/detail/' + encodeURIComponent(nick), true);
     
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -107,7 +107,7 @@ function updateMember() {
     };
 
     $.ajax({
-        url: '/admin_member/update',
+    	url: '${pageContext.request.contextPath}/admin/member/update',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -139,7 +139,7 @@ function deleteMember2(nick, accountFlag) {
     }
 
     $.ajax({
-        url: '/admin_member/delete/' + encodeURIComponent(nick),
+    	url: '${pageContext.request.contextPath}/admin/member/delete/' + encodeURIComponent(nick),
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -164,11 +164,11 @@ function deleteMember2(nick, accountFlag) {
 <body>
 <jsp:include page="../common/admin.jsp" />
 <div class="common_admin">
-<h1><a href="/admin_member" style="text-decoration: none; color: inherit;">회원관리</a></h1>
+<h1><a href="${pageContext.request.contextPath}/admin/member">회원관리</a></h1>
 
 <div class="order-management">
 <div class="product-filter">
-    <form action="/admin_member" method="get">
+<form action="${pageContext.request.contextPath}/admin/member" method="get">
         <input type="text" name="search" placeholder="닉네임 검색" 
                class="filter-input" id="product-name" value="${param.search}">
         <button type="submit" class="filter-btn">검색</button>
@@ -219,7 +219,7 @@ function deleteMember2(nick, accountFlag) {
     <c:if test="${totalPages > 1}">
         <!-- 이전 페이지 -->
         <c:if test="${currentPage > 1}">
-            <a href="/admin_member?page=${currentPage-1}&search=${search}" style="margin: 0 5px;">이전</a>
+			<a href="${pageContext.request.contextPath}/admin/member?page=${currentPage-1}&search=${search}">이전</a>
         </c:if>
         
         <!-- 페이지 번호 -->
@@ -229,14 +229,14 @@ function deleteMember2(nick, accountFlag) {
                     <span style="font-weight: bold; margin: 0 5px;">${pageNum}</span>
                 </c:when>
                 <c:otherwise>
-                    <a href="/admin_member?page=${pageNum}&search=${search}" style="margin: 0 5px;">${pageNum}</a>
+					<a href="${pageContext.request.contextPath}/admin/member?page=${pageNum}&search=${search}">${pageNum}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
         
         <!-- 다음 페이지 -->
         <c:if test="${currentPage < totalPages}">
-            <a href="/admin_member?page=${currentPage+1}&search=${search}" style="margin: 0 5px;">다음</a>
+			<a href="${pageContext.request.contextPath}/admin/member?page=${currentPage+1}&search=${search}">다음</a>
         </c:if>
     </c:if>
 	</div>

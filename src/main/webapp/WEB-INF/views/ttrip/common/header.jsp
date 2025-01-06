@@ -5,18 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <title>관광 웹사이트</title>
-    <style>
+<style>
    * {
        margin: 0;
        padding: 0;
        box-sizing: border-box;
        font-family: 'Noto Sans KR', sans-serif;
    }
-
    body {
        min-height: 100vh;
    }
-
    .header {
        position: fixed;
        width: 100%;
@@ -25,7 +23,6 @@
        background-color: #FFFFFF;
        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
    }
-
    .header::before,
    .header::after {
        content: '';
@@ -35,22 +32,20 @@
        height: 100%;
        background-color: #FFFFFF;
    }
-
    .header::before {
        left: 0;
    }
-
    .header::after {
        right: 0;
    }
-
+       
    .header-wrapper {
        height: 70px;
        margin-bottom: 50px;
    }
-
+       
    .nav-container {
-       width: 100%;
+       max-width: 1200px;
        margin: 0 auto;
        display: flex;
        align-items: center;
@@ -59,7 +54,6 @@
        background-color: #FFFFFF;
        position: relative;
    }
-
    .logo {
        display: flex;
        align-items: center;
@@ -69,21 +63,17 @@
        font-size: 24px;
        margin-right: 110px;
    }
-
    .nav-menu {
        display: flex;
        list-style: none;
        gap: 10px;
        position: relative;
        width: 800px;
-       margin-left: 100px;
    }
-
    .nav-item {
        position: relative;
        flex: 1;
    }
-
    .nav-link {
        color: #4F4F4F;
        text-decoration: none;
@@ -94,11 +84,9 @@
        transition: color 0.3s ease;
        white-space: nowrap;
    }
-
    .nav-link:hover {
        color: #000000;
    }
-
    .mega-menu {
        position: fixed;
        top: 70px;
@@ -111,12 +99,10 @@
        transition: all 0.3s ease;
        padding: 30px 0;
    }
-
    .nav-menu:hover .mega-menu {
        opacity: 1;
        visibility: visible;
    }
-
    .mega-menu-container {
        max-width: 1200px;
        margin: 0 auto;
@@ -125,15 +111,14 @@
        width: 800px;
        padding: 0 20px;
    }
-
    .mega-menu-column {
        min-width: 160px;
        flex: 1;
        display: flex;
        flex-direction: column;
        align-items: flex-start;
+       margin-left: 15px;
    }
-
    .mega-menu-item {
        display: inline-block;
        padding: 12px 0;
@@ -145,7 +130,6 @@
        white-space: nowrap;
        position: relative;
    }
-
    .mega-menu-item::after {
        content: '';
        position: absolute;
@@ -156,21 +140,17 @@
        background-color: #000000;
        transition: width 0.2s ease;
    }
-
    .mega-menu-item:hover::after {
        width: 100%;
    }
-
    .mega-menu-item:hover {
        color: #000000;
    }
-
    .auth-buttons {
        margin-left: auto;
        display: flex;
        gap: 12px;
    }
-
    .auth-link {
        text-decoration: none;
        padding: 8px 16px;
@@ -180,38 +160,43 @@
        transition: all 0.3s ease;
        white-space: nowrap;
    }
-
    .login {
        color: #666;
    }
-
    .signup {
        background-color: #2D63E2;
        color: white;
    }
-
    .login:hover {
        background-color: #f8f9fa;
        color: #333;
    }
-
    .signup:hover {
        background-color: #1a4cbd;
    }
-
+   .nav-link.active {
+       color: #000000;
+   }
    /* 로그아웃 버튼 스타일 - 빨간색 */
+
    .logout {
+
        background-color: #E53935;
+
        color: white;
+
    }
 
    .logout:hover {
+
        background-color: #C62828;
+
    }
 
-
    .nav-link.active {
+
        color: #000000;
+
    }
 </style>
 </head>
@@ -238,15 +223,15 @@
                 <div class="mega-menu">
                     <div class="mega-menu-container">
                         <div class="mega-menu-column">
-                            <a href="#" class="mega-menu-item">나의코스</a>
-                            <a href="#" class="mega-menu-item">월간Best30</a>
-                            <a href="#" class="mega-menu-item">여행 게시판</a>
+                            <a href="/main_mytripcourse" class="mega-menu-item">나의코스</a>
+                            <a href="/" class="mega-menu-item">월간Best30</a>
+                            <a href="/main_tripboard" class="mega-menu-item">여행 게시판</a>
                         </div>
                         <div class="mega-menu-column">
                             <a href="#" class="mega-menu-item">지역정보</a>
                         </div>
                         <div class="mega-menu-column">
-                            <a href="#" class="mega-menu-item">여행지 선택</a>
+                            <a href="tm" class="mega-menu-item">여행지 선택</a>
                         </div>
                         <div class="mega-menu-column">
                             <a href="#" class="mega-menu-item">자유게시판</a>
