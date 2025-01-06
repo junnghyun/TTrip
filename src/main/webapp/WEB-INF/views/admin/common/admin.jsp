@@ -33,9 +33,9 @@
                 <ul>
                     <li><a href="/admin/dashboard">대시보드</a></li>
                     <li><a href="/admin/member">회원관리</a></li>
-                    <li><a href="/admin/board">게시판관리</a></li>
+                    <li><a href="/admin/admin_boardlist/admin_boardlist">게시판관리</a></li>
                     <li><a href="/admin/dstnt/dstnt_manage">여행지관리</a></li>
-                    <li><a href="/admin/exit">신고관리</a></li>
+                    <li><a href="/admin/admin_report/admin_report">신고관리</a></li>
                 </ul>
                 </div>
             </div>

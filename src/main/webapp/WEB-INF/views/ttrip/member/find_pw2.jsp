@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Insert title</title>
+    <title>비밀번호 변경</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -63,31 +63,8 @@
             text-indent: -9999px;
         }
 
-        colgroup {
-            display: table-column-group;
-            unicode-bidi: isolate;
-        }
-
         .title {
             width: 20%;
-        }
-
-        tbody {
-            display: table-row-group;
-            vertical-align: middle;
-            unicode-bidi: isolate;
-            border-color: inherit;
-        }
-
-        tr {
-            display: table-row;
-            vertical-align: inherit;
-            unicode-bidi: isolate;
-            border-color: inherit;
-        }
-
-        .table_row .input th, .table_col .input th {
-            padding-top: 22px;
         }
 
         .table_col th {
@@ -159,39 +136,108 @@
             transition: border .5s, background .5s, color .5s;
         }
 
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .password-requirements {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
     </style>
     <script type="text/javascript">
-
         $(document).ready(function () {
+            const $newPassword = $('#new_pwd');
+            const $confirmPassword = $('#new_pwd_check');
+            const $form = $('#passwordForm');
+
+            function validatePassword(password) {
+                const hasLetter = /[a-zA-Z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const isLengthValid = password.length >= 8 && password.length <= 12;
+
+                return hasLetter && hasNumber && isLengthValid;
+            }
+
+            function showError($element, message) {
+                const $error = $element.siblings('.error-message');
+                $error.text(message).show();
+                $element.addClass('is-invalid');
+            }
+
+            function clearError($element) {
+                const $error = $element.siblings('.error-message');
+                $error.hide();
+                $element.removeClass('is-invalid');
+            }
+
+            function validatePasswordStrength(password) {
+                const $requirements = $('.password-requirements');
+                const hasLetter = /[a-zA-Z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const isLengthValid = password.length >= 8 && password.length <= 12;
+
+                $requirements.html(`
+                    <div>요구사항:</div>
+                    <div style="color: ${hasLetter ? 'green' : 'red'}">✓ 영문자 포함</div>
+                    <div style="color: ${hasNumber ? 'green' : 'red'}">✓ 숫자 포함</div>
+                    <div style="color: ${isLengthValid ? 'green' : 'red'}">✓ 8-12자리</div>
+                `);
+            }
+
+            // 입력 필드 이벤트 리스너
+            $newPassword.on('input', function() {
+                validatePasswordStrength($(this).val());
+                clearError($(this));
+            });
+
+            $confirmPassword.on('input', function() {
+                clearError($(this));
+            });
+
             $('#changePass').on('click', function (e) {
                 e.preventDefault();
+                let isValid = true;
 
-                const newPassword = $('#new_pwd').val();
-                const confirmPassword = $('#new_pwd_check').val();
+                const newPassword = $newPassword.val();
+                const confirmPassword = $confirmPassword.val();
 
-                // 비밀번호 유효성 검사
-                if (!newPassword || newPassword.length < 8 || newPassword.length > 12) {
-                    alert("비밀번호는 8자에서 12자 사이여야 합니다.");
-                    return;
-                }
-
-                const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]{8,12}$/;
-                if (!regex.test(newPassword)) {
-                    alert("비밀번호는 영문자, 숫자를 포함해야 합니다.");
-                    return;
+                if (!validatePassword(newPassword)) {
+                    showError($newPassword, "비밀번호는 영문자와 숫자를 포함한 8-12자리여야 합니다.");
+                    isValid = false;
                 }
 
                 if (newPassword !== confirmPassword) {
-                    alert("새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
-                    return;
+                    showError($confirmPassword, "비밀번호가 일치하지 않습니다.");
+                    isValid = false;
                 }
-                // hidden 필드에 값을 설정하여 기존 정보 전송
-                $('#name').val('<%= request.getParameter("name") %>');
-                $('#birth').val('<%= request.getParameter("birth") %>');
-                $('#phone').val('<%= request.getParameter("phone") %>');
 
-                // 유효성 검증 통과 후 폼 제출
-                $('#passwordForm').submit();
+                if (isValid) {
+                    // FormData 객체 생성
+                    const formData = new FormData($form[0]);
+
+                    // AJAX 요청
+                    $.ajax({
+                        url: '/change-password',
+                        type: 'POST',
+                        data: {
+                            email: $('#email').val(),
+                            newPassword: newPassword,
+                            confirmPassword: confirmPassword
+                        },
+                        success: function (response) {
+                            window.location.href = '/find_pw3';
+                        },
+                        error: function (xhr) {
+                            const errorMessage = xhr.responseJSON?.message || "비밀번호 변경 중 오류가 발생했습니다.";
+                            alert(errorMessage);
+                        }
+                    });
+                }
             });
         });
     </script>
@@ -203,10 +249,8 @@
 </div>
 <div class="cont_area">
     <div class="table_col">
-        <form id="passwordForm" action="find_pw2.jsp" method="POST" accept-charset="UTF-8">
-            <input type="hidden" name="name" id="name" value="">
-            <input type="hidden" name="birth" id="birth" value="">
-            <input type="hidden" name="phone" id="phone" value="">
+        <form id="passwordForm" method="POST">
+            <input type="hidden" name="email" id="email" value="${email}">
             <table>
                 <caption>비밀번호 변경을 위한 새 비밀번호, 새 비밀번호 확인 입력을 나타냅니다.</caption>
                 <colgroup>
@@ -218,8 +262,11 @@
                     <th scope="row"><label for="new_pwd">새 비밀번호</label></th>
                     <td>
                         <div class="input_group">
-                            <span class="input_txt"><input type="password" id="new_pwd" name="new_pwd" class="text"
-                                                           placeholder="새 비밀번호를 입력해주세요."></span>
+                            <span class="input_txt">
+                                <input type="password" id="new_pwd" name="newPassword" class="text" placeholder="새 비밀번호를 입력해주세요." value="">
+                                <div class="error-message"></div>
+                            </span>
+                            <div class="password-requirements"></div>
                         </div>
                     </td>
                 </tr>
@@ -227,8 +274,10 @@
                     <th scope="row"><label for="new_pwd_check">새 비밀번호 확인</label></th>
                     <td>
                         <div class="input_group">
-                            <span class="input_txt"><input type="password" id="new_pwd_check" name="new_pwd_check"
-                                                           class="text" placeholder="새 비밀번호를 재입력해주세요."></span>
+                            <span class="input_txt">
+                                <input type="password" id="new_pwd_check" name="confirmPassword" class="text" placeholder="새 비밀번호를 재입력해주세요." value="">
+                                <div class="error-message"></div>
+                            </span>
                         </div>
                     </td>
                 </tr>
@@ -240,7 +289,7 @@
         <dt>비밀번호 변경 시 유의사항</dt>
         <dd>
             <ul>
-                <li>영문자, 숫자, 특수문자 조합하여 8~12자리어야 합니다.</li>
+                <li>영문자와 숫자를 조합하여 8~12자리여야 합니다.</li>
                 <li>아이디와 4자리 이상 동일한 문자와 숫자는 사용이 불가합니다.</li>
             </ul>
         </dd>

@@ -4,6 +4,7 @@ import com.ttrip.auth.domain.User;
 import com.ttrip.auth.repository.UserRepository;
 import com.ttrip.member.dto.MemberInfoResponse;
 import com.ttrip.member.dto.MemberUpdateRequest;
+import com.ttrip.member.dto.PasswordChangeRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -68,13 +69,28 @@ public class UserService {
         return !userRepository.existsByNick(nickname);
     }
 
-//    private String maskName(String name) {
-//        if (name == null || name.length() < 2) return name;
-//        return name.charAt(0) + "*".repeat(name.length() - 1);
-//    }
-//
-//    private String maskBirth(String birth) {
-//        if (birth == null) return null;
-//        return "****년 **월 **일";
-//    }
+
+
+
+    public boolean changePassword(PasswordChangeRequest request){
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new IllegalArgumentException("새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+        }
+
+        User user = userRepository.findByEmail(request.getEmail());
+        if (user == null) {
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+
+        try {
+
+            // Spring Security의 PasswordEncoder를 사용하여 비밀번호 암호화
+            String encodedPassword = passwordEncoder.encode(request.getNewPassword());
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
