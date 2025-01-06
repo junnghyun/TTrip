@@ -1,5 +1,7 @@
 package com.ttrip.auth.controller;
 
+import com.ttrip.auth.dto.AdminLoginRequest;
+import com.ttrip.auth.service.AdminAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +24,11 @@ public class AuthController {
 
     private final JwtUtil jwtUtil;
     private final AuthService authService;
+    private final AdminAuthService adminAuthService;
 
-    public AuthController(AuthService authService, JwtUtil jwtUtil) {
+    public AuthController(AuthService authService, AdminAuthService adminAuthService, JwtUtil jwtUtil) {
         this.authService = authService;
+        this.adminAuthService = adminAuthService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -70,5 +74,30 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(Map.of("status", "valid"));
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<LoginResponse> adminLogin(@RequestBody AdminLoginRequest loginRequest) {
+        try {
+            String token = adminAuthService.authenticateAdmin(loginRequest);
+
+            LoginResponse response = new LoginResponse(
+                    "success",
+                    "Admin login successful",
+                    token
+            );
+
+            return ResponseEntity.ok()
+                    .header("Authorization", "Bearer " + token)
+                    .body(response);
+
+        } catch (Exception e) {
+            LoginResponse response = new LoginResponse(
+                    "error",
+                    e.getMessage(),
+                    null
+            );
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 }

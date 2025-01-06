@@ -40,4 +40,7 @@ public class AuthFrmController {
         return "ttrip/member/signupOauth2";
     }
 
+    @GetMapping("/admin/login")
+    public String showAdminPage() { return "admin/login/admin_login"; }
+
 }
