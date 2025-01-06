@@ -139,7 +139,6 @@ function formatDate(dateStr) {
 }
 
 function showLoginRequired() {
-    $(".cockcock_planner .showcase").hide();
     $(".planner_list").html(`
         <div class="planner_list myPannerNoData" style="text-align: center; padding: 50px 0;">
             <div class="no_data">
@@ -261,6 +260,10 @@ function goDetailCourse(boardId) {
 function showAiPlannerInfo() {
     alert("AI 기반의 맞춤형 여행 코스 추천 서비스입니다.");
 }
+
+function GoCreateCourse(num) {
+    window.location.href = "/tm";
+}
 </script>
 <jsp:include page="../common/header.jsp"/>
 </head>
@@ -292,7 +295,7 @@ function showAiPlannerInfo() {
                    </div>
                </div>
                <div class="btn">
-                   <a href="/courseCreate">
+					<a href="javascript:GoCreateCourse(1);">
                        <div class="pc">
                            <em>코스만들기</em>
                            <span class="arw_wrap">
