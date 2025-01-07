@@ -37,7 +37,9 @@
         <button class="tab-link" onclick="openTab(event, 'accommodation')">숙소 설정</button>
     </div>
 <form id="courseDetail" method="get">
+
 	<input type="hidden" value="<%= region %>" name="region"/>
+	
     <div id="location" class="tab-content active">
         <div class="location-selection">
             <h2>장소 선택</h2>
@@ -136,26 +138,33 @@
             button.parentElement.parentElement.remove();
         }
     }
-</script>
-<script>
-    var destinations = [];
-    document.querySelectorAll('.location-list li').forEach(function (li) {
-        var name = li.querySelector('h3').innerText; // 장소 이름
-        var detail = li.querySelector('p').innerText; // 장소 상세 정보
-        destinations.push({ name: name, detail: detail });
-    });
-
-    // JSON 문자열로 변환
+    
     var destinationsJson = JSON.stringify(destinations);
+    console.log("Prepared JSON:", destinationsJson); // 데이터 확인
 
-    // courseDetail 폼에 숨겨진 필드 추가
-    var courseDetailForm = document.getElementById('courseDetail'); // 기존 폼 가져오기
-    var hiddenInput = document.createElement('input');
-    hiddenInput.type = 'hidden';
-    hiddenInput.name = 'destinations';
-    hiddenInput.value = destinationsJson;
+     fetch("${pageContext.request.contextPath}/ttrip/travel_detail.jsp", { // 서버의 JSP 경로 확인
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "destinations=" + encodeURIComponent(destinationsJson), // URL-encoded 데이터
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.text();
+        })
+        .then((data) => {
+            console.log("Response from server:", data); // 서버 응답 확인
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        }); 
 
-    courseDetailForm.appendChild(hiddenInput);
+
+
+
 </script>
 
 

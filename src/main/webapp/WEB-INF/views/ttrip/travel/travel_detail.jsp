@@ -1,3 +1,4 @@
+<%@page import="com.nimbusds.jose.shaded.gson.JsonArray"%>
 <%@page import="java.io.BufferedReader"%>
 <%@page import="com.ttrip.tripboard.TripBoardServiceImpl"%>
 <%@page import="com.ttrip.tripboard.TripBoardService"%>
@@ -23,7 +24,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- 카카오 지도 API 스크립트 추가 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f4b38fb42b57cde2b0919f29b1e7215"></script>
+
 <style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 .top{
 	width: 80%;
@@ -76,7 +79,8 @@ hr {
 
 .cont{
 	margin-top: 20px;
-	font-weight: bold;
+	font-family: "Jua", sans-serif;
+	font-size: 25px;
 }
 
 #map {
@@ -223,6 +227,7 @@ hr {
 /* 전체 컨테이너 스타일 */
 #dayContent {
     margin-top: 20px;
+    font-family: jua;
 }
 
 /* 각 일차 정보 섹션 스타일 */
@@ -277,7 +282,7 @@ hr {
 /* 리스트 아이템 스타일 */
 .placeItem,
 .accommodationItem {
-    background-color: #e7f1ff;
+    background-color: #567FF2;
     padding: 10px 20px;
     border-radius: 5px;
     font-size: 20px;
@@ -302,7 +307,7 @@ hr {
     justify-content: center; /* 세로 방향 가운데 정렬 */
     margin: 10px 0;
     padding: 20px;
-    background-color: #e0f7fa;
+    background-color: #fff;
     border: 1px solid #00796b;
     border-radius: 10px; /* 테두리 둥글게 */
     text-align: center; /* 텍스트 가운데 정렬 */
@@ -406,7 +411,6 @@ $(function() {
         String comment = request.getParameter("comment");
         int totalDays = Integer.parseInt(request.getParameter("totalDays"));
         String region = request.getParameter("region");
-        String[] destinations = request.getParameterValues("destinations");
         
         Map<Integer, List<String>> placesMap = new HashMap<>();
         Map<Integer, List<String>> accommodationsMap = new HashMap<>();
@@ -427,9 +431,51 @@ $(function() {
         request.setAttribute("accommodationsMap", accommodationsMap);
     %>
     
-        <h2><%= courseName != null ? courseName : "코스 이름 없음" %></h2>
-        <span><%=region %></span>
-        <span><%=destinations %></span>
+        <h2 style="font-family: Jua, sans-serif;"><%= courseName != null ? courseName : "코스 이름 없음" %></h2>
+        <span style="font-family: Jua, sans-serif; font-size: 25px;"><%=region %></span>
+     <%-- <%
+    // 두 번째 JSP에서 전달된 데이터 받기
+    String destinationsJson = request.getParameter("destinations");
+
+    if (destinationsJson != null && !destinationsJson.isEmpty()) {
+        try {
+            // JSON 배열에서 양쪽 대괄호 제거
+            destinationsJson = destinationsJson.trim();
+            if (destinationsJson.startsWith("[") && destinationsJson.endsWith("]")) {
+                destinationsJson = destinationsJson.substring(1, destinationsJson.length() - 1);
+            }
+
+            // 각 JSON 객체를 분리 (},{ 기준으로 분리)
+            String[] destinationItems = destinationsJson.split("\\},\\{");
+
+            for (int i = 0; i < destinationItems.length; i++) {
+                String item = destinationItems[i];
+
+                // 첫 번째와 마지막 객체의 중괄호 처리
+                if (i == 0) item = item.startsWith("{") ? item.substring(1) : item;
+                if (i == destinationItems.length - 1) item = item.endsWith("}") ? item.substring(0, item.length() - 1) : item;
+
+                // "name":"값"과 "detail":"값"을 추출
+                String name = null, detail = null;
+                if (item.contains("\"name\":\"")) {
+                    name = item.split("\"name\":\"")[1].split("\",")[0];
+                }
+                if (item.contains("\"detail\":\"")) {
+                    detail = item.split("\"detail\":\"")[1].split("\"")[0];
+                }
+
+                // 출력
+                out.println("Name: " + (name != null ? name : "N/A") + "<br>");
+                out.println("Detail: " + (detail != null ? detail : "N/A") + "<br><br>");
+            }
+        } catch (Exception e) {
+            out.println("Error parsing JSON data: " + e.getMessage());
+        }
+    } else {
+        out.println("No destinations received.");
+    }
+%> --%>
+        
     </div>
 
     <div class="top2">
@@ -475,7 +521,7 @@ function addMarker(lat, lng) {
 <div class="detail">
     <div class="dayBtnBox">
         <% for (int i = 1; i <= totalDays; i++) { %>
-    <button class="dayBtn" id="dayBtn" data-day="<%=i %>"><%= i %>일차</button>
+    <button class="dayBtn" style="font-family: Jua, sans-serif;" id="dayBtn" data-day="<%=i %>"><%= i %>일차</button>
     
 <% } %>
 
@@ -487,15 +533,15 @@ function addMarker(lat, lng) {
         List<String> places = placesMap.get(i);
         List<String> accommodations = accommodationsMap.get(i);
     %>
-        <div class="dayDetail" data-day="<%= i %>" style="display: none;">
-            <h3 class="dayTitle"><%= i %>일차 상세 정보</h3>
+        <div class="dayDetail" data-day="<%= i %>" style="display: none; font-family: jua;">
+            <h3 class="dayTitle" style="font-family: Jua, sans-serif;"><%= i %>일차 상세 정보</h3>
             <div class="detailContainer">
                 <div class="placesSection">
-                    <h4>여행지</h4>
+                    <h4 style="font-family: Jua, sans-serif;">여행지</h4>
                     <% if (places != null && !places.isEmpty()) { %>
                         <div class="placesList">
                             <% for (String place : places) { %>
-                                <div class="placeItem" onclick="addDynamicDiv('<%=place %>')"><%= place %></div>
+                                <div class="placeItem" style="font-family: jua;" onclick="addDynamicDiv('<%=place %>')"><%= place %></div>
                             <% } %>
                         </div>
                     <% } else { %>
@@ -504,11 +550,11 @@ function addMarker(lat, lng) {
                 </div>
                 <% if (i != totalDays) { %> <!-- 마지막 일차가 아닌 경우에만 숙소 출력 -->
                 <div class="accommodationsSection">
-                    <h4>숙소</h4>
+                    <h4 style="font-family: Jua, sans-serif;">숙소</h4>
                     <% if (accommodations != null && !accommodations.isEmpty()) { %>
                         <div class="accommodationsList">
                             <% for (String accommodation : accommodations) { %>
-                                <div class="accommodationItem" onclick="addDynamicDiv('<%=accommodation %>')"><%= accommodation %></div>
+                                <div class="accommodationItem" style="font-family: Jua, sans-serif;" onclick="addDynamicDiv('<%=accommodation %>')"><%= accommodation %></div>
                             <% } %>
                         </div>
                     <% } else { %>
@@ -526,8 +572,19 @@ function addMarker(lat, lng) {
     <!-- 동적 <div>가 추가될 컨테이너 -->
     <div id="dynamicContainer"></div>
 </div>
-
 </div>
+<%-- <%
+    // 데이터를 수신
+    String destinationsJson = request.getParameter("destinations");
+
+    // 디버깅용 로그
+    System.out.println("Received destinationsJson in travel_detail.jsp: " + destinationsJson);
+
+    // 브라우저에 응답
+    response.getWriter().write("Received destinations successfully: " + destinationsJson);
+%>
+ <pre><%= destinationsJson %></pre> --%>
+    
 <script type="text/javascript">
 $(document).ready(function () {
 	console.log("DOM 로드 완료");
@@ -589,7 +646,7 @@ function addDynamicDiv(place) {
 <input type="button" value="등록" class="replyBtn" style="margin-left: 1100px; margin-top: 20px;">
 </div>
 
-<div class="reply">
+<!-- <div class="reply">
 
 <img alt="회원" src="/ttrip/travel/images/user.jpg" class="userImg">
 <span>대부도 서울서 가까워서 가족끼리 바람쐬러 가기 좋아요.</span><br>
@@ -607,7 +664,7 @@ function addDynamicDiv(place) {
 <input type="button" class="replyReportBtn">
 <input type="button" class="replyGoodBtn">
 
-</div>
+</div> -->
 
 <jsp:include page="../common/footer.jsp" />
 </body>
