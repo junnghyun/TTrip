@@ -102,7 +102,29 @@ public class MainService {
 	    
 	    try {
 	        list = mDAO.selectMoreBestTripBoards(offset);
-	        jsonObj.put("boardList", list);
+	        
+	        // MainDomain의 input_date를 JSON으로 변환할 때 형식 지정
+	        JSONArray jsonArray = new JSONArray();
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        
+	        for(MainDomain md : list) {
+	            JSONObject boardObj = new JSONObject();
+	            boardObj.put("trip_boardID", md.getTrip_boardID());
+	            boardObj.put("nick", md.getNick());
+	            boardObj.put("title", md.getTitle());
+	            boardObj.put("start_date", md.getStart_date() != null ? sdf.format(md.getStart_date()) : "");
+	            boardObj.put("end_date", md.getEnd_date() != null ? sdf.format(md.getEnd_date()) : "");
+	            boardObj.put("trip_period", md.getTrip_period());
+	            boardObj.put("input_date", md.getInput_date() != null ? sdf.format(md.getInput_date()) : "");
+	            boardObj.put("region", md.getRegion());
+	            boardObj.put("firstImageUrl", md.getFirstImageUrl());
+	            boardObj.put("recom_count", md.getRecom_count());
+	            boardObj.put("comment_count", md.getComment_count());
+	            
+	            jsonArray.add(boardObj);
+	        }
+	        
+	        jsonObj.put("boardList", jsonArray);
 	        jsonObj.put("status", "success");
 	    } catch(PersistenceException pe) {
 	        jsonObj.put("status", "error");

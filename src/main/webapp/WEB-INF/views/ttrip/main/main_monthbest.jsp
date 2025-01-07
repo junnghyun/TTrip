@@ -3,6 +3,8 @@
     info=""
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,23 +40,11 @@ $(function(){
             success: function(data){
                 if(data.boardList && data.boardList.length > 0) {
                     data.boardList.forEach(function(board){
-                        let dateStr = '';
-                        if(board.input_date) {
-                            try {
-                                const date = new Date(board.input_date);
-                                if(!isNaN(date.getTime())) {
-                                    dateStr = date.getFullYear() + '. ' + 
-                                            (date.getMonth() + 1) + '. ' + 
-                                            date.getDate() + '.';
-                                }
-                            } catch(e) {
-                                console.error('Date parsing error:', e);
-                            }
-                        }
+                        let dateStr = board.input_date;
 
                         let html = '<li tabindex="0">' +
                             '<span onclick="goDetailCourse(\'' + board.trip_boardID + '\')" class="img">' +
-                                '<img src="' + board.firstImageUrl + '" alt="">' +
+                                '<img src="/ttrip/dstnt/images/' + board.firstImageUrl + '" alt="">' +
                                 '<span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>' +
                             '</span>' +
                             '<div class="cont">' +
@@ -95,8 +85,8 @@ $(function(){
     });
 });//ready
 
-function GoCreateCourse(num) {
-    window.location.href = "/tm";
+function goDetailCourse(tripBoardId) {
+    window.location.href = '/travel/detail/' + tripBoardId;
 }
 </script>
 <jsp:include page="../common/header.jsp"/>
@@ -158,8 +148,8 @@ function GoCreateCourse(num) {
             <c:forEach items="${boards}" var="board">
                 <li tabindex="0">
                     <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
-                        <img src="${board.firstImageUrl}" alt="">
-                        <span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>
+					<img src="${pageContext.request.contextPath}/ttrip/dstnt/images/${board.firstImageUrl}" alt="">   
+                     <span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>
                     </span>
                     <div class="cont">
                         <span class="day">${board.trip_period}</span>

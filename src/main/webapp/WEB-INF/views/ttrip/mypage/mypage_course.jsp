@@ -169,34 +169,32 @@
                 courseList.append('<li class="no-courses"><p>작성한 여행 코스가 없습니다.</p></li>');
             } else {
                 data.courses.forEach(function(course) {
-                    var courseHtml = `
-                        <li style="margin-bottom: 0px; margin-left: 70px">
-                            <span onclick="goDetailCourse('\${course.trip_boardID}')" class="img">
-                                <img src="\${course.firstImageUrl || '/path/to/default/image.jpg'}" alt="">
-                                <span class="profile">
-                                    <img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필">
-                                </span>
-                            </span>
-                            <div class="cont" style="margin-top: 0px;padding-top: 0px">
-                                <a href="javascript:goDetailCourse('\${course.trip_boardID}');" 
-                                   style="font-size: 16px; margin-top: 5px;margin-bottom: 2px">\${course.title}</a>
-                                <span class="area" style="font-size: 14px">\${course.region}</span>
-                                <div class="date" style="font-size: 12px; margin-bottom: 2px; margin-top: 2px">
-                                    <em>만든날짜</em>
-                                    <span>\${course.formatted_date}</span>
-                                </div>
-                                <div class="rate">
-                                    <div class="grade">
-                                        <div class="star">
-                                            <span></span>
-                                        </div>
-                                        <span class="total"><em class="blind">추천수</em>\${course.recom_count}</span>
-                                    </div>
-                                    <span class="comment"><em class="blind">댓글수</em>\${course.comment_count}</span>
-                                </div>
-                            </div>
-                        </li>
-                    `;
+                    var courseHtml = '<li style="margin-bottom: 0px; margin-left: 70px">' +
+                        '<span onclick="goDetailCourse(\'' + course.trip_boardID + '\')" class="img">' +
+                            '<img src="/ttrip/dstnt/images/' + course.firstImageUrl + '" alt="">' +
+                            '<span class="profile">' +
+                                '<img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필">' +
+                            '</span>' +
+                        '</span>' +
+                        '<div class="cont" style="margin-top: 0px;padding-top: 0px">' +
+                            '<a href="javascript:goDetailCourse(\'' + course.trip_boardID + '\');" ' +
+                               'style="font-size: 16px; margin-top: 5px;margin-bottom: 2px">' + course.title + '</a>' +
+                            '<span class="area" style="font-size: 14px">' + course.region + '</span>' +
+                            '<div class="date" style="font-size: 12px; margin-bottom: 2px; margin-top: 2px">' +
+                                '<em>만든날짜</em>' +
+                                '<span>' + course.formatted_date + '</span>' +
+                            '</div>' +
+                            '<div class="rate">' +
+                                '<div class="grade">' +
+                                    '<div class="star">' +
+                                        '<span></span>' +
+                                    '</div>' +
+                                    '<span class="total"><em class="blind">추천수</em>' + course.recom_count + '</span>' +
+                                '</div>' +
+                                '<span class="comment"><em class="blind">댓글수</em>' + course.comment_count + '</span>' +
+                            '</div>' +
+                        '</div>' +
+                    '</li>';
                     courseList.append(courseHtml);
                 });
             }
@@ -211,10 +209,10 @@
             
             if (data.totalPages > 1) {
                 for (var i = 1; i <= data.totalPages; i++) {
-                    pagination.append(`
-                        <a href="javascript:void(0)" onclick="loadCourses(${i})" 
-                           class="page-item ${data.currentPage == i ? 'active' : ''}">${i}</a>
-                    `);
+                    pagination.append(
+                        '<a href="javascript:void(0)" onclick="loadCourses(' + i + ')" ' +
+                        'class="page-item ' + (data.currentPage == i ? 'active' : '') + '">' + i + '</a>'
+                    );
                 }
             }
         }
