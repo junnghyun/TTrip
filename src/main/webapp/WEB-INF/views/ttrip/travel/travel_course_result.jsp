@@ -72,7 +72,8 @@
         .detail {
             padding: 10px;
             background-color: #fff;
-            border: 1px solid #ccc;
+            border: 0px solid #ccc;
+            text-align: center;
         }
 
         .btnBox {
@@ -201,6 +202,15 @@
             padding-left: 10px;
             background-color: #BACCFA;
         }
+        
+        textarea {
+            font-size: 15px;
+            border: 3px solid #567FF2;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: #BACCFA;
+        }
 		
 		#courseName{
 			width: 220px;
@@ -221,7 +231,7 @@
 		}
 		
 		.schedule img {
-        width: 150px; /* 원하는 너비 */
+        width: 230px; /* 원하는 너비 */
         height: 100px; /* 원하는 높이 */
         object-fit: cover; /* 이미지를 잘라서 고정 크기에 맞추기 */
     }
@@ -272,7 +282,6 @@ $(function() {
             java.util.Enumeration<String> parameterNames = request.getParameterNames();
             java.util.Map<String, String> dayData = new java.util.HashMap<>();
             int totalDays = 0; // 총 일차 계산용
-            String[] destinations = request.getParameterValues("destinations");
             
             while (parameterNames.hasMoreElements()) {
                 String paramName = parameterNames.nextElement();
@@ -307,6 +316,7 @@ $(function() {
                 // 현재 날짜를 포맷팅
                 String currentDayDate = sdf.format(calendar.getTime());
         %>
+        
         <div class="day">
             <div class="day-header">
                 <h3><%= i %>일차</h3>
@@ -323,7 +333,7 @@ $(function() {
                     <div class="schedule-number">여행지</div>
                     <span class="description">
                     <img src="ttrip/dstnt/images/<%=place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim()%>.jpg" alt="<%=place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim()%>">
-                    <%= place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim() %>
+                    <br><%= place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim() %>
                     </span>
                 </div>
                 <input type="hidden" name="day<%= i %>_places" value="<%= place.replaceAll("(방문 예정|숙소 예약|삭제)", "").trim() %>">
@@ -351,9 +361,8 @@ $(function() {
         calendar.add(java.util.Calendar.DATE, 1);
         } %>
         <input type="hidden" name="totalDays" value="<%= totalDays %>">
-        <input type="hidden" name="destinations" value="<%= destinations%>">
     </div>
-   
+         
 </div>
 
 	<div class="resizer" id="dragMe"></div>
@@ -382,11 +391,12 @@ $(function() {
                 marker.setMap(map);
             }
         </script>
+    
     </div>
 </div>
 <div class="detail">
-    <h3 class="detailTitle" style="padding-top: 20px; font-family: jua; color: #567FF2">상세 내용</h3>
-    <input type="text" name="comment" placeholder="코스에 대한 상세 내용을 입력해주세요." style="width: 1700px; height: 150px"><br>
+    <h3 class="detailTitle" style="padding-top: 20px; font-family: jua; color: #567FF2; margin-right: 1600px;">상세 내용</h3>
+    <textarea name="comment" placeholder="코스에 대한 상세 내용을 입력해주세요." style="width: 1700px; height: 150px; font-family: jua;"></textarea><br>
     <div class="btnBox">
     	<input type="button" value="뒤로" class="backBtn"
                style="background-color: #ff0000; color: #fff; border-radius: 7px; width: 90px; height: 40px; border: none;">
