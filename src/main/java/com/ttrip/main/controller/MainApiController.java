@@ -52,7 +52,7 @@ public class MainApiController {
                 System.out.println("여행 기간: " + boards.get(0).getTrip_period());
                 System.out.println("지역: " + boards.get(0).getRegion());
                 System.out.println("이미지 URL: " + boards.get(0).getFirstImageUrl());
-
+                
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
                 for (MainDomain board : boards) {
                     board.calculateTripPeriod();

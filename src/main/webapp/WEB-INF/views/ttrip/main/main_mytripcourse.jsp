@@ -96,39 +96,37 @@ $(function(){
 });
 
 function createBoardHtml(board) {
-    return `
-        <li tabindex="0">
-            <button type="button" class="delete-btn" onclick="deleteCourse('${board.trip_boardID}', this)">×</button>
-            <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
-                <img src="\${board.firstImageUrl || '${pageContext.request.contextPath}/ttrip/main/images/default_image.jpg'}" 
-                     alt="여행 이미지" 
-                     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/ttrip/main/images/default_image.jpg'; this.classList.add('placeholder-img');">
-                <span class="profile">
-                    <img src="/resources/images/common/icon_header_profile2.png" 
-                         onerror="this.remove();" 
-                         alt="프로필">
-                </span>
-            </span>
-            <div class="cont">
-                <span class="day">\${board.trip_period}</span>
-                <a href="javascript:goDetailCourse('${board.trip_boardID}');">\${board.title}</a>
-                <span class="area">\${board.region}</span>
-                <div class="date">
-                    <em>만든날짜</em>
-                    <span>\${board.formatted_date}</span>
-                </div>
-                <div class="rate">
-                    <div class="grade">
-                        <div class="star">
-                            <span></span>
-                        </div>
-                        <span class="total"><em class="blind">추천수</em>\${board.recom_count}</span>
-                    </div>
-                    <span class="comment"><em class="blind">댓글수</em>\${board.comment_count}</span>
-                </div>
-            </div>
-        </li>
-    `;
+    return '<li tabindex="0">' +
+        '<button type="button" class="delete-btn" onclick="deleteCourse(\'' + board.trip_boardID + '\', this)">×</button>' +
+        '<span data-board-id="' + board.trip_boardID + '" class="img course-link">' +
+            '<img src="' + (board.firstImageUrl || '/ttrip/main/images/default_image.jpg') + '" ' +
+                'alt="여행 이미지" ' +
+                'onerror="this.onerror=null; this.src=\'/ttrip/main/images/default_image.jpg\'; this.classList.add(\'placeholder-img\');">' +
+            '<span class="profile">' +
+                '<img src="/resources/images/common/icon_header_profile2.png" ' +
+                     'onerror="this.remove();" ' +
+                     'alt="프로필">' +
+            '</span>' +
+        '</span>' +
+        '<div class="cont">' +
+            '<span class="day">' + board.trip_period + '</span>' +
+            '<a href="javascript:goDetailCourse(\'' + board.trip_boardID + '\');">' + board.title + '</a>' +
+            '<span class="area">' + board.region + '</span>' +
+            '<div class="date">' +
+                '<em>만든날짜</em>' +
+                '<span>' + board.formatted_date + '</span>' +
+            '</div>' +
+            '<div class="rate">' +
+                '<div class="grade">' +
+                    '<div class="star">' +
+                        '<span></span>' +
+                    '</div>' +
+                    '<span class="total"><em class="blind">추천수</em>' + board.recom_count + '</span>' +
+                '</div>' +
+                '<span class="comment"><em class="blind">댓글수</em>' + board.comment_count + '</span>' +
+            '</div>' +
+        '</div>' +
+    '</li>';
 }
 
 function formatDate(dateStr) {
@@ -253,8 +251,8 @@ function deleteCourse(boardId, element) {
     }
 }
 
-function goDetailCourse(boardId) {
-    window.location.href = "/courseDetail/" + boardId;
+function goDetailCourse(tripBoardId) {
+    window.location.href = '/travel/detail/' + tripBoardId;
 }
 
 function showAiPlannerInfo() {

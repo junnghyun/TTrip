@@ -29,65 +29,65 @@
 	    let offset = 12;  // 초기 게시글 개수
 
     // 더보기 버튼 클릭 이벤트
-    $(".more button").click(function(){
-        $.ajax({
-            url: "/main_tripboard/more",
-            type: "POST",
-            data: JSON.stringify({ offset: offset }),
-            contentType: "application/json",
-            dataType: "json",
-            success: function(data){
-                if(data.boardList && data.boardList.length > 0) {
-                    data.boardList.forEach(function(board){
-                        // 날짜는 이미 서버에서 형식화되어 옴
-                        let dateStr = board.input_date || '';
+	    $(".more button").click(function(){
+	        $.ajax({
+	            url: "/main_monthbest/more",
+	            type: "POST",
+	            data: JSON.stringify({ offset: offset }),
+	            contentType: "application/json",
+	            dataType: "json",
+	            success: function(data){
+	                if(data.boardList && data.boardList.length > 0) {
+	                    data.boardList.forEach(function(board){
+	                        // tripboard.jsp와 동일하게 단순화
+	                        let dateStr = board.input_date || '';
 
-                        let html = '<li tabindex="0">' +
-                            '<span onclick="goDetailCourse(\'' + board.trip_boardID + '\')" class="img">' +
-                                '<img src="' + board.firstImageUrl + '" alt="">' +
-                                '<span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>' +
-                            '</span>' +
-                            '<div class="cont">' +
-                                '<span class="day">' + board.trip_period + '</span>' +
-                                '<a href="javascript:goDetailCourse(\'' + board.trip_boardID + '\');">' + board.title + '</a>' +
-                                '<span class="area">' + board.region + '</span>' +
-                                '<div class="date">' +
-                                    '<em>만든날짜</em>' +
-                                    '<span>' + dateStr + '</span>' +
-                                '</div>' +
-                                '<div class="rate">' +
-                                    '<div class="grade">' +
-                                        '<div class="star">' +
-                                            '<span></span>' +
-                                        '</div>' +
-                                        '<span class="total"><em class="blind">추천수</em>' + board.recom_count + '</span>' +
-                                    '</div>' +
-                                    '<span class="comment"><em class="blind">댓글수</em>' + board.comment_count + '</span>' +
-                                '</div>' +
-                            '</div>' +
-                        '</li>';
-                        $(".planner_list ul").append(html);
-                    });
-                    offset += data.boardList.length;
-                    
-                    if(data.boardList.length < 12) {
-                        $(".more").hide();
-                    }
-                } else {
-                    $(".more").hide();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
-                alert("게시글을 더 불러오는데 실패했습니다.");
-            }
-        });
-    });
+	                        let html = '<li tabindex="0">' +
+	                            '<span onclick="goDetailCourse(\'' + board.trip_boardID + '\')" class="img">' +
+	                                '<img src="' + board.firstImageUrl + '" alt="">' +
+	                                '<span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>' +
+	                            '</span>' +
+	                            '<div class="cont">' +
+	                                '<span class="day">' + board.trip_period + '</span>' +
+	                                '<a href="javascript:goDetailCourse(\'' + board.trip_boardID + '\');">' + board.title + '</a>' +
+	                                '<span class="area">' + board.region + '</span>' +
+	                                '<div class="date">' +
+	                                    '<em>만든날짜</em>' +
+	                                    '<span>' + dateStr + '</span>' +
+	                                '</div>' +
+	                                '<div class="rate">' +
+	                                    '<div class="grade">' +
+	                                        '<div class="star">' +
+	                                            '<span></span>' +
+	                                        '</div>' +
+	                                        '<span class="total"><em class="blind">추천수</em>' + board.recom_count + '</span>' +
+	                                    '</div>' +
+	                                    '<span class="comment"><em class="blind">댓글수</em>' + board.comment_count + '</span>' +
+	                                '</div>' +
+	                            '</div>' +
+	                        '</li>';
+	                        $(".planner_list ul").append(html);
+	                    });
+	                    offset += data.boardList.length;
+	                    
+	                    if(data.boardList.length < 12) {
+	                        $(".more").hide();
+	                    }
+	                } else {
+	                    $(".more").hide();
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("Error:", error);
+	                alert("게시글을 더 불러오는데 실패했습니다.");
+	            }
+	        });
+	    });
 });
 
-function GoCreateCourse(num) {
-    window.location.href = "/tm";
-}
+	function goDetailCourse(tripBoardId) {
+	    window.location.href = '/travel/detail/' + tripBoardId;
+	}
 </script>
 
 <jsp:include page="../common/header.jsp"/>

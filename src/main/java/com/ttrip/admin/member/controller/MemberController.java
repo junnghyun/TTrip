@@ -56,7 +56,7 @@ public class MemberController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("search", searchTerm);
         
-        return "/admin/admin_member/admin_member";
+        return "admin/admin_member/admin_member";
     }
     
     @GetMapping("/member/detail/{nick}")
@@ -65,7 +65,7 @@ public class MemberController {
             MemberVO member = memberService.getMemberByNick(nick);
             if (member != null) {
                 model.addAttribute("member", member);
-                return "/admin/admin_member/member_modal";
+                return "admin/admin_member/member_modal";
             } else {
                 return "error";
             }

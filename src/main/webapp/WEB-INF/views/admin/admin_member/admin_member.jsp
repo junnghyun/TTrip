@@ -164,7 +164,7 @@ function deleteMember2(nick, accountFlag) {
 <body>
 <jsp:include page="../common/admin.jsp" />
 <div class="common_admin">
-<h1><a href="${pageContext.request.contextPath}/admin/member">회원관리</a></h1>
+<h1><a href="${pageContext.request.contextPath}/admin/member" style="text-decoration-line:none; color: black;">회원관리</a></h1>
 
 <div class="order-management">
 <div class="product-filter">
