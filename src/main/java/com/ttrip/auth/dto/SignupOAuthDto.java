@@ -14,4 +14,5 @@ public class SignupOAuthDto {
     private String phone;
     private String password;
     public String oauthProvider;
+    private String oauthUserId;
 }

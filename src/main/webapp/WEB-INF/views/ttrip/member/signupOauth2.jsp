@@ -23,7 +23,7 @@
                 <th>닉네임</th>
                 <td>
                     <div class="nickname-container">
-                        <input type="text" name="nickname" id="nickname" required>
+                        <input type="text" name="nick" id="nick" required>
                         <button type="button" class="check-btn" id="checkNickBtn">중복 확인</button>
                     </div>
                 </td>
@@ -53,11 +53,13 @@
                 <td><input type="text" name="pass" required></td>
             </tr>
         </table>
+        <input type="hidden" name="oauthProvider" value="${provider}">
+        <input type="hidden" name="oauthUserId" value="${providerId}">
         <input type="hidden" name="registrationId" value="${registrationId}">
         <button type="submit" class="submit-btn">회원가입</button>
     </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${pageContext.request.contextPath}/ttrip/member/signup/signupUser.js"></script>
+<script src="${pageContext.request.contextPath}/ttrip/member/signup/signupAdmin.js"></script>
 </body>
 </html>

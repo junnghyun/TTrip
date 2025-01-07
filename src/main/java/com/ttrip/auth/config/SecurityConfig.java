@@ -1,5 +1,7 @@
 package com.ttrip.auth.config;
 
+import com.ttrip.auth.exception.CustomAuthenticationEntryPoint;
+import com.ttrip.auth.service.AdminUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -23,7 +25,6 @@ import com.ttrip.auth.jwt.JwtFilter;
 import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.auth.oauth2.CustomOAuth2AuthenticationFailureHandler;
 import com.ttrip.auth.oauth2.CustomOAuth2LoginSuccessHandler;
-import com.ttrip.auth.service.AdminUserDetailsService;
 import com.ttrip.auth.service.CustomOAuth2UserService;
 import com.ttrip.auth.service.CustomUserDetailsService;
 
@@ -99,35 +100,26 @@ public class SecurityConfig {
     public SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf((auth) -> auth.disable())
-                .oauth2Login((oauth2) -> oauth2
-                        .loginPage("/login") // 일반 사용자는 /login 경로로 로그인
-                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService))
                         .failureHandler(customOAuth2AuthenticationFailureHandler)
                         .successHandler(customOAuth2LoginSuccessHandler))
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/signup", "/ttrip/**", "/signup/**", "/auth/**", "/api/**").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/", "/signup", "/ttrip/**", "/signup/**", "/auth/**", "/api/**",
+                                "/login/oauth2/code/*").permitAll()  // OAuth2 콜백 URL 명시적 허용
                         .requestMatchers("/WEB-INF/**").permitAll()
                         .requestMatchers("/common/**").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
                         .anyRequest().permitAll())
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-                .authenticationProvider(userAuthenticationProvider()); // 일반 사용자 인증 제공자 사용
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
-        // JwtFilter 설정
         http.addFilterBefore(new JwtFilter(jwtUtil, customUserDetailsService, adminUserDetailsService),
                 UsernamePasswordAuthenticationFilter.class);
-
-        // 인증, 인가 실패 핸들러 설정
-        http.exceptionHandling(
-                exceptionHandling -> {
-                    exceptionHandling.accessDeniedHandler(new CustomAccessDeniedHandler());
-                }
-        );
-
-        // CORS 설정
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         return http.build();
     }

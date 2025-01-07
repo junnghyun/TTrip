@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -65,12 +67,9 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean isNicknameAvailable(String nickname) {
-        return !userRepository.existsByNick(nickname);
+    public boolean isNicknameAvailable(String nick) {
+        return !userRepository.existsByNick(nick);
     }
-
-
-
 
     public boolean changePassword(PasswordChangeRequest request){
         if (!request.getNewPassword().equals(request.getConfirmPassword())) {
@@ -93,4 +92,22 @@ public class UserService {
             return false;
         }
     }
+
+    @Transactional
+    public void deleteUser(String email, String password) {
+        // 이메일로 유저 찾기
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new RuntimeException("존재하지 않는 사용자입니다.");
+        }
+
+        // 비밀번호 확인
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+
+        // 회원 탈퇴 처리
+        userRepository.delete(user);
+    }
+
 }

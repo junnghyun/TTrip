@@ -27,15 +27,20 @@ public class AuthFrmController {
         return "ttrip/member/signupUser";
     }
 
-    @GetMapping("/signup/outh2")
-    public String showOuth2Page(HttpServletRequest request, Model model) {
-        // 이메일과 로그인 출처 파라미터 가져오기
-        String email = request.getParameter("email");
-        String registrationId = request.getParameter("registrationId");
+    @GetMapping("/signup/oauth2")
+    public String showOauth2Page(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String provider,
+            @RequestParam(required = false) String providerId,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String error,
+            Model model) {
 
-        // 모델에 이메일과 로그인 출처 정보를 추가하여 뷰로 전달
         model.addAttribute("email", email);
-        model.addAttribute("registrationId", registrationId);
+        model.addAttribute("provider", provider);
+        model.addAttribute("providerId", providerId);
+        model.addAttribute("name", name);
+        model.addAttribute("error", error);
 
         return "ttrip/member/signupOauth2";
     }
