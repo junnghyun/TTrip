@@ -133,6 +133,7 @@ $(document).ready(function() {
         }
     });
     
+    
     $.ajax({
         url: '${pageContext.request.contextPath}/admin/dashboard/getWeeklyLoginUsers',
         type: 'GET',
@@ -177,6 +178,7 @@ $(document).ready(function() {
             console.error('Error:', error);
         }
     });
+
     
     
     	<!-- 신규 현황 -->
