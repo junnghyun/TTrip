@@ -204,7 +204,7 @@
 <div class="header-wrapper">
     <header class="header">
         <nav class="nav-container">
-            <a href="#" class="logo">
+            <a href="/" class="logo">
                 <img src="${pageContext.request.contextPath}/common/header/images/logo.png" alt="로고" style="height: 40px;">
             </a>
             <ul class="nav-menu">
@@ -234,7 +234,7 @@
                             <a href="tm" class="mega-menu-item">여행지 선택</a>
                         </div>
                         <div class="mega-menu-column">
-                            <a href="#" class="mega-menu-item">자유게시판</a>
+                            <a href="/ttrip/boardlist/mainBoardlist" class="mega-menu-item">자유게시판</a>
                             <a href="#" class="mega-menu-item">질문게시판</a>
                             <a href="#" class="mega-menu-item">추천게시판</a>
                         </div>

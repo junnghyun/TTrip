@@ -1,6 +1,5 @@
 package com.ttrip.auth.config;
 
-import com.ttrip.auth.service.AdminUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -24,6 +23,7 @@ import com.ttrip.auth.jwt.JwtFilter;
 import com.ttrip.auth.jwt.JwtUtil;
 import com.ttrip.auth.oauth2.CustomOAuth2AuthenticationFailureHandler;
 import com.ttrip.auth.oauth2.CustomOAuth2LoginSuccessHandler;
+import com.ttrip.auth.service.AdminUserDetailsService;
 import com.ttrip.auth.service.CustomOAuth2UserService;
 import com.ttrip.auth.service.CustomUserDetailsService;
 

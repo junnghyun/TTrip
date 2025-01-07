@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ttrip.traveldetail.travelDetailMapper">
+
+  <!-- 게시글 기본 정보 조회 -->
+  <select id="selectTripBoardDetail" parameterType="int" resultType="com.ttrip.traveldetail.TravelDetailDomain">
+    SELECT 
+        tb.trip_boardID,
+        tb.nick,
+        tb.title,
+        tb.start_date,
+        tb.end_date,
+        tb.input_date,
+        r.region,
+        (SELECT COUNT(*) FROM trip_board_recom WHERE trip_boardID = tb.trip_boardID) as recom_count
+    FROM trip_board tb
+    INNER JOIN region r ON tb.regionID = r.regionID
+    WHERE tb.trip_boardID = #{tripBoardId}
+    AND tb.status = 'Y'
+  </select>
+
+  <!-- 일차별 여행지 정보 조회 -->
+  <select id="selectTripPlansByDay" parameterType="int" resultType="com.ttrip.traveldetail.TripPlanDomain">
+    SELECT 
+        tp.trip_planID,
+        tp.trip_day,
+        tp.plan_title,
+        tp.visit_order,
+        d.DSTNTID,
+        d.name as destination_name,
+        d.addr as destination_addr,
+        d.img as destination_img,
+        d.detail as destination_detail,
+        d.lat,
+        d.lng
+    FROM trip_plan tp
+    INNER JOIN course c ON tp.trip_planID = c.trip_planID
+    INNER JOIN DSTNT d ON c.DSTNTID = d.DSTNTID
+    WHERE tp.trip_boardID = #{tripBoardId}
+    ORDER BY tp.trip_day, tp.visit_order
+  </select>
+
+  <!-- 일차별 숙소 정보 조회 -->
+  <select id="selectAccommodationsByDay" parameterType="int" resultType="com.ttrip.traveldetail.AccommodationDomain">
+    SELECT 
+        ap.trip_planID,
+        tp.trip_day,
+        a.accomID,
+        a.name as accom_name,
+        a.addr as accom_addr,
+        a.phone,
+        a.lat,
+        a.lng
+    FROM trip_plan tp
+    INNER JOIN accom_plan ap ON tp.trip_planID = ap.trip_planID
+    INNER JOIN accom a ON ap.accomID = a.accomID
+    WHERE tp.trip_boardID = #{tripBoardId}
+    AND a.status = 'Y'
+    ORDER BY tp.trip_day
+  </select>
+
+  <!-- 게시글 추천 여부 확인 -->
+  <select id="checkRecommendation" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM trip_board_recom
+    WHERE trip_boardID = #{tripBoardId}
+    AND nick = #{nick}
+  </select>
+
+  <!-- 게시글 추천 추가 -->
+  <insert id="insertRecommendation" parameterType="map">
+    INSERT INTO trip_board_recom (nick, trip_boardID)
+    VALUES (#{nick}, #{tripBoardId})
+  </insert>
+
+  <!-- 게시글 추천 삭제 -->
+  <delete id="deleteRecommendation" parameterType="map">
+    DELETE FROM trip_board_recom
+    WHERE nick = #{nick}
+    AND trip_boardID = #{tripBoardId}
+  </delete>
+
+<!-- 댓글 목록 조회 -->
+  <select id="selectComments" parameterType="int" resultType="com.ttrip.traveldetail.CommentDomain">
+    SELECT 
+        tc.trip_commentID,
+        tc.trip_boardID,
+        tc.nick,
+        tc.detail,
+        tc.input_date,
+        tc.status
+    FROM trip_comment tc
+    WHERE tc.trip_boardID = #{tripBoardId}
+    AND tc.status = 'Y'
+    ORDER BY tc.input_date DESC
+  </select>
+
+  <!-- 댓글 작성 -->
+  <insert id="insertComment" parameterType="com.ttrip.traveldetail.CommentDomain">
+    INSERT INTO trip_comment (
+        trip_commentID,
+        trip_boardID,
+        nick,
+        detail,
+        status
+    ) VALUES (
+        seq_trip_comment.NEXTVAL,
+        #{trip_boardID},
+        #{nick},
+        #{detail},
+        'Y'
+    )
+  </insert>
+
+  <!-- 댓글 삭제 -->
+  <update id="deleteComment" parameterType="map">
+    UPDATE trip_comment 
+    SET status = 'N'
+    WHERE trip_commentID = #{commentId}
+    AND nick = #{nick}
+  </update>
+
+ 
+</mapper>

@@ -211,10 +211,10 @@
             
             if (data.totalPages > 1) {
                 for (var i = 1; i <= data.totalPages; i++) {
-                    pagination.append(`
-                        <a href="javascript:void(0)" onclick="loadCourses(${i})" 
-                           class="page-item ${data.currentPage == i ? 'active' : ''}">${i}</a>
-                    `);
+                    pagination.append(
+                        '<a href="javascript:void(0)" onclick="loadCourses(' + i + ')" ' +
+                        'class="page-item ' + (data.currentPage == i ? 'active' : '') + '">' + i + '</a>'
+                    );
                 }
             }
         }
