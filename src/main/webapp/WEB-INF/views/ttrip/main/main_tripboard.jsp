@@ -25,13 +25,13 @@
 
 </style>
 <script type="text/javascript">
-	$(function(){
-	    let offset = 12;  // 초기 게시글 개수
+$(function(){
+    let offset = 12;  // 초기 게시글 개수
 
     // 더보기 버튼 클릭 이벤트
     $(".more button").click(function(){
         $.ajax({
-            url: "/main_tripboard/more",
+            url: "/main_monthbest/more",
             type: "POST",
             data: JSON.stringify({ offset: offset }),
             contentType: "application/json",
@@ -39,12 +39,11 @@
             success: function(data){
                 if(data.boardList && data.boardList.length > 0) {
                     data.boardList.forEach(function(board){
-                        // 날짜는 이미 서버에서 형식화되어 옴
                         let dateStr = board.input_date || '';
 
                         let html = '<li tabindex="0">' +
                             '<span onclick="goDetailCourse(\'' + board.trip_boardID + '\')" class="img">' +
-                                '<img src="' + board.firstImageUrl + '" alt="">' +
+                                '<img src="${pageContext.request.contextPath}/ttrip/dstnt/images/' + board.firstImageUrl + '" alt="">' +
                                 '<span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>' +
                             '</span>' +
                             '<div class="cont">' +
@@ -85,8 +84,8 @@
     });
 });
 
-function GoCreateCourse(num) {
-    window.location.href = "/tm";
+function goDetailCourse(tripBoardId) {
+    window.location.href = '/travel/detail/' + tripBoardId;
 }
 </script>
 
@@ -149,7 +148,7 @@ function GoCreateCourse(num) {
 	           <c:forEach items="${boards}" var="board">
 	               <li tabindex="0">
 	                   <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
-	                       <img src="${board.firstImageUrl}" alt="">
+	                       <img src="${pageContext.request.contextPath}/ttrip/dstnt/images/${board.firstImageUrl}" alt="">
 	                       <span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>
 	                   </span>
 	                   <div class="cont">
