@@ -35,9 +35,6 @@ $(document).ready(function() {
                     // 토큰 저장 확인
                     console.log('Stored token:', localStorage.getItem('jwt_token'));
 
-                    // 보호된 리소스 접근 테스트
-                    accessProtectedResource();
-
                     alert('Login successful!');
                     window.location.href = "/";
                 } else {
