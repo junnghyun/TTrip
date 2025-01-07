@@ -72,19 +72,14 @@ public class SignupController {
     }
 
     @PostMapping("/signup/oauth")
-    public ResponseEntity<?> signupOauth(@RequestBody SignupOAuthDto signupOAuthDto) {
+    public ResponseEntity<?> signupOAuth(@RequestBody SignupOAuthDto signupOAuthDto) {
         try {
-            // 회원가입 로직 처리
-            signupOAuthService.registerUser(signupOAuthDto);
-
-            // 성공 응답
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("success", true);
-            return ResponseEntity.ok(response);
-
+            signupOAuthService.registerOAuthUser(signupOAuthDto);
+            return ResponseEntity.ok().body(Map.of("message", "회원가입이 완료되었습니다."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
-            // 오류 발생 시 응답 처리
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("success", false, "message", e.getMessage()));
+            return ResponseEntity.internalServerError().body(Map.of("message", "회원가입 처리 중 오류가 발생했습니다."));
         }
     }
 
