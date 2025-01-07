@@ -99,7 +99,7 @@ function createBoardHtml(board) {
     return '<li tabindex="0">' +
         '<button type="button" class="delete-btn" onclick="deleteCourse(\'' + board.trip_boardID + '\', this)">×</button>' +
         '<span data-board-id="' + board.trip_boardID + '" class="img course-link">' +
-            '<img src="' + (board.firstImageUrl || '/ttrip/main/images/default_image.jpg') + '" ' +
+            '<img src="/ttrip/dstnt/images/' + (board.firstImageUrl || 'default_image.jpg') + '" ' +
                 'alt="여행 이미지" ' +
                 'onerror="this.onerror=null; this.src=\'/ttrip/main/images/default_image.jpg\'; this.classList.add(\'placeholder-img\');">' +
             '<span class="profile">' +

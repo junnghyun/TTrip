@@ -204,7 +204,7 @@
 <div class="header-wrapper">
     <header class="header">
         <nav class="nav-container">
-            <a href="#" class="logo">
+            <a href="/" class="logo">
                 <img src="${pageContext.request.contextPath}/common/header/images/logo.png" alt="로고" style="height: 40px;">
             </a>
             <ul class="nav-menu">

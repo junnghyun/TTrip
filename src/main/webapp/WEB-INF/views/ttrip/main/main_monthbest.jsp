@@ -29,7 +29,7 @@
 $(function(){
     let offset = 12;  // 초기 게시글 개수
 
- // 더보기 버튼 클릭 이벤트
+    // 더보기 버튼 클릭 이벤트
     $(".more button").click(function(){
         $.ajax({
             url: "/main_monthbest/more",
@@ -40,12 +40,11 @@ $(function(){
             success: function(data){
                 if(data.boardList && data.boardList.length > 0) {
                     data.boardList.forEach(function(board){
-                        // 날짜 문자열을 직접 사용 (서버에서 이미 포맷팅된 상태)
                         let dateStr = board.input_date;
 
                         let html = '<li tabindex="0">' +
                             '<span onclick="goDetailCourse(\'' + board.trip_boardID + '\')" class="img">' +
-                                '<img src="' + board.firstImageUrl + '" alt="">' +
+                                '<img src="/ttrip/dstnt/images/' + board.firstImageUrl + '" alt="">' +
                                 '<span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>' +
                             '</span>' +
                             '<div class="cont">' +
@@ -149,8 +148,8 @@ function goDetailCourse(tripBoardId) {
             <c:forEach items="${boards}" var="board">
                 <li tabindex="0">
                     <span onclick="goDetailCourse('${board.trip_boardID}')" class="img">
-                        <img src="${board.firstImageUrl}" alt="">
-                        <span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>
+					<img src="${pageContext.request.contextPath}/ttrip/dstnt/images/${board.firstImageUrl}" alt="">   
+                     <span class="profile"><img src="/resources/images/common/icon_header_profile2.png" onerror="this.remove();" alt="프로필"></span>
                     </span>
                     <div class="cont">
                         <span class="day">${board.trip_period}</span>
