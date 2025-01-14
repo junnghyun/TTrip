@@ -35,12 +35,9 @@ $(document).ready(function() {
                     // 토큰 저장 확인
                     console.log('Stored token:', localStorage.getItem('jwt_token'));
 
-<<<<<<< HEAD
-=======
                     // 보호된 리소스 접근 테스트
-                    //accessProtectedResource();
+                    accessProtectedResource();
 
->>>>>>> f6964c4400d54fced929b64ef5ef1ce5e3ff0ad5
                     alert('Login successful!');
                     window.location.href = "/";
                 } else {
@@ -49,7 +46,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log('Login error:', error);
-                alert('Error during login process');
+                //alert('Error during login process');
             }
         });
     });
