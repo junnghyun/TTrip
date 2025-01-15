@@ -46,7 +46,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log('Login error:', error);
-                //alert('Error during login process');
+                alert('로그인 실패');
             }
         });
     });
@@ -73,7 +73,7 @@ $(document).ready(function() {
                 if (error.status === 403) {
                     alert('접근 권한이 없습니다.');
                 } else {
-                    alert('Error accessing protected resource: ' + error.statusText);
+                   // alert('Error accessing protected resource: ' + error.statusText);
                 }
             }
         });
