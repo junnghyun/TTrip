@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ttrip.admin.member.memberMapper">
-    <!-- 모든 회원 조회 -->
-    <select id="selectAllMembers" resultType="com.ttrip.admin.member.MemberVO">
-        SELECT * FROM member ORDER BY join_date DESC
-    </select>
-    
-    <!-- 닉네임으로 회원 검색 -->
-	<select id="searchMembersByNick" parameterType="string" 
-	        resultType="com.ttrip.admin.member.MemberVO">
-	    SELECT * FROM member 
-	    WHERE nick LIKE '%'||#{searchTerm}||'%'
-	    ORDER BY join_date DESC
+	<!-- 모든 회원 조회 -->
+	<select id="selectAllMembers" resultType="com.ttrip.admin.member.MemberVO">
+		SELECT * FROM member ORDER BY join_date DESC
 	</select>
-	
-	<select id="selectMemberByNick" parameterType="string" resultType="com.ttrip.admin.member.MemberVO">
-	    SELECT * FROM member WHERE nick = #{nick}
+
+	<!-- 닉네임으로 회원 검색 -->
+	<select id="searchMembersByNick" parameterType="string"
+			resultType="com.ttrip.admin.member.MemberVO">
+		SELECT * FROM member
+		WHERE nick LIKE CONCAT('%', #{searchTerm}, '%')
+		ORDER BY join_date DESC
 	</select>
-    
-    <update id="updateMember" parameterType="com.ttrip.admin.member.MemberVO">
-	    UPDATE member 
-	    SET name = #{name},
-	        phone = #{phone},
-	        birth = #{birth}
-	    WHERE nick = #{nick}
+
+	<!-- 닉네임으로 특정 회원 조회 -->
+	<select id="selectMemberByNick" parameterType="string"
+			resultType="com.ttrip.admin.member.MemberVO">
+		SELECT * FROM member
+		WHERE nick = #{nick}
+	</select>
+
+	<!-- 회원 정보 업데이트 -->
+	<update id="updateMember" parameterType="com.ttrip.admin.member.MemberVO">
+		UPDATE member
+		SET name = #{name},
+			phone = #{phone},
+			birth = #{birth}
+		WHERE nick = #{nick}
 	</update>
-	
+
+	<!-- 회원 삭제 (상태 변경) -->
 	<update id="deleteMember" parameterType="string">
-	    UPDATE member 
-	    SET account_flag = 'N'
-	    WHERE nick = #{nick}
+		UPDATE member
+		SET account_flag = 'N'
+		WHERE nick = #{nick}
 	</update>
-    
+
 </mapper>
