@@ -10,13 +10,14 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-    // Oracle compatible email check query
-    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM member WHERE email = :email", nativeQuery = true)
+    // Email 존재 여부 확인
+    @Query(value = "SELECT CASE WHEN EXISTS (SELECT 1 FROM member WHERE email = :email) THEN 1 ELSE 0 END", nativeQuery = true)
     Integer checkEmailExists(@Param("email") String email);
 
-    // Oracle compatible nickname check query
-    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM member WHERE nick = :nick", nativeQuery = true)
+    // Nickname 존재 여부 확인
+    @Query(value = "SELECT CASE WHEN EXISTS (SELECT 1 FROM member WHERE nick = :nick) THEN 1 ELSE 0 END", nativeQuery = true)
     Integer checkNickExists(@Param("nick") String nick);
+
 
     // Helper methods to convert Integer to Boolean
     default Boolean existsByEmail(String email) {
